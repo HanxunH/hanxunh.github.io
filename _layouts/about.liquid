@@ -43,7 +43,7 @@ layout: default
     <!-- News -->
     {% if page.news and site.announcements.enabled %}
       <h2>
-        <a href="{{ '/news/' | relative_url }}" style="color: inherit">news</a>
+        <a href="{{ '/news/' | relative_url }}" style="color: inherit">News</a>
       </h2>
       {% include news.liquid limit=true %}
     {% endif %}
@@ -63,6 +63,22 @@ layout: default
       </h2>
       {% include selected_papers.liquid %}
     {% endif %}
+
+    <h2> Professional Activities</h2>
+
+    <ul>
+      <li> <b>Conference Reviewer</b>
+        <ul>
+          <li>ICML (2021-2024), NeurIPS (2021-2024), ICLR (2022-2025), CVPR (2024).</li>
+        </ul>
+      </li>
+
+      <li> <b>Journal Reviewer</b>
+        <ul>
+          <li>KAIS, IEEE Trans. Syst. Man Cybern, TIST, TIP, TMLR, JAIR, TPAMI.</li>
+        </ul>
+      </li>
+    </ul>
 
     <!-- Social -->
     {% if page.social %}
