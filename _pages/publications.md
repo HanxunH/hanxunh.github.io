@@ -9,6 +9,12 @@ nav_order: 1
 
 The full list of publications can be found on <a href="https://scholar.google.com.au/citations?user=8CxZe3IAAAAJ&hl=en" target="_blank">Google Scholar</a>.
 
+
+### 2025
+<a href="https://arxiv.org/pdf/2502.01385.pdf" target="_blank"><b>Detecting Backdoor Samples in Contrastive Language Image Pretraining</b></a> <a href="https://hanxunh.github.io/Detect-CLIP-Backdoor-Samples/" target="_blank"> [Project] </a> <a href="https://github.com/HanxunH/Detect-CLIP-Backdoor-Samples" target="_blank"> [Code] </a> <br/>
+<b>Hanxun Huang</b>, Sarah Erfani, Yige Li, Xingjun Ma, James Bailey<br/>
+International Conference on Learning Representations (<b>ICLR</b>), 2025.
+
 ### 2024
 <a href="https://link.springer.com/chapter/10.1007/978-3-031-75823-2_10" target="_blank"><b>Bayesian Estimation Approaches for Local Intrinsic Dimensionality</b></a> <br/>
 Zaher Joukhadar, <b>Hanxun Huang</b>, Sarah Erfani, Ricardo J.G.B. Campello, Michael E. Houle, James Bailey 
