@@ -58,7 +58,7 @@ International Joint Conference on Neural Networks (<b>IJCNN</b>), 2021.
 
 <a href="https://arxiv.org/abs/2006.13554" target="_blank"><b>Normalized Loss Functions for Deep Learning with Noisy Labels</b></a> <a href="https://github.com/HanxunH/Active-Passive-Losses" target="_blank"> [Code] </a> <br/>
 Xingjun Ma, <b>Hanxun Huang</b>, Yisen Wang, Simone Romano, Sarah Erfani, James Bailey<br/>
-International Conference on Machine Learning (<b>ICML</b>), 2021.
+International Conference on Machine Learning (<b>ICML</b>), 2020.
 
 
 
