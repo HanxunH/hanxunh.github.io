@@ -16,7 +16,7 @@ selected_papers: false # includes a list of papers marked as "selected={true}"
 social: true # includes social icons at the bottom of the page
 ---
 
-I am a Postdoctoral Research Fellow at the [School of Computing and Information Systems](https://cis.unimelb.edu.au/), [The University of Melbourne], The University of Melbourne. I earned my Ph.D. degree from The University of Melbourne, where I also completed my Master’s degree. Prior to that, I earned my Bachelor’s degree from [Purdue University](https://www.cs.purdue.edu/). 
+I am a Postdoctoral Research Fellow at the [School of Computing and Information Systems](https://cis.unimelb.edu.au/), The University of Melbourne. I earned my Ph.D. degree from The University of Melbourne, where I also completed my Master’s degree. Prior to that, I earned my Bachelor’s degree from [Purdue University](https://www.cs.purdue.edu/). 
 
 🔭 My research mainly focus on:
 - Adversarial ML
