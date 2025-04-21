@@ -22,6 +22,7 @@ I am a Postdoctoral Research Fellow at the [School of Computing and Information 
 - Adversarial ML
 - Trustworthy ML
 - Self-supervised Learning
+- Cybersecurity
 
 ---
 - 🎓 [Google Scholar](https://scholar.google.com.au/citations?user=8CxZe3IAAAAJ&hl=en)
