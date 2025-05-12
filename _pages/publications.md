@@ -11,6 +11,10 @@ The full list of publications can be found on <a href="https://scholar.google.co
 
 
 ### 2025
+<a href="https://arxiv.org/pdf/2505.05528.pdf" target="_blank"><b>X-Transfer Attacks: Towards Super Transferable Adversarial Attacks on CLIP</b></a> <a href="https://github.com/HanxunH/XTransferBench" target="_blank"> [Code] </a> <br/>
+<b>Hanxun Huang</b>, Sarah Erfani, Yige Li, Xingjun Ma, James Bailey<br/>
+International Conference on Machine Learning (<b>ICML</b>), Vancouver, BC, 2025.
+
 <a href="https://arxiv.org/pdf/2411.15210.pdf" target="_blank"><b>Towards Million-Scale Adversarial Robustness Evaluation With Stronger
 Individual Attacks</b></a> <a href="https://opentai.org/VisionSafety" target="_blank"> [Project] </a><br/>
 Yong Xie, Weijie Zheng, <b>Hanxun Huang</b>, Guangnan Ye, Xingjun Ma<br/>
