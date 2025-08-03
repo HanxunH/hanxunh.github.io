@@ -11,8 +11,8 @@ The full list of publications can be found on <a href="https://scholar.google.co
 
 
 ### 2025
-<a href="" target="_blank"><b>T2UE: Generating Unlearnable Examples from Text Descriptions</b></a>
-Xingjun Ma, <b>Hanxun Huang</b>, Tianwei Song, Ye Sun, Yifeng Gao, Yu-Gang Jiang
+<a href="" target="_blank"><b>T2UE: Generating Unlearnable Examples from Text Descriptions</b></a> <br/>
+Xingjun Ma, <b>Hanxun Huang</b>, Tianwei Song, Ye Sun, Yifeng Gao, Yu-Gang Jiang <br/>
 ACM Multimedia (<b>MM</b>), Dublin, Ireland, 2025.
 
 <a href="https://arxiv.org/pdf/2505.05528.pdf" target="_blank"><b>X-Transfer Attacks: Towards Super Transferable Adversarial Attacks on CLIP</b></a> <a href="https://github.com/HanxunH/XTransferBench" target="_blank"> [Code] </a> <a href="https://hanxunh.github.io/XTransferBench/" target="_blank"> [Project] </a> <a href="https://huggingface.co/spaces/hanxunh/XTransferBench-UAP-Linf" target="_blank"> [HuggingFace Demo] </a> <br/>
