@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-Our work on [Text-to-Unlearnable Example (T2UE)]() is accepted by ACM Multimedia 2025.
+Our work on [Text-to-Unlearnable Example (T2UE)](https://www.arxiv.org/pdf/2508.03091) is accepted by ACM Multimedia 2025.

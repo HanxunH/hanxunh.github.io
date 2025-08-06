@@ -11,7 +11,7 @@ The full list of publications can be found on <a href="https://scholar.google.co
 
 
 ### 2025
-<a href="" target="_blank"><b>T2UE: Generating Unlearnable Examples from Text Descriptions</b></a> <br/>
+<a href="https://www.arxiv.org/pdf/2508.03091" target="_blank"><b>T2UE: Generating Unlearnable Examples from Text Descriptions</b></a> <br/>
 Xingjun Ma, <b>Hanxun Huang</b>, Tianwei Song, Ye Sun, Yifeng Gao, Yu-Gang Jiang <br/>
 ACM Multimedia (<b>MM</b>), Dublin, Ireland, 2025.
 
