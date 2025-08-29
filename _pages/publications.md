@@ -13,8 +13,8 @@ The full list of publications can be found on <a href="https://scholar.google.co
 ### 2025
 
 <a href="https://arxiv.org/pdf/2401.15295" target="_blank"><b>Shortcuts Everywhere and Nowhere: Exploring Multi-Trigger Backdoor Attacks</b></a> <br/>
-Yige Li, Jiabo He, <b>Hanxun Huang</b>, Jun Sun, Xingjun Ma
-IEEE Transactions on Dependable and Secure Computing (TDSC), 2025.
+Yige Li, Jiabo He, <b>Hanxun Huang</b>, Jun Sun, Xingjun Ma <br/>
+IEEE Transactions on Dependable and Secure Computing (<b>TDSC</b>), 2025.
 
 
 <a href="https://www.arxiv.org/pdf/2508.03091" target="_blank"><b>T2UE: Generating Unlearnable Examples from Text Descriptions</b></a> <br/>
