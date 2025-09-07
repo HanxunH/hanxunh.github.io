@@ -12,7 +12,7 @@ The full list of publications can be found on <a href="https://scholar.google.co
 
 ### 2025
 
-<a href="https://arxiv.org/pdf/2401.15295" target="_blank"><b>Shortcuts Everywhere and Nowhere: Exploring Multi-Trigger Backdoor Attacks</b></a> <br/>
+<a href="https://ieeexplore.ieee.org/document/11150583" target="_blank"><b>Shortcuts Everywhere and Nowhere: Exploring Multi-Trigger Backdoor Attacks</b></a> <br/>
 Yige Li, Jiabo He, <b>Hanxun Huang</b>, Jun Sun, Xingjun Ma <br/>
 IEEE Transactions on Dependable and Secure Computing (<b>TDSC</b>), 2025.
 
