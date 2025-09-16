@@ -12,12 +12,12 @@ The full list of publications can be found on <a href="https://scholar.google.co
 
 ### 2025
 
-<a href="https://www.nowpublishers.com/article/Details/SEC-051" target="_blank"><b>Safety at Scale: A Comprehensive Survey of Large Model and Agent Safety</b></a> <br/>
+<a href="https://www.nowpublishers.com/article/Details/SEC-051" target="_blank"><b>Safety at Scale: A Comprehensive Survey of Large Model and Agent Safety</b></a> <a href="https://github.com/xingjunm/Awesome-Large-Model-Safety" target="_blank"> [Code] </a> <br/>
 Xingjun Ma, Yifeng Gao, Yixu Wang, Ruofan Wang, Xin Wang, Ye Sun, Yifan Ding, Hengyuan Xu, Yunhao Chen, Yunhan Zhao, <b>Hanxun Huang</b>, Yige Li, Jiaming Zhang, Xiang Zheng, Yang Bai, Zuxuan Wu, Xipeng Qiu, Jingfeng Zhang, Yiming Li, Xudong Han, Haonan Li, Jun Sun, Cong Wang, Jindong Gu, Baoyuan Wu, Siheng Chen, Tianwei Zhang, Yang Liu, Mingming Gong, Tongliang Liu, Shirui Pan, Cihang Xie, Tianyu Pang, Yinpeng Dong, Ruoxi Jia, Yang Zhang, Shiqing Ma, Xiangyu Zhang, Neil Gong, Chaowei Xiao, Sarah Erfani, Tim Baldwin, Bo Li, Masashi Sugiyama, Dacheng Tao, James Bailey, Yu-Gang Jiang
  <br/>
 Foundations and Trends® in Privacy and Security, 2025.
 
-<a href="https://ieeexplore.ieee.org/document/11150583" target="_blank"><b>Shortcuts Everywhere and Nowhere: Exploring Multi-Trigger Backdoor Attacks</b></a> <br/>
+<a href="https://ieeexplore.ieee.org/document/11150583" target="_blank"><b>Shortcuts Everywhere and Nowhere: Exploring Multi-Trigger Backdoor Attacks</b></a> <a href="https://github.com/bboylyg/Multi-Trigger-Backdoor-Attacks" target="_blank"> [Code] </a> <br/>
 Yige Li, Jiabo He, <b>Hanxun Huang</b>, Jun Sun, Xingjun Ma <br/>
 IEEE Transactions on Dependable and Secure Computing (<b>TDSC</b>), 2025.
 
