@@ -21,7 +21,7 @@ I am a Postdoctoral Research Fellow at the [School of Computing and Information 
 🔭 My research mainly focus on:
 - Trustworthy ML
 - AI Safety
-- Cybersecurity
+- Generative AI
 
 ---
 - 🎓 [Google Scholar](https://scholar.google.com.au/citations?user=8CxZe3IAAAAJ&hl=en)
