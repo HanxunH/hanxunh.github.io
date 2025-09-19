@@ -11,6 +11,10 @@ The full list of publications can be found on <a href="https://scholar.google.co
 
 
 ### 2025
+<a href="https://arxiv.org/abs/2408.12798" target="_blank"><b>BackdoorLLM: A Comprehensive Benchmark for Backdoor Attacks and Defenses on Large Language Models</b></a> <a href="https://github.com/bboylyg/BackdoorLLM" target="_blank"> [Code] </a> <br/>
+Yige Li, <b>Hanxun Huang</b>, Yunhan Zhao, Xingjun Ma, Jun Sun<br/>
+Advances in Neural Information Processing Systems (<b>NeurIPS</b>), San Diego, CA, 2025.
+
 
 <a href="https://www.nowpublishers.com/article/Details/SEC-051" target="_blank"><b>Safety at Scale: A Comprehensive Survey of Large Model and Agent Safety</b></a> <a href="https://github.com/xingjunm/Awesome-Large-Model-Safety" target="_blank"> [Code] </a> <br/>
 Xingjun Ma, Yifeng Gao, Yixu Wang, Ruofan Wang, Xin Wang, Ye Sun, Yifan Ding, Hengyuan Xu, Yunhao Chen, Yunhan Zhao, <b>Hanxun Huang</b>, Yige Li, Jiaming Zhang, Xiang Zheng, Yang Bai, Zuxuan Wu, Xipeng Qiu, Jingfeng Zhang, Yiming Li, Xudong Han, Haonan Li, Jun Sun, Cong Wang, Jindong Gu, Baoyuan Wu, Siheng Chen, Tianwei Zhang, Yang Liu, Mingming Gong, Tongliang Liu, Shirui Pan, Cihang Xie, Tianyu Pang, Yinpeng Dong, Ruoxi Jia, Yang Zhang, Shiqing Ma, Xiangyu Zhang, Neil Gong, Chaowei Xiao, Sarah Erfani, Tim Baldwin, Bo Li, Masashi Sugiyama, Dacheng Tao, James Bailey, Yu-Gang Jiang
