@@ -11,7 +11,7 @@ The full list of publications can be found on <a href="https://scholar.google.co
 
 
 ### 2025
-<a href="https://arxiv.org/abs/2408.12798" target="_blank"><b>BackdoorLLM: A Comprehensive Benchmark for Backdoor Attacks and Defenses on Large Language Models</b></a> <a href="https://github.com/bboylyg/BackdoorLLM" target="_blank"> [Code] </a> <br/>
+<a href="https://arxiv.org/abs/2408.12798" target="_blank"><b>BackdoorLLM: A Comprehensive Benchmark for Backdoor Attacks and Defenses on Large Language Models</b></a> <a href="https://github.com/bboylyg/BackdoorLLM" target="_blank"> [Code] </a> <a href="https://huggingface.co/BackdoorLLM" target="_blank"> [HuggingFace] </a> <br/>
 Yige Li, <b>Hanxun Huang</b>, Yunhan Zhao, Xingjun Ma, Jun Sun<br/>
 Annual Conference on Neural Information Processing Systems (<b>NeurIPS</b>), San Diego, CA, 2025.
 
