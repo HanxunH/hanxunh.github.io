@@ -10,6 +10,22 @@ nav_order: 1
 The full list of publications can be found on <a href="https://scholar.google.com.au/citations?user=8CxZe3IAAAAJ&hl=en" target="_blank">Google Scholar</a>.
 
 
+### 2026
+<a href="https://arxiv.org/abs/2602.01025" target="_blank"><b>Toward Universal and Transferable Jailbreak Attacks on Vision-Language Models</b></a> <a href="https://github.com/kaiyuanCui/UltraBreak" target="_blank"> [Code] </a> <br/>
+Kaiyuan Cui, Yige Li, Yutao Wu, Xingjun Ma, Sarah Erfani, Christopher Leckie, <b>Hanxun Huang</b> <br/>
+International Conference on Learning Representations (<b>ICLR</b>), Rio de Janeiro, Brazil, 2026.
+
+<!-- 
+<a href="https://openreview.net/forum?id=SzZOBzueK0" target="_blank"><b>Semantic-aware Adversarial Fine-tuning for CLIP</b></a> <br/>
+Jiacheng Zhang, Jinhao Li, <b>Hanxun Huang</b>, Sarah Monazam Erfani, Benjamin I. P. Rubinstein, Feng Liu <br/>
+Transactions on Machine Learning Research (<b>TMLR</b>), 2026. -->
+
+
+<a href="https://www.sciencedirect.com/science/article/pii/S0306437925001541" target="_blank"><b>A Bayesian framework for robust local intrinsic dimensionality estimation</b></a> <br/>
+Zaher Joukhadar, <b>Hanxun Huang</b>, Sarah Erfani, Ricardo J.G.B. Campello, Michael E. Houle, James Bailey <br/>
+<b>Information Systems</b>, 2026.
+
+
 ### 2025
 <a href="https://arxiv.org/abs/2408.12798" target="_blank"><b>BackdoorLLM: A Comprehensive Benchmark for Backdoor Attacks and Defenses on Large Language Models</b></a> <a href="https://github.com/bboylyg/BackdoorLLM" target="_blank"> [Code] </a> <a href="https://huggingface.co/BackdoorLLM" target="_blank"> [HuggingFace] </a> <br/>
 Yige Li, <b>Hanxun Huang</b>, Yunhan Zhao, Xingjun Ma, Jun Sun<br/>
