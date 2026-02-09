@@ -15,10 +15,10 @@ The full list of publications can be found on <a href="https://scholar.google.co
 Kaiyuan Cui, Yige Li, Yutao Wu, Xingjun Ma, Sarah Erfani, Christopher Leckie, <b>Hanxun Huang</b> <br/>
 International Conference on Learning Representations (<b>ICLR</b>), Rio de Janeiro, Brazil, 2026.
 
-<!-- 
-<a href="https://openreview.net/forum?id=SzZOBzueK0" target="_blank"><b>Semantic-aware Adversarial Fine-tuning for CLIP</b></a> <br/>
+
+<a href="https://openreview.net/forum?id=T5hD0as3jb" target="_blank"><b>Semantic-aware Adversarial Fine-tuning for CLIP</b></a> <br/>
 Jiacheng Zhang, Jinhao Li, <b>Hanxun Huang</b>, Sarah Monazam Erfani, Benjamin I. P. Rubinstein, Feng Liu <br/>
-Transactions on Machine Learning Research (<b>TMLR</b>), 2026. -->
+Transactions on Machine Learning Research (<b>TMLR</b>), 2026.
 
 
 <a href="https://www.sciencedirect.com/science/article/pii/S0306437925001541" target="_blank"><b>A Bayesian framework for robust local intrinsic dimensionality estimation</b></a> <br/>
