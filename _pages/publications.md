@@ -11,12 +11,12 @@ The full list of publications can be found on <a href="https://scholar.google.co
 
 
 ### 2026
-<a href="https://arxiv.org/abs/2602.01025" target="_blank"><b>Toward Universal and Transferable Jailbreak Attacks on Vision-Language Models</b></a> <a href="https://github.com/kaiyuanCui/UltraBreak" target="_blank"> [Code] </a> <br/>
+<a href="https://openreview.net/forum?id=T5hD0as3jb" target="_blank"><b>Toward Universal and Transferable Jailbreak Attacks on Vision-Language Models</b></a> <a href="https://github.com/kaiyuanCui/UltraBreak" target="_blank"> [Code] </a> <br/>
 Kaiyuan Cui, Yige Li, Yutao Wu, Xingjun Ma, Sarah Erfani, Christopher Leckie, <b>Hanxun Huang</b> <br/>
 International Conference on Learning Representations (<b>ICLR</b>), Rio de Janeiro, Brazil, 2026.
 
 
-<a href="https://openreview.net/forum?id=T5hD0as3jb" target="_blank"><b>Semantic-aware Adversarial Fine-tuning for CLIP</b></a> <br/>
+<a href="https://openreview.net/forum?id=SzZOBzueK0" target="_blank"><b>Semantic-aware Adversarial Fine-tuning for CLIP</b></a> <br/>
 Jiacheng Zhang, Jinhao Li, <b>Hanxun Huang</b>, Sarah Monazam Erfani, Benjamin I. P. Rubinstein, Feng Liu <br/>
 Transactions on Machine Learning Research (<b>TMLR</b>), 2026.
 
