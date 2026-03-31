@@ -13,5 +13,10 @@ nav_order: 1
 - [Haitian He](https://www.linkedin.com/in/haitianhe/) (Co-supervision with [Sarah Erfani](https://findanexpert.unimelb.edu.au/profile/639922-sarah-monazam-erfani))
 
 ### Master 
-- [Kaiyuan Cui](https://www.linkedin.com/in/kaiyuancui/)
+- Ruoyu Zhou
+- Jingjie Zheng
+- Hanjie Liu
+- Shenghao Zhong
+- [Kaiyuan Cui](https://www.linkedin.com/in/kaiyuancui/) -> [Court Services Victoria](https://courts.vic.gov.au) and PhD at University of Melbourne
+
 
