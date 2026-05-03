@@ -17,6 +17,8 @@ nav_order: 1
 - Jingjie Zheng
 - Hanjie Liu
 - Shenghao Zhong
+- Huan Zhang
+- Zejinyi Liu
 - [Kaiyuan Cui](https://www.linkedin.com/in/kaiyuancui/) -> [Court Services Victoria](https://courts.vic.gov.au) and PhD at University of Melbourne
 
 
