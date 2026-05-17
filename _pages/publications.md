@@ -11,7 +11,17 @@ The full list of publications can be found on <a href="https://scholar.google.co
 
 
 ### 2026
-<a href="https://openreview.net/forum?id=OXJ7KqVOoT" target="_blank"><b>AudioMosaic: Contrastive Masked Audio Representation Learnings</b></a> <br/>
+<a href="https://arxiv.org/pdf/2509.04345" target="_blank"><b>AUDETER: A Large-scale Dataset for Deepfake Audio Detection in Open Worlds</b></a> 
+<a href="https://github.com/mike-qz-wang/AUDETER" target="_blank"><img src="https://img.shields.io/badge/GitHub-black?style=flat-square&logo=github" alt="GitHub"></a> 
+<a href="https://huggingface.co/datasets/wqz995/AUDETER" target="_blank"><img src="https://img.shields.io/badge/%F0%9F%A4%97-HuggingFace-yellow?style=flat-square" alt="HuggingFace"></a> 
+<br/>
+Qizhou Wang, <b>Hanxun Huang</b>, Guansong Pang, Sarah Erfani, Christopher Leckie <br/>
+ACM International Conference on Knowledge Discovery and Data Mining (<b>KDD</b>), Jeju, South Korea, 2026.
+
+<a href="https://openreview.net/forum?id=OXJ7KqVOoT" target="_blank"><b>AudioMosaic: Contrastive Masked Audio Representation Learnings</b></a> 
+<a href="https://github.com/HanxunH/AudioMosaic" target="_blank"><img src="https://img.shields.io/badge/GitHub-black?style=flat-square&logo=github" alt="GitHub"></a> 
+<a href="https://huggingface.co/collections/hanxunh/audiomosaic" target="_blank"><img src="https://img.shields.io/badge/%F0%9F%A4%97-HuggingFace-yellow?style=flat-square" alt="HuggingFace"></a> 
+<br/>
 <b>Hanxun Huang</b>, Qizhou Wang, Xingjun Ma, Cihang Xie, Christopher Leckie, Sarah Erfani <br/>
 International Conference on Machine Learning (<b>ICML</b>), Seoul, South Korea, 2026.
 
@@ -19,7 +29,10 @@ International Conference on Machine Learning (<b>ICML</b>), Seoul, South Korea, 
 Afsaneh Hasanebrahimi, <b>Hanxun Huang</b>, Christopher Leckie, Sarah Erfani <br/>
 International Conference on Machine Learning (<b>ICML</b>), Seoul, South Korea, 2026.
 
-<a href="https://openreview.net/forum?id=qFWLv8bLL2" target="_blank"><b>Just Ask: Curious Code Agents Reveal System Prompts in Frontier LLMs</b></a> <br/>
+<a href="https://openreview.net/forum?id=qFWLv8bLL2" target="_blank"><b>Just Ask: Curious Code Agents Reveal System Prompts in Frontier LLMs</b></a> 
+<a href="https://github.com/x-zheng16/JustAsk" target="_blank"><img src="https://img.shields.io/badge/GitHub-black?style=flat-square&logo=github" alt="GitHub"></a> 
+<a href="https://x-zheng16.github.io/System-Prompt-Open/" target="_blank"><img src="https://img.shields.io/badge/Website-blue?style=flat-square&logo=googlechrome&logoColor=white" alt="Website"></a>
+<br/>
 Xiang Zheng, Yutao Wu, <b>Hanxun Huang</b>, Yige Li, Xingjun Ma, Bo Li, Yu-Gang Jiang, Cong Wang <br/>
 International Conference on Machine Learning (<b>ICML</b>), Seoul, South Korea, 2026.
 
@@ -27,15 +40,13 @@ International Conference on Machine Learning (<b>ICML</b>), Seoul, South Korea, 
 Yifeng Gao, Yifan Ding, Li Wang, Feida Huang, Ye Sun, Yixu Wang, Xin Wang, Yutao Wu, <b>Hanxun Huang</b>, Yunhao Feng, Yingshui Tan, Xingjun Ma, Yu-Gang Jiang <br/>
 International Conference on Machine Learning (<b>ICML</b>), Seoul, South Korea, 2026.
 
-<a href="https://openreview.net/forum?id=T5hD0as3jb" target="_blank"><b>Toward Universal and Transferable Jailbreak Attacks on Vision-Language Models</b></a> <a href="https://github.com/kaiyuanCui/UltraBreak" target="_blank"> [Code] </a> <a href="https://kaiyuancui.github.io/UltraBreak/" target="_blank"> [Project] </a> <br/>
+<a href="https://openreview.net/forum?id=T5hD0as3jb" target="_blank"><b>Toward Universal and Transferable Jailbreak Attacks on Vision-Language Models</b></a> <a href="https://github.com/kaiyuanCui/UltraBreak" target="_blank"><img src="https://img.shields.io/badge/GitHub-black?style=flat-square&logo=github" alt="GitHub"></a> <a href="https://kaiyuancui.github.io/UltraBreak/" target="_blank"><img src="https://img.shields.io/badge/Website-blue?style=flat-square&logo=googlechrome&logoColor=white" alt="Website"></a> <br/>
 Kaiyuan Cui, Yige Li, Yutao Wu, Xingjun Ma, Sarah Erfani, Christopher Leckie, <b>Hanxun Huang</b> <br/>
 International Conference on Learning Representations (<b>ICLR</b>), Rio de Janeiro, Brazil, 2026.
-
 
 <a href="https://openreview.net/forum?id=SzZOBzueK0" target="_blank"><b>Semantic-aware Adversarial Fine-tuning for CLIP</b></a> <br/>
 Jiacheng Zhang, Jinhao Li, <b>Hanxun Huang</b>, Sarah Erfani, Benjamin I. P. Rubinstein, Feng Liu <br/>
 Transactions on Machine Learning Research (<b>TMLR</b>), 2026.
-
 
 <a href="https://www.sciencedirect.com/science/article/pii/S0306437925001541" target="_blank"><b>A Bayesian framework for robust local intrinsic dimensionality estimation</b></a> <br/>
 Zaher Joukhadar, <b>Hanxun Huang</b>, Sarah Erfani, Ricardo J.G.B. Campello, Michael E. Houle, James Bailey <br/>
@@ -43,17 +54,17 @@ Zaher Joukhadar, <b>Hanxun Huang</b>, Sarah Erfani, Ricardo J.G.B. Campello, Mic
 
 
 ### 2025
-<a href="https://arxiv.org/abs/2408.12798" target="_blank"><b>BackdoorLLM: A Comprehensive Benchmark for Backdoor Attacks and Defenses on Large Language Models</b></a> <a href="https://github.com/bboylyg/BackdoorLLM" target="_blank"> [Code] </a> <a href="https://huggingface.co/BackdoorLLM" target="_blank"> [HuggingFace] </a> <br/>
+<a href="https://arxiv.org/abs/2408.12798" target="_blank"><b>BackdoorLLM: A Comprehensive Benchmark for Backdoor Attacks and Defenses on Large Language Models</b></a> <a href="https://github.com/bboylyg/BackdoorLLM" target="_blank"><img src="https://img.shields.io/badge/GitHub-black?style=flat-square&logo=github" alt="GitHub"></a> <a href="https://huggingface.co/BackdoorLLM" target="_blank"><img src="https://img.shields.io/badge/%F0%9F%A4%97-HuggingFace-yellow?style=flat-square" alt="HuggingFace"></a> <br/>
 Yige Li, <b>Hanxun Huang</b>, Yunhan Zhao, Xingjun Ma, Jun Sun<br/>
 Annual Conference on Neural Information Processing Systems (<b>NeurIPS</b>), San Diego, CA, 2025.
 
 
-<a href="https://www.nowpublishers.com/article/Details/SEC-051" target="_blank"><b>Safety at Scale: A Comprehensive Survey of Large Model and Agent Safety</b></a> <a href="https://github.com/xingjunm/Awesome-Large-Model-Safety" target="_blank"> [Code] </a> <br/>
+<a href="https://www.nowpublishers.com/article/Details/SEC-051" target="_blank"><b>Safety at Scale: A Comprehensive Survey of Large Model and Agent Safety</b></a> <a href="https://github.com/xingjunm/Awesome-Large-Model-Safety" target="_blank"><img src="https://img.shields.io/badge/GitHub-black?style=flat-square&logo=github" alt="GitHub"></a> <br/>
 Xingjun Ma, Yifeng Gao, Yixu Wang, Ruofan Wang, Xin Wang, Ye Sun, Yifan Ding, Hengyuan Xu, Yunhao Chen, Yunhan Zhao, <b>Hanxun Huang</b>, Yige Li, Jiaming Zhang, Xiang Zheng, Yang Bai, Zuxuan Wu, Xipeng Qiu, Jingfeng Zhang, Yiming Li, Xudong Han, Haonan Li, Jun Sun, Cong Wang, Jindong Gu, Baoyuan Wu, Siheng Chen, Tianwei Zhang, Yang Liu, Mingming Gong, Tongliang Liu, Shirui Pan, Cihang Xie, Tianyu Pang, Yinpeng Dong, Ruoxi Jia, Yang Zhang, Shiqing Ma, Xiangyu Zhang, Neil Gong, Chaowei Xiao, Sarah Erfani, Tim Baldwin, Bo Li, Masashi Sugiyama, Dacheng Tao, James Bailey, Yu-Gang Jiang
  <br/>
 Foundations and Trends® in Privacy and Security, 2025.
 
-<a href="https://ieeexplore.ieee.org/document/11150583" target="_blank"><b>Shortcuts Everywhere and Nowhere: Exploring Multi-Trigger Backdoor Attacks</b></a> <a href="https://github.com/bboylyg/Multi-Trigger-Backdoor-Attacks" target="_blank"> [Code] </a> <br/>
+<a href="https://ieeexplore.ieee.org/document/11150583" target="_blank"><b>Shortcuts Everywhere and Nowhere: Exploring Multi-Trigger Backdoor Attacks</b></a> <a href="https://github.com/bboylyg/Multi-Trigger-Backdoor-Attacks" target="_blank"><img src="https://img.shields.io/badge/GitHub-black?style=flat-square&logo=github" alt="GitHub"></a> <br/>
 Yige Li, Jiabo He, <b>Hanxun Huang</b>, Jun Sun, Xingjun Ma <br/>
 IEEE Transactions on Dependable and Secure Computing (<b>TDSC</b>), 2025.
 
@@ -62,16 +73,16 @@ IEEE Transactions on Dependable and Secure Computing (<b>TDSC</b>), 2025.
 Xingjun Ma, <b>Hanxun Huang</b>, Tianwei Song, Ye Sun, Yifeng Gao, Yu-Gang Jiang <br/>
 ACM Multimedia (<b>MM</b>), Dublin, Ireland, 2025.
 
-<a href="https://arxiv.org/pdf/2505.05528.pdf" target="_blank"><b>X-Transfer Attacks: Towards Super Transferable Adversarial Attacks on CLIP</b></a> <a href="https://github.com/HanxunH/XTransferBench" target="_blank"> [Code] </a> <a href="https://hanxunh.github.io/XTransferBench/" target="_blank"> [Project] </a> <a href="https://huggingface.co/spaces/hanxunh/XTransferBench-UAP-Linf" target="_blank"> [HuggingFace Demo] </a> <br/>
+<a href="https://arxiv.org/pdf/2505.05528.pdf" target="_blank"><b>X-Transfer Attacks: Towards Super Transferable Adversarial Attacks on CLIP</b></a> <a href="https://github.com/HanxunH/XTransferBench" target="_blank"><img src="https://img.shields.io/badge/GitHub-black?style=flat-square&logo=github" alt="GitHub"></a> <a href="https://hanxunh.github.io/XTransferBench/" target="_blank"><img src="https://img.shields.io/badge/Website-blue?style=flat-square&logo=googlechrome&logoColor=white" alt="Website"></a> <a href="https://huggingface.co/spaces/hanxunh/XTransferBench-UAP-Linf" target="_blank"><img src="https://img.shields.io/badge/%F0%9F%A4%97-HuggingFace%20Demo-yellow?style=flat-square" alt="HuggingFace Demo"></a> <br/>
 <b>Hanxun Huang</b>, Sarah Erfani, Yige Li, Xingjun Ma, James Bailey<br/>
 International Conference on Machine Learning (<b>ICML</b>), Vancouver, BC, 2025.
 
 <a href="https://arxiv.org/pdf/2411.15210.pdf" target="_blank"><b>Towards Million-Scale Adversarial Robustness Evaluation With Stronger
-Individual Attacks</b></a> <a href="https://opentai.org/VisionSafety" target="_blank"> [Project] </a><br/>
+Individual Attacks</b></a> <a href="https://opentai.org/VisionSafety" target="_blank"><img src="https://img.shields.io/badge/Website-blue?style=flat-square&logo=googlechrome&logoColor=white" alt="Website"></a><br/>
 Yong Xie, Weijie Zheng, <b>Hanxun Huang</b>, Guangnan Ye, Xingjun Ma<br/>
 IEEE/CVF Computer Vision and Pattern Recognition Conference (<b>CVPR</b>), Nashville TN, 2025.
 
-<a href="https://arxiv.org/pdf/2502.01385.pdf" target="_blank"><b>Detecting Backdoor Samples in Contrastive Language Image Pretraining</b></a> <a href="https://hanxunh.github.io/Detect-CLIP-Backdoor-Samples/" target="_blank"> [Project] </a> <a href="https://github.com/HanxunH/Detect-CLIP-Backdoor-Samples" target="_blank"> [Code] </a> <br/>
+<a href="https://arxiv.org/pdf/2502.01385.pdf" target="_blank"><b>Detecting Backdoor Samples in Contrastive Language Image Pretraining</b></a> <a href="https://hanxunh.github.io/Detect-CLIP-Backdoor-Samples/" target="_blank"><img src="https://img.shields.io/badge/Website-blue?style=flat-square&logo=googlechrome&logoColor=white" alt="Website"></a> <a href="https://github.com/HanxunH/Detect-CLIP-Backdoor-Samples" target="_blank"><img src="https://img.shields.io/badge/GitHub-black?style=flat-square&logo=github" alt="GitHub"></a> <br/>
 <b>Hanxun Huang</b>, Sarah Erfani, Yige Li, Xingjun Ma, James Bailey<br/>
 International Conference on Learning Representations (<b>ICLR</b>), Singapore, 2025.
 
@@ -80,28 +91,28 @@ International Conference on Learning Representations (<b>ICLR</b>), Singapore, 2
 Zaher Joukhadar, <b>Hanxun Huang</b>, Sarah Erfani, Ricardo J.G.B. Campello, Michael E. Houle, James Bailey <br/>
 Similarity Search and Applications: 17th International Conference (<b>SISAP</b>), Providence, RI, 2024.
 
-<a href="https://arxiv.org/pdf/2401.10474.pdf" target="_blank"><b>LDReg: Local Dimensionality Regularized Self-Supervised Learning</b></a> <a href="https://github.com/HanxunH/LDReg" target="_blank"> [Code] </a> <br/>
+<a href="https://arxiv.org/pdf/2401.10474.pdf" target="_blank"><b>LDReg: Local Dimensionality Regularized Self-Supervised Learning</b></a> <a href="https://github.com/HanxunH/LDReg" target="_blank"><img src="https://img.shields.io/badge/GitHub-black?style=flat-square&logo=github" alt="GitHub"></a> <br/>
 <b>Hanxun Huang</b>, Ricardo J.G.B. Campello, Sarah Erfani, Xingjun Ma,  Michael E. Houle, James Bailey<br/>
 International Conference on Learning Representations (<b>ICLR</b>), Vienna, Austria, 2024.
 
 ### 2023
 
-<a href="https://arxiv.org/pdf/2301.10908.pdf" target="_blank"><b>Distilling Cognitive Backdoor Patterns within an Image</b></a> <a href="https://github.com/HanxunH/CognitiveDistillation" target="_blank"> [Code] </a> <br/>
+<a href="https://arxiv.org/pdf/2301.10908.pdf" target="_blank"><b>Distilling Cognitive Backdoor Patterns within an Image</b></a> <a href="https://github.com/HanxunH/CognitiveDistillation" target="_blank"><img src="https://img.shields.io/badge/GitHub-black?style=flat-square&logo=github" alt="GitHub"></a> <br/>
 <b>Hanxun Huang</b>, Xingjun Ma, Sarah Erfani, James Bailey<br/>
 International Conference on Learning Representations (<b>ICLR</b>), Kigali, Rwanda, 2023.
 
 <a href="https://link.springer.com/article/10.1007/s10994-023-06328-7" target="_blank"><b>Imbalanced Gradients: A Subtle Cause of Overestimated Adversarial Robustness
-</b></a> <a href="https://github.com/HanxunH/MDAttack" target="_blank"> [Code] </a> <br/>
+</b></a> <a href="https://github.com/HanxunH/MDAttack" target="_blank"><img src="https://img.shields.io/badge/GitHub-black?style=flat-square&logo=github" alt="GitHub"></a> <br/>
 Xingjun Ma, Linxi Jiang, <b>Hanxun Huang</b>, Zejia Weng, James Bailey, Yu-Gang Jiang<br/>
 <b>Machine Learning</b>.
 
 ### 2021
 
-<a href="https://arxiv.org/abs/2110.03825" target="_blank"><b>Exploring Architectural Ingredients of Adversarially Robust Deep Neural Networks</b></a> <a href="https://github.com/HanxunH/RobustWRN" target="_blank"> [Code] </a> <br/>
+<a href="https://arxiv.org/abs/2110.03825" target="_blank"><b>Exploring Architectural Ingredients of Adversarially Robust Deep Neural Networks</b></a> <a href="https://github.com/HanxunH/RobustWRN" target="_blank"><img src="https://img.shields.io/badge/GitHub-black?style=flat-square&logo=github" alt="GitHub"></a> <br/>
 <b>Hanxun Huang</b>, Yisen Wang, Sarah Erfani, Quanquan Gu, James Bailey, Xingjun Ma<br/>
 Advances in Neural Information Processing Systems (<b>NeurIPS</b>), 2021.
 
-<a href="https://openreview.net/forum?id=iAmZUo0DxC0" target="_blank"><b>Unlearnable Examples: Making Personal Data Unexploitable</b></a> <a href="https://github.com/HanxunH/Unlearnable-Examples" target="_blank"> [Code] </a> <a href="https://hanxunh.github.io/Unlearnable-Examples/" target="_blank"> [Website] </a> <br/>
+<a href="https://openreview.net/forum?id=iAmZUo0DxC0" target="_blank"><b>Unlearnable Examples: Making Personal Data Unexploitable</b></a> <a href="https://github.com/HanxunH/Unlearnable-Examples" target="_blank"><img src="https://img.shields.io/badge/GitHub-black?style=flat-square&logo=github" alt="GitHub"></a> <a href="https://hanxunh.github.io/Unlearnable-Examples/" target="_blank"><img src="https://img.shields.io/badge/Website-blue?style=flat-square&logo=googlechrome&logoColor=white" alt="Website"></a> <br/>
 <b>Hanxun Huang</b>, Xingjun Ma, Sarah Erfani, James Bailey, Yisen Wang<br/>
 International Conference on Learning Representations (<b>ICLR</b>), 2021.
 
@@ -111,7 +122,7 @@ International Joint Conference on Neural Networks (<b>IJCNN</b>), 2021.
 
 ### 2020
 
-<a href="https://arxiv.org/abs/2006.13554" target="_blank"><b>Normalized Loss Functions for Deep Learning with Noisy Labels</b></a> <a href="https://github.com/HanxunH/Active-Passive-Losses" target="_blank"> [Code] </a> <br/>
+<a href="https://arxiv.org/abs/2006.13554" target="_blank"><b>Normalized Loss Functions for Deep Learning with Noisy Labels</b></a> <a href="https://github.com/HanxunH/Active-Passive-Losses" target="_blank"><img src="https://img.shields.io/badge/GitHub-black?style=flat-square&logo=github" alt="GitHub"></a> <br/>
 Xingjun Ma, <b>Hanxun Huang</b>, Yisen Wang, Simone Romano, Sarah Erfani, James Bailey<br/>
 International Conference on Machine Learning (<b>ICML</b>), 2020.
 
