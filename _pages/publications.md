@@ -44,7 +44,7 @@ International Conference on Machine Learning (<b>ICML</b>), Seoul, South Korea, 
 Kaiyuan Cui, Yige Li, Yutao Wu, Xingjun Ma, Sarah Erfani, Christopher Leckie, <b>Hanxun Huang</b> <br/>
 International Conference on Learning Representations (<b>ICLR</b>), Rio de Janeiro, Brazil, 2026.
 
-<a href="https://openreview.net/forum?id=SzZOBzueK0" target="_blank"><b>Semantic-aware Adversarial Fine-tuning for CLIP</b></a> <br/>
+<a href="https://openreview.net/forum?id=SzZOBzueK0" target="_blank"><b>Semantic-aware Adversarial Fine-tuning for CLIP</b></a> <a href="https://github.com/tmlr-group/SAFT" target="_blank"><img src="https://img.shields.io/badge/GitHub-black?style=flat-square&logo=github" alt="GitHub"></a> <br/>
 Jiacheng Zhang, Jinhao Li, <b>Hanxun Huang</b>, Sarah Erfani, Benjamin I. P. Rubinstein, Feng Liu <br/>
 Transactions on Machine Learning Research (<b>TMLR</b>), 2026.
 
