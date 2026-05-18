@@ -24,9 +24,11 @@ I am a Postdoctoral Research Fellow at the University of Melbourne, where I comp
 - Generative AI
 
 ---
-- 🎓 [Google Scholar](https://scholar.google.com.au/citations?user=8CxZe3IAAAAJ&hl=en)
-- 💼 [Linkedin](https://www.linkedin.com/in/hanxunh/)
-- 📧 [Email](): hanxun AT unimelb dot edu dot au
+<a href="https://scholar.google.com.au/citations?user=8CxZe3IAAAAJ&hl=en" target="_blank"><img src="https://img.shields.io/badge/Google%20Scholar-4285F4?style=for-the-badge&logo=googlescholar&logoColor=white" alt="Google Scholar"></a>
+<a href="https://www.linkedin.com/in/hanxunh/" target="_blank"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"></a>
+<a href="https://huggingface.co/hanxunh" target="_blank"><img src="https://img.shields.io/badge/%F0%9F%A4%97-HuggingFace-yellow?style=for-the-badge" alt="HuggingFace"></a>
+<a href="https://github.com/HanxunH" target="_blank"><img src="https://img.shields.io/badge/GitHub-black?style=for-the-badge&logo=github" alt="GitHub"></a>
+<img src="https://img.shields.io/badge/Email-hanxun%20AT%20unimelb%20dot%20edu%20dot%20au-D14836?style=for-the-badge&logo=gmail&logoColor=white" alt="Email">
 
 ---
 
