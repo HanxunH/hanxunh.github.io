@@ -11,6 +11,10 @@ The full list of publications can be found on <a href="https://scholar.google.co
 
 
 ### 2026
+<a href="https://openreview.net/forum?id=vMcivrrPTj" target="_blank"><b>GeoDetect: Geometric Adversarial Detection for VLPs</b></a> <br/>
+Afsaneh Hasanebrahimi, <b>Hanxun Huang</b>, Christopher Leckie, James Bailey, Sarah Erfani <br/>
+European Conference on Computer Vision (<b>ECCV</b>), Malmö, Sweden, 2026.
+
 <a href="https://arxiv.org/pdf/2509.04345" target="_blank"><b>AUDETER: A Large-scale Dataset for Deepfake Audio Detection in Open Worlds</b></a> 
 <a href="https://github.com/mike-qz-wang/AUDETER" target="_blank"><img src="https://img.shields.io/badge/GitHub-black?style=flat-square&logo=github" alt="GitHub"></a> 
 <a href="https://huggingface.co/datasets/wqz995/AUDETER" target="_blank"><img src="https://img.shields.io/badge/%F0%9F%A4%97-HuggingFace-yellow?style=flat-square" alt="HuggingFace"></a> 

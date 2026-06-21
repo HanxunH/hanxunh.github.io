@@ -8,7 +8,7 @@ nav_order: 1
 ---
 
 ### Talks
-
+- **[June 2026, Melbourne, Australia]**  Invited talk on "Burning down the House - the Risks of Internal Safety Collapse in LLMs", [Alliance for Digital health at Monash (ADAM)](https://www.monash.edu/it/digital-health/initiatives/adam).
 - **[July 2025, Salt Lake City, UT, USA]** Lab visit and talk on "Understanding Adversarial and Backdoor Vulnerabilities in CLIP" at [Guanhong Tao's Group](https://tao.aisec.world), University of Utah.
 - **[July-2025, Melbourne, Australia]** Invited talk on "Understanding Adversarial and Backdoor Vulnerabilities in CLIP" at the [Melbourn-RIKEN AIP Joint Workshop](https://trustworthy-ml.wixsite.com/melb-aip), University of Melbourne. 
 - **[July-2025, Brisbane, Australia]** Invited talk on "Authenticity as a social service in the age of Generative AI" at the [ADM+S Symposium](https://adms-symposium.com), University of Queensland.
