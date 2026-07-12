@@ -11,6 +11,11 @@ The full list of publications can be found on <a href="https://scholar.google.co
 
 
 ### 2026
+<a href="https://arxiv.org/abs/2511.18921" target="_blank"><b>BackdoorVLM: A Benchmark for Backdoor Attacks on Vision-Language Models</b></a> <br/>
+Juncheng Li, Yige Li, <b>Hanxun Huang</b>, Yunhao Chen, Xin Wang, Yixu Wang, Xingjun Ma, Yu-Gang Jiang<br/>
+ACM Multimedia (<b>MM</b>), Rio de Janeiro, Brazil, 2026.
+
+
 <a href="https://openreview.net/forum?id=vMcivrrPTj" target="_blank"><b>GeoDetect: Geometric Adversarial Detection for VLPs</b></a> <br/>
 Afsaneh Hasanebrahimi, <b>Hanxun Huang</b>, Christopher Leckie, James Bailey, Sarah Erfani <br/>
 European Conference on Computer Vision (<b>ECCV</b>), Malmö, Sweden, 2026.
