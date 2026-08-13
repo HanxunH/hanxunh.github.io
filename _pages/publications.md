@@ -11,12 +11,16 @@ The full list of publications can be found on <a href="https://scholar.google.co
 
 
 ### 2026
-<a href="https://arxiv.org/abs/2511.18921" target="_blank"><b>BackdoorVLM: A Benchmark for Backdoor Attacks on Vision-Language Models</b></a> <br/>
+<a href="https://arxiv.org/abs/2511.18921" target="_blank"><b>BackdoorVLM: A Benchmark for Backdoor Attacks on Vision-Language Models</b></a> 
+<a href="https://github.com/bin015/BackdoorVLM" target="_blank"><img src="https://img.shields.io/badge/GitHub-black?style=flat-square&logo=github" alt="GitHub"></a> 
+<br/>
 Juncheng Li, Yige Li, <b>Hanxun Huang</b>, Yunhao Chen, Xin Wang, Yixu Wang, Xingjun Ma, Yu-Gang Jiang<br/>
 ACM Multimedia (<b>MM</b>), Rio de Janeiro, Brazil, 2026.
 
 
-<a href="https://openreview.net/forum?id=vMcivrrPTj" target="_blank"><b>GeoDetect: Geometric Adversarial Detection for VLPs</b></a> <br/>
+<a href="https://openreview.net/forum?id=vMcivrrPTj" target="_blank"><b>GeoDetect: Geometric Adversarial Detection for VLPs</b></a> 
+<a href="https://github.com/AfsanehEB/GeoDetect" target="_blank"><img src="https://img.shields.io/badge/GitHub-black?style=flat-square&logo=github" alt="GitHub"></a> 
+<br/>
 Afsaneh Hasanebrahimi, <b>Hanxun Huang</b>, Christopher Leckie, James Bailey, Sarah Erfani <br/>
 European Conference on Computer Vision (<b>ECCV</b>), Malmö, Sweden, 2026.
 
@@ -34,7 +38,9 @@ ACM International Conference on Knowledge Discovery and Data Mining (<b>KDD</b>)
 <b>Hanxun Huang</b>, Qizhou Wang, Xingjun Ma, Cihang Xie, Christopher Leckie, Sarah Erfani <br/>
 International Conference on Machine Learning (<b>ICML</b>), Seoul, South Korea, 2026.
 
-<a href="https://openreview.net/forum?id=ZXYcM3QuAR" target="_blank"><b>Density-Aware Translation of Spurious Correlations in Zero-Shot VLMs</b></a> <br/>
+<a href="https://openreview.net/forum?id=ZXYcM3QuAR" target="_blank"><b>Density-Aware Translation of Spurious Correlations in Zero-Shot VLMs</b></a> 
+<a href="https://github.com/AfsanehEB/DAT" target="_blank"><img src="https://img.shields.io/badge/GitHub-black?style=flat-square&logo=github" alt="GitHub"></a> 
+<br/>
 Afsaneh Hasanebrahimi, <b>Hanxun Huang</b>, Christopher Leckie, Sarah Erfani <br/>
 International Conference on Machine Learning (<b>ICML</b>), Seoul, South Korea, 2026.
 
@@ -134,6 +140,4 @@ International Joint Conference on Neural Networks (<b>IJCNN</b>), 2021.
 <a href="https://arxiv.org/abs/2006.13554" target="_blank"><b>Normalized Loss Functions for Deep Learning with Noisy Labels</b></a> <a href="https://github.com/HanxunH/Active-Passive-Losses" target="_blank"><img src="https://img.shields.io/badge/GitHub-black?style=flat-square&logo=github" alt="GitHub"></a> <br/>
 Xingjun Ma, <b>Hanxun Huang</b>, Yisen Wang, Simone Romano, Sarah Erfani, James Bailey<br/>
 International Conference on Machine Learning (<b>ICML</b>), 2020.
-
-
 
