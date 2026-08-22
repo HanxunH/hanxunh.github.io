@@ -11,6 +11,23 @@ The full list of publications can be found on <a href="https://scholar.google.co
 
 
 ### 2026
+<a href="https://openreview.net/forum?id=dKXBjoZQfx" target="_blank"><b>VisER: Visual Evidence and Reliance for Object Hallucination Detection in LVLMs</b></a> <br/>
+Afsaneh Hasanebrahimi, <b>Hanxun Huang</b>, Christopher Leckie, Sarah Erfani<br/>
+Proceedings of the 2026 Conference on Empirical Methods in Natural Language Processing (<b>EMNLP</b>), Budapest, Hungary, 2026.
+
+<a href="https://arxiv.org/abs/2511.16709" target="_blank"><b>AutoBackdoor: Automating Backdoor Attacks via LLM Agents
+</b></a> 
+<a href="https://github.com/bboylyg/BackdoorLLM" target="_blank"><img src="https://img.shields.io/badge/GitHub-black?style=flat-square&logo=github" alt="GitHub"></a>
+<br/>
+Yige Li, Zhe Li, Wei Zhao, Nay Myat Min, <b>Hanxun Huang</b>, Xingjun Ma, Jun Sun<br/>
+Findings of the Association for Computational Linguistics: <b>EMNLP</b>, Budapest, Hungary, 2026.
+
+<a href="https://arxiv.org/abs/2608.14577" target="_blank"><b>HarmProfile: Characterizing Harmful Distributions in Frontier LLMs</b></a> 
+<a href="https://github.com/fresh-ma/HarmProfile" target="_blank"><img src="https://img.shields.io/badge/GitHub-black?style=flat-square&logo=github" alt="GitHub"></a> <a href="https://fresh-ma.github.io/HarmProfile/" target="_blank"><img src="https://img.shields.io/badge/Website-blue?style=flat-square&logo=googlechrome&logoColor=white" alt="Website"></a>
+<br/>
+Zhouyuan Ma, Yutao Wu, <b>Hanxun Huang</b>, Xiang Zheng, Xiao Liu, Yixin Cao, Zuxuan Wu, Xingjun Ma, Yu-Gang Jiang<br/>
+Findings of the Association for Computational Linguistics: <b>EMNLP</b>, Budapest, Hungary, 2026.
+
 <a href="https://arxiv.org/abs/2511.18921" target="_blank"><b>BackdoorVLM: A Benchmark for Backdoor Attacks on Vision-Language Models</b></a> 
 <a href="https://github.com/bin015/BackdoorVLM" target="_blank"><img src="https://img.shields.io/badge/GitHub-black?style=flat-square&logo=github" alt="GitHub"></a> 
 <br/>
