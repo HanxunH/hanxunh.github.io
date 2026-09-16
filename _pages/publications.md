@@ -11,6 +11,14 @@ The full list of publications can be found on <a href="https://scholar.google.co
 
 
 ### 2026
+<!-- <a href="https://openreview.net/forum?id=xYPvwioYRg" target="_blank"><b>VEX-Bench: Benchmarking Verification Complexity of LLM-Generated Misinformation</b></a> <br/>
+<b>Hanxun Huang</b>, Yutao Wu, Qizhou Wang, Silvia Montaña-Niño, Yige Li, Xiang Zheng, Elif Buse Doyuran, Phoebe Matich, Xiao Liu, Xingjun Ma, Sarah Erfani, Christopher Leckie<br/>
+Annual Conference on Neural Information Processing Systems (<b>NeurIPS</b>), Sydney, Australia, 2026.
+
+<a href="https://openreview.net/forum?id=w7YzZDE3Ei" target="_blank"><b>Internal Safety Collapse in Frontier Large Language Models</b></a> <a href="https://github.com/wuyoscar/Internal-Safety-Collapse" target="_blank"><img src="https://img.shields.io/badge/GitHub-black?style=flat-square&logo=github" alt="GitHub"></a> <a href="https://wuyoscar.github.io/Internal-Safety-Collapse/" target="_blank"><img src="https://img.shields.io/badge/Website-blue?style=flat-square&logo=googlechrome&logoColor=white" alt="Website"></a><br/>
+Yutao Wu, Xiao Liu, <b>Hanxun Huang</b>, Yige Li, Xiang Zheng, Yifeng Gao, Cong Wang, Bo Li, Xingjun Ma, Yu-Gang Jiang<br/>
+Annual Conference on Neural Information Processing Systems (<b>NeurIPS</b>), Sydney, Australia, 2026. -->
+
 <a href="https://openreview.net/forum?id=dKXBjoZQfx" target="_blank"><b>VisER: Visual Evidence and Reliance for Object Hallucination Detection in LVLMs</b></a> <br/>
 Afsaneh Hasanebrahimi, <b>Hanxun Huang</b>, Christopher Leckie, Sarah Erfani<br/>
 Proceedings of the 2026 Conference on Empirical Methods in Natural Language Processing (<b>EMNLP</b>), Budapest, Hungary, 2026.
@@ -68,9 +76,9 @@ International Conference on Machine Learning (<b>ICML</b>), Seoul, South Korea, 
 Xiang Zheng, Yutao Wu, <b>Hanxun Huang</b>, Yige Li, Xingjun Ma, Bo Li, Yu-Gang Jiang, Cong Wang <br/>
 International Conference on Machine Learning (<b>ICML</b>), Seoul, South Korea, 2026.
 
-<a href="https://openreview.net/forum?id=UXbNXAJRCo" target="_blank"><b>FakeWorld 1.0: An Omni modal Benchmark for Fake Media and Content</b></a> <br/>
+<!-- <a href="https://openreview.net/forum?id=UXbNXAJRCo" target="_blank"><b>FakeWorld 1.0: An Omni modal Benchmark for Fake Media and Content</b></a> <br/>
 Yifeng Gao, Yifan Ding, Li Wang, Feida Huang, Ye Sun, Yixu Wang, Xin Wang, Yutao Wu, <b>Hanxun Huang</b>, Yunhao Feng, Yingshui Tan, Xingjun Ma, Yu-Gang Jiang <br/>
-International Conference on Machine Learning (<b>ICML</b>), Seoul, South Korea, 2026.
+International Conference on Machine Learning (<b>ICML</b>), Seoul, South Korea, 2026. -->
 
 <a href="https://openreview.net/forum?id=T5hD0as3jb" target="_blank"><b>Toward Universal and Transferable Jailbreak Attacks on Vision-Language Models</b></a> <a href="https://github.com/kaiyuanCui/UltraBreak" target="_blank"><img src="https://img.shields.io/badge/GitHub-black?style=flat-square&logo=github" alt="GitHub"></a> <a href="https://kaiyuancui.github.io/UltraBreak/" target="_blank"><img src="https://img.shields.io/badge/Website-blue?style=flat-square&logo=googlechrome&logoColor=white" alt="Website"></a> <br/>
 Kaiyuan Cui, Yige Li, Yutao Wu, Xingjun Ma, Sarah Erfani, Christopher Leckie, <b>Hanxun Huang</b> <br/>
