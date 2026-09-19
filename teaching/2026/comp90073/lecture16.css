@@ -76,7 +76,8 @@
 .reveal .boundary-reasoning .result > span { background: var(--red); }
 .reveal .boundary-reasoning .result > p { color: var(--red); }
 .reveal .decision-map { margin: 0; padding: 16px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); opacity: 0; transition: opacity .35s ease; }
-.reveal .decision-map svg { width: 100%; height: 100%; }
+/* Size only the diagram SVG, not MathJax SVGs inside its labels. */
+.reveal .decision-map > svg { width: 100%; height: 100%; }
 .reveal .decision-map .region { opacity: .12; transition: opacity .35s ease; }
 .reveal .decision-map .region-a { fill: rgba(71,200,240,.18); }
 .reveal .decision-map .region-b { fill: rgba(0,15,70,.09); }
@@ -117,7 +118,7 @@
 .reveal :is(.lp-three-class-stack,.lp-k-stack) { grid-row: 2; grid-column: 1; font-size: 20px; }
 .reveal .linear-lp-slide:has(.lp-k-stack.visible) .lp-three-class-stack { opacity: 0 !important; }
 .reveal .lp-geometry { margin: 0; padding: 16px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); opacity: 0; transition: opacity .35s ease; }
-.reveal .lp-geometry svg { width: 100%; height: 100%; }
+.reveal .lp-geometry > svg { width: 100%; height: 100%; }
 .reveal .lp-feasible-region { fill: rgba(255,71,86,.13); opacity: 0; transition: opacity .35s ease; }
 .reveal .lp-constraint { stroke: var(--blue); stroke-width: 4; opacity: 0; transition: opacity .35s ease; }
 .reveal .lp-constraint-label, .reveal .lp-region-label, .reveal .lp-stack-label { color: var(--blue); font-size: 20px; font-weight: 850; opacity: 0; }
@@ -152,7 +153,7 @@
 .reveal .binary-kkt-row mjx-container { margin: 1px 0 !important; }
 .reveal .binary-derivative-intro { margin: 1px 0 1px 170px; color: var(--ink-2); font-size: 19px; font-weight: 750; line-height: 1.22; }
 .reveal .binary-bridge-figure { margin: 0; padding: 16px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); opacity: 0; transition: opacity .35s ease; }
-.reveal .binary-bridge-figure svg { width: 100%; height: 100%; }
+.reveal .binary-bridge-figure > svg { width: 100%; height: 100%; }
 .reveal :is(.binary-region,.binary-boundary,.binary-region-label,.binary-contours,.binary-contour-label,.binary-start,.binary-start-label) { opacity: 0; transition: opacity .35s ease; }
 .reveal .binary-region.class-zero { fill: rgba(71,200,240,.17); }
 .reveal .binary-region.target-class { fill: rgba(255,71,86,.12); }
@@ -200,7 +201,7 @@
 .reveal :is(.projection-summary-slide,.iterative-transition-slide) > h2 { margin-bottom: .24em; font-size: 56px; line-height: 1.06; }
 .reveal .projection-summary-layout { display: grid; grid-template-columns: 1.08fr .92fr; gap: 26px; width: 1400px; height: 560px; }
 .reveal .projection-summary-figure { position: relative; margin: 0; padding: 14px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); opacity: 0; transition: opacity .35s ease; }
-.reveal .projection-summary-figure svg { width: 100%; height: 100%; }
+.reveal .projection-summary-figure > svg { width: 100%; height: 100%; }
 .reveal .projection-class-left { fill: rgba(71,200,240,.16); }
 .reveal .projection-class-right { fill: rgba(255,71,86,.1); }
 .reveal .projection-summary-boundary { stroke: var(--blue); stroke-width: 4; }
@@ -243,7 +244,7 @@
 .reveal .iterative-bullet mjx-container { margin: 0 !important; }
 .reveal .iterative-loop { color: var(--red) !important; font-size: 24px !important; font-weight: 900 !important; }
 .reveal .iterative-transition-figure { position: relative; margin: 0; padding: 14px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); opacity: 0; transition: opacity .35s ease; }
-.reveal .iterative-transition-figure svg { width: 100%; height: 100%; }
+.reveal .iterative-transition-figure > svg { width: 100%; height: 100%; }
 .reveal .iterative-contour { fill: none; stroke: rgba(0,15,70,.24); stroke-width: 2; }
 .reveal .iterative-path { fill: none; stroke: var(--red); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 500; stroke-dashoffset: 500; opacity: 0; }
 .reveal .iterative-transition-figure #iterative-path-arrow path { fill: var(--red); }
@@ -314,7 +315,7 @@
 .reveal .norm-theory-row > div { color: var(--blue); font-size: 24px; }
 .reveal .norm-theory-row > p { margin: 0 0 8px; color: var(--ink-2); font-size: 18px; font-weight: 750; }
 .reveal .norm-unit-figure { position: relative; display: grid; grid-template-rows: minmax(0,1fr) auto auto; min-height: 0; gap: 7px; margin: 0; padding: 14px 18px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); }
-.reveal .norm-unit-figure svg { width: 100%; height: 100%; min-height: 0; }
+.reveal .norm-unit-figure > svg { width: 100%; height: 100%; min-height: 0; }
 .reveal .norm-unit-axis { stroke: rgba(0,15,70,.22); stroke-width: 2; }
 .reveal .norm-unit-ball { fill: none; stroke-width: 6; opacity: 0; transition: opacity .35s ease; }
 .reveal .norm-unit-l1 { stroke: var(--sky); }
@@ -385,7 +386,7 @@
 .reveal .attack-step mjx-container { margin: 0 !important; }
 .reveal .attack-step .method-result { color: var(--red); font-size: 21px; font-weight: 900; }
 .reveal .attack-method-figure { position: relative; min-height: 0; margin: 0; padding: 14px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); opacity: 0; transition: opacity .35s ease; }
-.reveal .attack-method-figure svg { width: 100%; height: 100%; }
+.reveal .attack-method-figure > svg { width: 100%; height: 100%; }
 .reveal .method-slide:has(.attack-step[data-fragment-index="0"].visible) .attack-method-figure { opacity: 1; }
 .reveal .construct-attack-figure { display: grid; grid-template-rows: minmax(0,1fr) 28px minmax(0,1fr) 28px minmax(0,1fr); box-sizing: border-box; align-self: center; height: 440px; gap: 6px; }
 .reveal .construct-attack-figure > b { display: grid; color: var(--sky); font-size: 19px; font-weight: 900; text-align: center; opacity: 0; place-items: center; }
@@ -429,7 +430,7 @@
 .reveal .fgsm-issue::before { position: absolute; top: 50%; left: 3px; width: 10px; height: 10px; border-radius: 50%; background: var(--red); content: ""; transform: translateY(-50%); }
 .reveal .fgsm-issue strong { color: var(--blue); font-size: 28px; font-weight: 900; }.reveal .fgsm-issue p { margin: 6px 0 0; color: var(--ink-2); font-size: 21px; font-weight: 700; line-height: 1.3; }
 .reveal .fgsm-issue-figure { position: relative; box-sizing: border-box; margin: 0; padding: 14px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); opacity: 0; transition: opacity .35s ease; }
-.reveal .fgsm-issue-figure svg { width: 100%; height: 100%; }
+.reveal .fgsm-issue-figure > svg { width: 100%; height: 100%; }
 .reveal .fgsm-issue-budget { fill: rgba(255,71,86,.045); stroke: var(--red); stroke-width: 4; stroke-dasharray: 10 8; opacity: 0; }
 .reveal .fgsm-failure-region { fill: rgba(71,200,240,.18); opacity: 0; }
 .reveal .fgsm-issue-boundary { fill: none; stroke: var(--blue); stroke-width: 4; stroke-linejoin: round; opacity: 0; }
