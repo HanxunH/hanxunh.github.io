@@ -216,7 +216,7 @@
     pdfSeparateFragments: false,
     pdfPageHeightOffset: 0,
     totalTime: config.totalTime || 50 * 60,
-    plugins: [RevealNotes]
+    plugins: []
   });
 
   Reveal.on("ready", () => {

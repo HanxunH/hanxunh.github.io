@@ -35,10 +35,7 @@
           <span>Semester 2, 2026</span>
         </div>
         <div class="title-wave" aria-hidden="true"></div>
-        <aside class="notes">
-          <p>Hi everyone, I’m Hanxun Huang, one of the lecturers for this subject. I’ll be teaching you from this week through to Week 11.</p>
-          <p>Today, we’ll start with an introduction to adversarial attacks—how someone can deliberately change an input to make a machine learning model get it wrong.</p>
-        </aside>
+        
       </section>
 
       <section class="outline-slide" data-timing="120">
@@ -49,11 +46,7 @@
           <div class="outline-item"><span>02</span><strong>Why can they occur, and how do we classify attacks?</strong></div>
           <div class="outline-item"><span>03</span><strong>How do attacks extend from neural networks to LLM agents?</strong></div>
         </div>
-        <aside class="notes">
-          <p>Here’s what we’ll cover today. We’ll start with a few examples to see what these attacks look like and why we should care.</p>
-          <p>Then we’ll look at why they can happen and the different types of attacks. What can the attacker change? What do they know about the model? And what are they trying to achieve?</p>
-          <p>Finally, we’ll look at some case studies of attacks on language models and agents.</p>
-        </aside>
+        
       </section>
 
       <section class="foundation-slide foundation-panda" data-timing="75">
@@ -64,14 +57,10 @@
           <figure class="foundation-hero">
             <img src="panda-fgsm.png" alt="Published example: panda, 57.7% confidence; add a small gradient-sign perturbation; gibbon, 99.3% confidence.">
           </figure>
-          <p class="foundation-takeaway fragment highlight-current-red" data-notes="This shows why adversarial examples matter. A neural network can be sensitive to changes that we barely notice. The image looks almost the same to us, but the model gives a wrong answer with high confidence.">High confidence does not mean a correct prediction.</p>
+          <p class="foundation-takeaway fragment highlight-current-red">High confidence does not mean a correct prediction.</p>
         </div>
         <a class="paper-study-reference apa-reference" href="https://arxiv.org/abs/1412.6572" target="_blank" rel="noopener noreferrer">Goodfellow, I. J., Shlens, J., &amp; Szegedy, C. (2015). Explaining and harnessing adversarial examples. <em>International Conference on Learning Representations.</em></a>
-        <aside class="notes">
-          <p>This is one of the best-known early examples of an adversarial attack on a deep neural network. It was presented by Ian Goodfellow and his colleagues in 2015. Goodfellow is a well-known researcher in deep learning.</p>
-          <p>Look at the image on the left. We see a panda, and the model also predicts panda. The middle image shows a carefully crafted pattern. We scale that pattern down and add it to the original image.</p>
-          <p>The image on the right still looks like a panda to us. But the model now predicts gibbon, with 99.3 percent confidence.</p>
-        </aside>
+        
       </section>
 
       <section class="foundation-slide" data-timing="90">
@@ -90,13 +79,9 @@
             <p><strong>The model gets it wrong</strong><span>\(f_\theta(x)=y\quad\longrightarrow\quad f_\theta(x')\ne y\)</span></p>
             <p><strong>The true label stays the same</strong><span>A panda is still a panda.</span></p>
           </div>
-          <p class="foundation-takeaway fragment highlight-current-red" data-notes="We also need to say how much change is allowed. Here, epsilon sets the limit on the size of delta. The modified pixels still need to stay within the valid range.">In this example, we limit how much the pixels can change: \(\|\delta\|_p\le\varepsilon\).</p>
+          <p class="foundation-takeaway fragment highlight-current-red">In this example, we limit how much the pixels can change: \(\|\delta\|_p\le\varepsilon\).</p>
         </div>
-        <aside class="notes">
-          <p>So what do we mean by an adversarial example? We start with an input that the model gets right, then deliberately change it so the model gets it wrong.</p>
-          <p>Here, x is the original input, and delta is the change we add. Together, they give us x-prime—the modified input.</p>
-          <p>Think back to the panda. It is still a panda, so the correct label has not changed. What changes is the model’s prediction. We have changed the input, not the model’s weights.</p>
-        </aside>
+        
       </section>
 
       <section class="foundation-slide foundation-perturbations" data-timing="75">
@@ -116,12 +101,7 @@
           <a class="apa-reference" href="https://doi.org/10.1109/TEVC.2019.2890858" target="_blank" rel="noopener noreferrer">Su, J., Vargas, D. V., &amp; Sakurai, K. (2019). One pixel attack for fooling deep neural networks. <em>IEEE Transactions on Evolutionary Computation, 23</em>(5), 828–841. https://doi.org/10.1109/TEVC.2019.2890858</a>
           <a class="apa-reference" href="https://arxiv.org/abs/1712.09665" target="_blank" rel="noopener noreferrer">Brown, T. B., Mané, D., Roy, A., Abadi, M., &amp; Gilmer, J. (2017). <em>Adversarial patch</em> [Preprint]. arXiv. https://doi.org/10.48550/arXiv.1712.09665</a>
         </div>
-        <aside class="notes">
-          <p>On the left is the panda example we just saw. Let’s look at two other types of changes.</p>
-          <p>In the middle, we only change a small part of the image. Some attacks change just a few pixels—even a single pixel can be enough in some cases. The rest of the image stays the same.</p>
-          <p>On the right, we add a patch. You can clearly see it, but it is designed to make the model give a wrong prediction.</p>
-          <p>So when we describe an attack, we need to be clear about what it is allowed to change: how many pixels, which part of the image, and by how much.</p>
-        </aside>
+        
       </section>
 
       <section class="foundation-slide foundation-modalities" data-timing="75">
@@ -134,19 +114,14 @@
             <figure><h3>Question answering</h3><img src="figures/l15-intro-text.png" alt="Question-answering adversarial example reproduced in the source lecture."><figcaption>A small edit changes the answer.</figcaption></figure>
             <figure><h3>Speech recognition</h3><img src="figures/l15-intro-speech.png" alt="Published speech-recognition adversarial example reproduced in the source lecture."><figcaption>The model writes down different words.</figcaption></figure>
           </div>
-          <p class="foundation-takeaway fragment highlight-current-red" data-notes="The allowed changes depend on the task. For text, we might require the question to keep the same meaning. For audio, we might limit how much the sound can change. We need to be clear about those rules when we describe an attack.">We still need to decide which changes are allowed for each task.</p>
+          <p class="foundation-takeaway fragment highlight-current-red">We still need to decide which changes are allowed for each task.</p>
         </div>
         <div class="cot-references" aria-label="Video text and speech attack references">
           <a class="apa-reference" href="https://doi.org/10.1145/3343031.3351088" target="_blank" rel="noopener noreferrer">Jiang, L., Ma, X., Chen, S., Bailey, J., &amp; Jiang, Y.-G. (2019). Black-box adversarial attacks on video recognition models. In <em>Proceedings of the 27th ACM International Conference on Multimedia</em> (pp. 864–872). ACM. https://doi.org/10.1145/3343031.3351088</a>
           <a class="apa-reference" href="https://aclanthology.org/P18-1079/" target="_blank" rel="noopener noreferrer">Ribeiro, M. T., Singh, S., &amp; Guestrin, C. (2018). Semantically equivalent adversarial rules for debugging NLP models. In <em>Proceedings of the 56th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)</em> (pp. 856–865). Association for Computational Linguistics. https://doi.org/10.18653/v1/P18-1079</a>
           <a class="apa-reference" href="https://doi.org/10.1109/SPW.2018.00009" target="_blank" rel="noopener noreferrer">Carlini, N., &amp; Wagner, D. (2018). Audio adversarial examples: Targeted attacks on speech-to-text. In <em>2018 IEEE Security and Privacy Workshops (SPW)</em> (pp. 1–7). IEEE. https://doi.org/10.1109/SPW.2018.00009</a>
         </div>
-        <aside class="notes">
-          <p>So far, we’ve looked at images. But adversarial attacks also work with video, text and audio.</p>
-          <p>On the left, small changes to the video frames make the model recognise the wrong action, even though the person is still doing the same thing.</p>
-          <p>In the middle, a small edit to the question changes the model’s answer. The question still means the same thing to us.</p>
-          <p>On the right, a carefully chosen change is added to the audio. The speech-recognition model then writes down different words.</p>
-        </aside>
+        
       </section>
 
       <section class="foundation-slide foundation-physical" data-timing="90">
@@ -158,17 +133,13 @@
             <figure><h3>A road sign</h3><img src="figures/l15-intro-road.png" alt="Road-sign perturbation example from Evtimov and colleagues, reproduced in the source lecture."><figcaption>The sign has added marks or stickers.</figcaption></figure>
             <figure><h3>A 3D-printed turtle</h3><img src="figures/l15-intro-turtle.png" alt="Published 3D-printed adversarial object example from Athalye and colleagues."><figcaption>The model labels it as a rifle.</figcaption></figure>
           </div>
-          <p class="foundation-takeaway fragment highlight-current-red" data-notes="The challenge is that a camera will not always see the object in the same way. It might be farther away, at a different angle, or in different light. A physical attack needs to keep working as those conditions change. These studies tested a range of conditions, but that does not mean the attack works from every viewpoint.">The attack needs to work across different camera angles and lighting conditions.</p>
+          <p class="foundation-takeaway fragment highlight-current-red">The attack needs to work across different camera angles and lighting conditions.</p>
         </div>
         <div class="cot-references" aria-label="Real-world adversarial example references">
           <a class="apa-reference" href="https://proceedings.mlr.press/v80/athalye18b.html" target="_blank" rel="noopener noreferrer">Athalye, A., Engstrom, L., Ilyas, A., &amp; Kwok, K. (2018). Synthesizing robust adversarial examples. In <em>Proceedings of the 35th International Conference on Machine Learning</em> (pp. 284–293). PMLR.</a>
           <a class="apa-reference" href="https://doi.org/10.1109/CVPR.2018.00175" target="_blank" rel="noopener noreferrer">Eykholt, K., Evtimov, I., Fernandes, E., Li, B., Rahmati, A., Xiao, C., Prakash, A., Kohno, T., &amp; Song, D. (2018). Robust physical-world attacks on deep learning visual classification. In <em>Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition</em> (pp. 1625–1634). https://doi.org/10.1109/CVPR.2018.00175</a>
         </div>
-        <aside class="notes">
-          <p>These attacks are not limited to changing an image on a computer. We can also change a real object and let a camera capture it.</p>
-          <p>On the left, marks or stickers are added to a road sign. We can still recognise the sign, but the changes are designed to make a vision model misclassify it.</p>
-          <p>On the right, the researchers made a 3D-printed turtle with a carefully designed surface pattern. It still looks like a turtle to us, but the model in the study labels it as a rifle.</p>
-        </aside>
+        
       </section>
 
 <section class="foundation-slide foundation-care" data-timing="75">
@@ -180,15 +151,13 @@
       <div>The model gives an answer</div><span>→</span><div>The system acts on it</div><span>→</span><div>Someone may be harmed</div>
     </div>
     <div class="foundation-columns foundation-risk-examples">
-      <div><h3>Driving</h3><p>The model misreads a road sign.</p><p class="fragment highlight-current-red" data-fragment-index="0" data-notes="Think about these three examples. If a car acts on a misread road sign, it may make an unsafe driving decision. If a medical system misses a sign of disease, a patient may not get treatment. And if face recognition matches the wrong person, the system may let them in. These are possible consequences. The risk depends on what the system does with the prediction and what other checks are in place.">The car may take an unsafe action.</p></div>
+      <div><h3>Driving</h3><p>The model misreads a road sign.</p><p class="fragment highlight-current-red" data-fragment-index="0">The car may take an unsafe action.</p></div>
       <div><h3>Healthcare</h3><p>The model misses a sign of disease.</p><p class="fragment highlight-current-red" data-fragment-index="0">A patient may not get treatment.</p></div>
       <div><h3>Face recognition</h3><p>The model matches the wrong person.</p><p class="fragment highlight-current-red" data-fragment-index="0">The system may let that person in.</p></div>
     </div>
     <p class="foundation-takeaway">Acting on a wrong prediction can cause real-world harm.</p>
   </div>
-  <aside class="notes">
-    <p>So far, we’ve seen models give wrong answers. But what happens when a system uses that answer to decide what to do?</p>
-  </aside>
+  
 </section>
 
 <section class="foundation-slide foundation-shift" data-timing="90">
@@ -203,13 +172,13 @@
           <div><span>Original</span><img src="figures/l15-stop-clean.png" alt="Clean stop-sign photograph from Eykholt and colleagues."></div>
           <div><span>Darker</span><img class="foundation-low-light" src="figures/l15-stop-clean.png" alt="The same photograph darkened to illustrate lower light; not a separate photograph or a model test."></div>
         </div>
-        <p class="fragment highlight-current-red" data-fragment-index="0" data-notes="The left pair shows the same stop sign at two brightness levels. Under lower light, some details are harder to see. A model trained mostly on clear daytime images may struggle with that change, even though nobody is trying to fool it.">Lower light changes the image.<br>Illustrated here by darkening the photo.</p>
+        <p class="fragment highlight-current-red" data-fragment-index="0">Lower light changes the image.<br>Illustrated here by darkening the photo.</p>
         <p>The model may misread the sign.</p>
       </figure>
       <figure>
         <h3>Image collection</h3>
         <img src="figures/l15-intro-medical.png" alt="Published dermoscopy examples with and without surgical ink markings, from Winkler and colleagues, 2019. Ink is a collection artefact, not a crafted attack.">
-        <p class="fragment highlight-current-red" data-fragment-index="1" data-notes="In the middle, we have the same skin lesion with and without ink marks. The marks can affect the model’s prediction, even though they were not added to fool it. This shows how the way we collect an image can matter.">The same lesion, with and without ink.</p>
+        <p class="fragment highlight-current-red" data-fragment-index="1">The same lesion, with and without ink.</p>
         <p>The marks can affect the prediction. They were not added to fool the model.</p>
       </figure>
       <figure>
@@ -218,20 +187,17 @@
           <div><span>Clean sign</span><img src="figures/l15-stop-clean.png" alt="Published clean stop-sign example."></div>
           <div><span>With stickers</span><img src="figures/l15-stop-stickers.png" alt="Published stop-sign example with adversarial black stickers from Eykholt and colleagues."></div>
         </div>
-        <p class="fragment highlight-current-red" data-fragment-index="2" data-notes="On the right, we compare a clean sign with the paper’s stickered example. The sticker pattern was deliberately designed to fool a sign classifier. Unlike an ordinary lighting change, the error is the attacker’s goal.">Stickers chosen to fool the model.</p>
+        <p class="fragment highlight-current-red" data-fragment-index="2">Stickers chosen to fool the model.</p>
         <p>The error is the attacker’s goal.</p>
       </figure>
     </div>
-    <p class="foundation-takeaway fragment highlight-current-red" data-notes="The key difference is whether someone is deliberately trying to cause the error. Seeing a wrong prediction alone is not enough to say that an attack happened.">An attack is deliberate. An ordinary model error is not.</p>
+    <p class="foundation-takeaway fragment highlight-current-red">An attack is deliberate. An ordinary model error is not.</p>
   </div>
   <div class="cot-references" aria-label="Natural changes and adversarial attack example references">
     <a class="apa-reference" href="https://doi.org/10.1001/jamadermatol.2019.1735" target="_blank" rel="noopener noreferrer">Winkler, J. K., Fink, C., Toberer, F., Enk, A., Deinlein, T., Hofmann-Wellenhof, R., Thomas, L., Lallas, A., Blum, A., Stolz, W., &amp; Haenssle, H. A. (2019). Association between surgical skin markings in dermoscopic images and diagnostic performance of a deep learning convolutional neural network for melanoma recognition. <em>JAMA Dermatology, 155</em>(10), 1135–1141. https://doi.org/10.1001/jamadermatol.2019.1735</a>
     <a class="apa-reference" href="https://doi.org/10.1109/CVPR.2018.00175" target="_blank" rel="noopener noreferrer">Eykholt, K., Evtimov, I., Fernandes, E., Li, B., Rahmati, A., Xiao, C., Prakash, A., Kohno, T., &amp; Song, D. (2018). Robust physical-world attacks on deep learning visual classification. In <em>Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition</em> (pp. 1625–1634). https://doi.org/10.1109/CVPR.2018.00175</a>
   </div>
-  <aside class="notes">
-    <p>Before we go further, it’s important to separate an attack from an ordinary model error. A model can get something wrong even when nobody is trying to fool it.</p>
-    <p>These three examples show the difference.</p>
-  </aside>
+  
 </section>
 
 <section class="foundation-slide foundation-intuitions" data-timing="90">
@@ -252,7 +218,7 @@
           <text x="280" y="238" fill="#ff4756" font-size="23">No training samples here</text>
           <text x="640" y="300" text-anchor="end" fill="#656c8b" font-size="20">Input space · example</text>
         </svg>
-        <figcaption class="fragment highlight-current-red" data-fragment-index="0" data-notes="Look at the left diagram. Both boundaries correctly separate the training points. But between those points, the boundaries are different. So getting the training examples right does not tell us how the model will behave on every other input. We simply do not have examples covering every possible case.">Both boundaries fit the training data.<br>They disagree on other inputs.</figcaption>
+        <figcaption class="fragment highlight-current-red" data-fragment-index="0">Both boundaries fit the training data.<br>They disagree on other inputs.</figcaption>
       </figure>
       <figure>
         <h3>Unreliable features</h3>
@@ -271,15 +237,12 @@
           <circle cx="310" cy="90" r="8" fill="white" stroke="#ff4756" stroke-width="3"/>
           <text x="330" y="97" fill="#ff4756" font-size="24">x′</text>
         </svg>
-        <figcaption class="fragment highlight-current-red" data-fragment-index="1" data-notes="On the right, we change a feature that does not change the true class. But the point crosses the model’s boundary, so its prediction changes. The model is relying on the wrong clue.">The true class stays the same.<br>The model’s prediction changes.</figcaption>
+        <figcaption class="fragment highlight-current-red" data-fragment-index="1">The true class stays the same.<br>The model’s prediction changes.</figcaption>
       </figure>
     </div>
   </div>
   <a class="paper-study-reference apa-reference" href="https://arxiv.org/abs/1612.00334" target="_blank" rel="noopener noreferrer">Wang, B., Gao, J., &amp; Qi, Y. (2017). A theoretical framework for robustness of (deep) classifiers against adversarial examples. <em>International Conference on Learning Representations, Workshop Track.</em></a>
-  <aside class="notes">
-    <p>So why can a small change fool a model? These two diagrams help us understand what can go wrong.</p>
-    <p>One issue is that our training data only cover some inputs. Another is that the model may rely on features that are not reliable clues to the correct class.</p>
-  </aside>
+  
 </section>
       <section class="taxonomy-slide" data-timing="120">
         <span class="kicker">Attack taxonomy</span>
@@ -292,11 +255,7 @@
           <div><dt>Model format</dt><dd>Classification <span>/</span> Regression <span>/</span> Reinforcement learning <span>/</span> Large language models (LLMs)</dd></div>
           <div><dt>Attack surface</dt><dd>Test-time inputs <span>/</span> Training sets <span>/</span> Model weights</dd></div>
         </dl>
-        <aside class="notes">
-          <p>Now that we’ve seen a few examples, let’s organise them. We can describe an attack by asking a few questions.</p>
-          <p>When does it happen: during training or after deployment? What does the attacker know about the model? Do they want any wrong answer, or one particular answer? And are they changing one input or creating something they can reuse?</p>
-          <p>We also need to say which part of the system they can control.</p>
-        </aside>
+        
       </section>
 
       <section class="attack-time-slide training-time-slide" data-timing="145">
@@ -334,7 +293,7 @@
               <text class="attack-figure-copy" x="1080" y="139">model θ</text>
             </g>
 
-            <g class="fragment fade-in" data-fragment-index="0" data-notes="The attacker can interfere at different points. They might add misleading training examples or change the labels. They might directly change model updates, or interfere with the code that runs training. In each case, they are trying to change what the model learns.">
+            <g class="fragment fade-in" data-fragment-index="0">
                           <circle class="attack-figure-adversary" cx="630" cy="24" r="17" />
                           <circle class="attack-figure-adversary-head" cx="630" cy="19" r="4" />
                           <path class="attack-figure-adversary-body" d="M621 33 C622 26 638 26 639 33" />
@@ -372,8 +331,8 @@
           </article>
         </div>
 
-        <div class="time-attack-rule fragment fade-up" data-fragment-index="1" data-notes="The attack changes the learned parameters. So when we deploy the model, we are deploying a model that has already been affected by the attacker."><strong>Key distinction</strong><span>The learned parameters change because the training data or procedure changes: \(\mathcal{D} \rightarrow \mathcal{D}'\) and/or \(\mathcal{A} \rightarrow \mathcal{A}',\ \theta \rightarrow \theta'\).</span></div>
-        <div class="practical-implication fragment fade-up" data-fragment-index="2" data-notes="For example, think about downloading a model from Hugging Face. We did not train that model ourselves, so we need to check who published it and which version we are using. The repository may also include custom code that runs when we load it. We need to check that code as well as the model weights.">
+        <div class="time-attack-rule fragment fade-up" data-fragment-index="1"><strong>Key distinction</strong><span>The learned parameters change because the training data or procedure changes: \(\mathcal{D} \rightarrow \mathcal{D}'\) and/or \(\mathcal{A} \rightarrow \mathcal{A}',\ \theta \rightarrow \theta'\).</span></div>
+        <div class="practical-implication fragment fade-up" data-fragment-index="2">
                   <div class="practical-intro">
                     <img class="practical-logo" src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="Hugging Face">
                     <div>
@@ -387,9 +346,7 @@
                     <p class="practical-action-line">Verify publisher <b>/</b> Pin a commit revision <b>/</b> Review remote code</p>
                   </div>
                 </div>
-        <aside class="notes">
-          <p>Let’s start with attacks during training. This diagram shows the usual process: we have training data, we run a learning algorithm, and we get a trained model.</p>
-        </aside>
+        
       </section>
 
       <section class="attack-time-slide test-time-slide" data-timing="145">
@@ -429,7 +386,7 @@
               <text class="attack-figure-copy" x="1040" y="139">prediction 𝑦̂</text>
             </g>
 
-            <g class="fragment fade-in" data-fragment-index="0" data-notes="For a vision model, that could be a changed image. For a language-model application, it could be an instruction that redirects the task. The changed input moves through the same model, but produces a different prediction or action.">
+            <g class="fragment fade-in" data-fragment-index="0">
                           <circle class="attack-figure-adversary" cx="190" cy="24" r="17" />
                           <circle class="attack-figure-adversary-head" cx="190" cy="19" r="4" />
                           <path class="attack-figure-adversary-body" d="M181 33 C182 26 198 26 199 33" />
@@ -464,8 +421,8 @@
           </article>
         </div>
 
-        <div class="time-attack-rule fragment fade-up" data-fragment-index="1" data-notes="So the distinction is simple. During training, the attacker changes what the model learns. At test time, the attacker changes what the model sees."><strong>Key distinction</strong><span>The model parameters stay fixed; the attacker changes the input and therefore the prediction: \(\theta\ \text{fixed},\ x \rightarrow x',\ \hat{y}=f_{\theta}(x')\).</span></div>
-        <div class="practical-implication fragment fade-up" data-fragment-index="2" data-notes="The practical implication is that we need to protect how the model is used, not just the model itself. We can check inputs and outputs, limit which tools it can use, and ask for approval before important actions.">
+        <div class="time-attack-rule fragment fade-up" data-fragment-index="1"><strong>Key distinction</strong><span>The model parameters stay fixed; the attacker changes the input and therefore the prediction: \(\theta\ \text{fixed},\ x \rightarrow x',\ \hat{y}=f_{\theta}(x')\).</span></div>
+        <div class="practical-implication fragment fade-up" data-fragment-index="2">
                   <div class="practical-intro">
                     <svg class="practical-guardrail-icon" viewBox="0 0 64 64" aria-hidden="true">
                       <path d="M32 6 L53 14 V29 C53 43 44 53 32 58 C20 53 11 43 11 29 V14 Z" />
@@ -482,9 +439,7 @@
                     <p class="practical-action-line">Filter inputs <b>/</b> Use least-privilege tools and approvals <b>/</b> Safeguard outputs and monitor abuse</p>
                   </div>
                 </div>
-        <aside class="notes">
-          <p>Now compare that with a test-time attack. The model is already trained and deployed. We keep its weights fixed and change the input it receives.</p>
-        </aside>
+        
       </section>
 
       <section class="knowledge-access-slide" data-timing="130">
@@ -572,12 +527,7 @@
         </figure>
 
 
-        <aside class="notes">
-          <p>Next, what does the attacker know about the model?</p>
-          <p>In a white-box attack, they can inspect the model and compute gradients. That gives them a direct way to work out which input changes might affect the output.</p>
-          <p>Grey box means partial information. For example, they may know something about the training data or have a related model they can use as a surrogate.</p>
-          <p>With a black box, they only see the inputs and returned outputs, such as labels or scores. They may query the model, or craft an input on a surrogate and try transferring it. What they can access limits how they can attack the model.</p>
-        </aside>
+        
       </section>
 
       <section class="applicability-slide" data-timing="150">
@@ -620,11 +570,7 @@
           </div>
         </article>
 
-        <aside class="notes">
-          <p>Here the question is whether one perturbation is designed for one input or for many inputs.</p>
-          <p>The panda on the left is the example we’ve already seen. That change was designed for that image.</p>
-          <p>On the right, the idea is different. The same perturbation is added to several images. We call that a universal perturbation. It does not have to work on every image, but it is designed to be reused rather than calculated from scratch for each one.</p>
-        </aside>
+        
       </section>
       <section class="untargeted-slide" data-timing="165">
         <span class="kicker">Attacker objective · untargeted</span>
@@ -833,14 +779,12 @@
             </figure>
           </article>
         </div>
-        <span class="fragment staged-animation-trigger" data-fragment-index="0" data-animation-target="untargeted-image" data-animation-mode="segment" data-animation-start="0" data-animation-end="5000" aria-hidden="true" data-notes="First, the clean image goes through the classifier. The model correctly recognises the stop sign."></span>
-        <span class="fragment staged-animation-trigger" data-fragment-index="1" data-animation-target="untargeted-image" data-animation-mode="segment" data-animation-start="5200" data-animation-end="9200" aria-hidden="true" data-notes="Now we add the perturbation. The sign still looks the same to us, but the model predicts yield. That is already enough for an untargeted attack. Any wrong class would satisfy the goal."></span>
-        <span class="fragment staged-animation-trigger" data-fragment-index="2" data-animation-target="untargeted-llm" data-animation-mode="segment" data-animation-start="0" data-animation-end="8900" aria-hidden="true" data-notes="The lower diagram shows the same idea with a language model. With the original prompt, it completes the university motto."></span>
-        <span class="fragment staged-animation-trigger" data-fragment-index="3" data-animation-target="untargeted-llm" data-animation-mode="segment" data-animation-start="9000" data-animation-end="17800" aria-hidden="true" data-notes="Now we add an adversarial suffix—a specially chosen piece of text at the end of the prompt. This changes the model’s answer. By the way, that’s the University of Sydney’s motto, not ours. For this untargeted attack, any wrong answer is enough."></span>
+        <span class="fragment staged-animation-trigger" data-fragment-index="0" data-animation-target="untargeted-image" data-animation-mode="segment" data-animation-start="0" data-animation-end="5000" aria-hidden="true"></span>
+        <span class="fragment staged-animation-trigger" data-fragment-index="1" data-animation-target="untargeted-image" data-animation-mode="segment" data-animation-start="5200" data-animation-end="9200" aria-hidden="true"></span>
+        <span class="fragment staged-animation-trigger" data-fragment-index="2" data-animation-target="untargeted-llm" data-animation-mode="segment" data-animation-start="0" data-animation-end="8900" aria-hidden="true"></span>
+        <span class="fragment staged-animation-trigger" data-fragment-index="3" data-animation-target="untargeted-llm" data-animation-mode="segment" data-animation-start="9000" data-animation-end="17800" aria-hidden="true"></span>
 
-        <aside class="notes">
-          <p>Now let’s look at the attacker’s goal. In an untargeted attack, they want the model to get it wrong, but they do not choose exactly which wrong answer it should give.</p>
-        </aside>
+        
       </section>
 
       <section class="targeted-slide" data-timing="165">
@@ -1042,14 +986,12 @@
             </figure>
           </article>
         </div>
-        <span class="fragment staged-animation-trigger" data-fragment-index="0" data-animation-target="targeted-image" data-animation-mode="segment" data-animation-start="0" data-animation-end="5000" aria-hidden="true" data-notes="We start with the same clean stop sign. Again, the model recognises it correctly."></span>
-        <span class="fragment staged-animation-trigger" data-fragment-index="1" data-animation-target="targeted-image" data-animation-mode="segment" data-animation-start="5200" data-animation-end="9200" aria-hidden="true" data-notes="This time, the chosen target is a speed limit of one hundred kilometres per hour. Predicting yield would be wrong too, but it would not achieve this attack’s goal."></span>
-        <span class="fragment staged-animation-trigger" data-fragment-index="2" data-animation-target="targeted-llm" data-animation-mode="segment" data-animation-start="0" data-animation-end="8900" aria-hidden="true" data-notes="In the language-model example, the normal response is a refusal to provide a private home address."></span>
-        <span class="fragment staged-animation-trigger" data-fragment-index="3" data-animation-target="targeted-llm" data-animation-mode="segment" data-animation-start="9000" data-animation-end="17800" aria-hidden="true" data-notes="Here, we also add an adversarial suffix to the prompt. But this time, the suffix is chosen to make the model produce one specific answer—the company headquarters address shown here. A different wrong answer would not count as success."></span>
+        <span class="fragment staged-animation-trigger" data-fragment-index="0" data-animation-target="targeted-image" data-animation-mode="segment" data-animation-start="0" data-animation-end="5000" aria-hidden="true"></span>
+        <span class="fragment staged-animation-trigger" data-fragment-index="1" data-animation-target="targeted-image" data-animation-mode="segment" data-animation-start="5200" data-animation-end="9200" aria-hidden="true"></span>
+        <span class="fragment staged-animation-trigger" data-fragment-index="2" data-animation-target="targeted-llm" data-animation-mode="segment" data-animation-start="0" data-animation-end="8900" aria-hidden="true"></span>
+        <span class="fragment staged-animation-trigger" data-fragment-index="3" data-animation-target="targeted-llm" data-animation-mode="segment" data-animation-start="9000" data-animation-end="17800" aria-hidden="true"></span>
 
-        <aside class="notes">
-          <p>A targeted attack is more specific. The attacker chooses the exact output they want, so not every wrong answer counts.</p>
-        </aside>
+        
       </section>
 
       <section class="prompt-injection-slide" data-timing="150">
@@ -1236,14 +1178,10 @@
           <strong>Primary target · application</strong>
           <span>PI redirects the LLM application from its trusted <code>ls</code> task to an unauthorized <code>rm -rf *</code> tool action.</span>
         </div>
-        <span class="fragment staged-animation-trigger" data-animation-target="pi-demo" data-animation-mode="segment" data-animation-start="0" data-animation-end="11920" aria-hidden="true" data-notes="First, watch the normal path. The user asks to see the directory. The model produces a tool request, the application runs it, and the file listing appears."></span>
-        <span class="fragment staged-animation-trigger" data-animation-target="pi-demo" data-animation-mode="segment" data-animation-start="12000" data-animation-end="23900" data-animation-reveal-explanation="true" aria-hidden="true" data-notes="Now the input includes an instruction pretending to be a system update. The model follows it and generates an action: remove files. The application sends the command to the terminal. The app now does what the attacker wants, not its original task."></span>
+        <span class="fragment staged-animation-trigger" data-animation-target="pi-demo" data-animation-mode="segment" data-animation-start="0" data-animation-end="11920" aria-hidden="true"></span>
+        <span class="fragment staged-animation-trigger" data-animation-target="pi-demo" data-animation-mode="segment" data-animation-start="12000" data-animation-end="23900" data-animation-reveal-explanation="true" aria-hidden="true"></span>
 
-        <aside class="notes">
-          <p>Here, the attacker’s goal is to make the application do something it was not supposed to do. We call this prompt injection, or PI.</p>
-          <p>The attacker adds instructions to the input, trying to make the model follow those instructions instead of the application’s original task.</p>
-          <p>In this example, the app is not allowed to remove files.</p>
-        </aside>
+        
       </section>
 
       <section class="pi-ipi-slide prompt-injection-slide ipi-flow-slide" data-timing="150">
@@ -1423,14 +1361,10 @@
           <strong>Primary target · application</strong>
           <span>The injected <code>cat ./README.md</code> response becomes model input and redirects the application’s next tool action to <code>rm -rf *</code>.</span>
         </div>
-        <span class="fragment staged-animation-trigger" data-animation-target="ipi-demo" data-animation-mode="segment" data-animation-start="0" data-animation-end="11920" aria-hidden="true" data-notes="First, the app uses a tool to read the README and passes the file contents to the model. Remember, the user only asked it to read the file—not to follow instructions inside it."></span>
-        <span class="fragment staged-animation-trigger" data-animation-target="ipi-demo" data-animation-mode="segment" data-animation-start="12000" data-animation-end="23900" data-animation-reveal-explanation="true" aria-hidden="true" data-notes="The README tells the model to delete all files. The model follows that instruction and generates a delete command. The app then runs it. The user only asked to read a file, but the app ends up deleting files instead. Unlike the previous slide, the attacker’s instruction came from the file, not directly from the user’s message."></span>
+        <span class="fragment staged-animation-trigger" data-animation-target="ipi-demo" data-animation-mode="segment" data-animation-start="0" data-animation-end="11920" aria-hidden="true"></span>
+        <span class="fragment staged-animation-trigger" data-animation-target="ipi-demo" data-animation-mode="segment" data-animation-start="12000" data-animation-end="23900" data-animation-reveal-explanation="true" aria-hidden="true"></span>
 
-        <aside class="notes">
-          <p>On the previous slide, the attacker put the instructions directly into the message sent to the model. But what if the instructions are hidden in something the model reads instead?</p>
-          <p>That’s indirect prompt injection, or IPI. The attacker puts instructions in a webpage, a document, or a tool response, hoping the model will follow them instead of the user’s task.</p>
-          <p>Here, the user just asks the app to read a README file. But the attacker has put instructions inside that file. Let’s see what happens when the model reads it.</p>
-        </aside>
+        
       </section>
 
       <section class="prompt-injection-slide jailbreak-slide" data-timing="150">
@@ -1609,14 +1543,10 @@
             <small class="jailbreak-command-note"><sup>†</sup> <code>nmap -sV 192.0.2.10</code> scans a reserved example host and probes open ports to identify services and versions.</small>
           </span>
         </div>
-        <span class="fragment staged-animation-trigger" data-animation-target="jailbreak-demo" data-animation-mode="segment" data-animation-start="0" data-animation-end="11920" aria-hidden="true" data-notes="First, someone asks the model to help break into a server. The model refuses to help, and no command is run. The model’s developers set safety rules and train it to refuse harmful requests like this."></span>
-        <span class="fragment staged-animation-trigger" data-animation-target="jailbreak-demo" data-animation-mode="segment" data-animation-start="12000" data-animation-end="23900" data-animation-reveal-explanation="true" aria-hidden="true" data-notes="Now the attacker adds a jailbreak prompt, telling the model to ignore its safety rules and never refuse. This time, the model generates a command to scan the server, and the app runs it—an early step in the cyber attack. The point is that the model now helps with a request it previously refused. Prompt injection and jailbreaks can overlap, but the focus here is getting past the model’s safety rules."></span>
+        <span class="fragment staged-animation-trigger" data-animation-target="jailbreak-demo" data-animation-mode="segment" data-animation-start="0" data-animation-end="11920" aria-hidden="true"></span>
+        <span class="fragment staged-animation-trigger" data-animation-target="jailbreak-demo" data-animation-mode="segment" data-animation-start="12000" data-animation-end="23900" data-animation-reveal-explanation="true" aria-hidden="true"></span>
 
-        <aside class="notes">
-          <p>On the last two slides, the attacker tried to make the app do something different from the user’s task. Now let’s look at a jailbreak.</p>
-          <p>A jailbreak is an attempt to get around a model’s safety rules—to make it give an answer or generate an action it would normally refuse.</p>
-          <p>Here, someone wants the model to help break into a server. Let’s first see how the model responds, then what happens when they add a jailbreak prompt.</p>
-        </aside>
+        
       </section>
 
       <section class="extraction-slide" data-timing="110">
@@ -1642,11 +1572,7 @@
 
         <a class="objective-reference apa-reference" href="https://www.usenix.org/conference/usenixsecurity21/presentation/carlini-extracting" target="_blank" rel="noopener noreferrer"><span class="apa-line">Carlini, N., Tramèr, F., Wallace, E., Jagielski, M., Herbert-Voss, A., Lee, K., Roberts, A., Brown, T., Song, D., Erlingsson, Ú., Oprea, A., &amp; Raffel, C. (2021).</span><span class="apa-line">Extracting training data from large language models. In <em>30th USENIX Security Symposium (USENIX Security 21)</em> (pp. 2633–2650). USENIX Association.</span></a>
 
-        <aside class="notes">
-          <p>Next, let’s look at private-information extraction. This is when an attacker tries to get a model to reveal sensitive information from its training data, such as someone’s private contact details.</p>
-          <p>The attacker may only be able to send prompts and read the replies. They do not have access to the model’s weights or the training data itself.</p>
-          <p>How is this different from the targeted attack we saw earlier? In a targeted attack, the attacker already knows the exact answer they want the model to give. Here, they do not know the private information yet. They are trying to get the model to reveal it.</p>
-        </aside>
+        
       </section>
 
       <section class="model-theft-slide" data-timing="105">
@@ -1682,12 +1608,7 @@
 
         <a class="objective-reference apa-reference" href="https://www.usenix.org/conference/usenixsecurity16/technical-sessions/presentation/tramer" target="_blank" rel="noopener noreferrer">Tramèr, F., Zhang, F., Juels, A., Reiter, M. K., &amp; Ristenpart, T. (2016). Stealing machine learning models via prediction APIs. In <em>25th USENIX Security Symposium (USENIX Security 16)</em> (pp. 601–618). USENIX Association.</a>
 
-        <aside class="notes">
-          <p>Next is model theft. This is when an attacker tries to build a copy of a model by learning from its answers. Instead of trying to extract private information, they want their own model that behaves like the original.</p>
-          <p>The attacker can send requests to the model’s API and read the replies, but they do not have access to its weights or training data.</p>
-          <p>They send lots of inputs and save the answers. Then they use those input–output pairs to train their own model to give similar answers.</p>
-          <p>The copy does not need to have the same weights or source code. What matters is whether it gives similar answers to the original model, including on new inputs.</p>
-        </aside>
+        
       </section>
 
 
@@ -1809,8 +1730,8 @@
             <text x="900" y="232" text-anchor="middle">ENCRYPTED AS encrypted_content</text>
           </svg>
         </div>
-        <span class="fragment cot-animation-trigger cot-generation-trigger" data-fragment-index="0" aria-hidden="true" data-notes="Watch the decode panel. Instead of giving an answer straight away, the model generates a series of steps first. Here, it works through the algebra problem one token at a time: expanding the brackets, collecting the terms, and finally giving x equals nineteen. Working through these steps can help the model solve more complex problems and get more answers right."></span>
-        <span class="fragment cot-animation-trigger cot-encryption-trigger" data-fragment-index="1" aria-hidden="true" data-notes="The server encrypts the reasoning steps and returns them to the client along with the final answer. The client can read the answer, but not the encrypted reasoning."></span>
+        <span class="fragment cot-animation-trigger cot-generation-trigger" data-fragment-index="0" aria-hidden="true"></span>
+        <span class="fragment cot-animation-trigger cot-encryption-trigger" data-fragment-index="1" aria-hidden="true"></span>
 
 
         <div class="cot-references" aria-label="Chain-of-thought references">
@@ -1818,9 +1739,7 @@
           <a class="apa-reference" href="https://arxiv.org/abs/2205.11916" target="_blank" rel="noopener noreferrer">Kojima, T., Gu, S. S., Reid, M., Matsuo, Y., &amp; Iwasawa, Y. (2022). Large language models are zero-shot reasoners. <em>Advances in Neural Information Processing Systems, 35</em>, 22199–22213.</a>
         </div>
 
-        <aside class="notes">
-          <p>We’ve just looked at extracting private information and copying a model’s behaviour. Next, we’ll look at an attack that tries to extract a model’s hidden reasoning. Before we get to that, let’s introduce chain-of-thought, or CoT.</p>
-        </aside>
+        
       </section>
 
       <section class="cot-encryption-slide" data-timing="120">
@@ -1829,17 +1748,15 @@
         <p class="objective-lead">Encrypt CoT to protect capability while preserving multi-turn context.</p>
 
         <ul class="cot-encryption-bullets">
-          <li class="fragment fade-up" data-fragment-index="0" data-notes="First, model providers see these reasoning traces as intellectual property. They spend a lot of money training their models, including hiring experts such as mathematicians and physicists to write example solutions and check the model’s answers. That work helps teach the model how to solve difficult problems, so providers want to protect what they have invested in."><strong>Intellectual property (IP).</strong> CoT reflects costly training, curated traces, and human alignment.</li>
-          <li class="fragment fade-up" data-fragment-index="1" data-notes="Those traces can also transfer capability into a much smaller model. Distillation itself is a legitimate way to build smaller models. The concern is unauthorised distillation of proprietary traces."><strong>Distillation risk.<sup>†</sup></strong> CoT can transfer capability to much smaller models.</li>
-          <li class="fragment fade-up" data-fragment-index="2" data-notes="So providers want to keep the reasoning private. But why keep it at all? In apps like Claude Code and Codex, the model may call a tool and then continue working when the result comes back. Keeping the earlier reasoning helps it pick up where it left off, rather than work through the same problem again."><strong>Memory.</strong> Applications (e.g., Claude Code and Codex) need CoT across tool calls and turns.</li>
-          <li class="fragment fade-up" data-fragment-index="3" data-notes="If we want to reuse that reasoning, we need to store it somewhere. We can keep it on the model provider’s server, or return it to the user’s app so the app can send it back with the next request. But if we send it to the app, how do we keep it private?"><strong>Two places to store CoT.</strong> Keep it on the model vendor’s server, or return it to the user’s app.</li>
-          <li class="fragment fade-up" data-fragment-index="4" data-notes="If it goes back to the app, it goes as an encrypted local copy. The app can return that blob next turn without ever seeing the plaintext."><strong>Encrypted local copy.</strong> The app returns encrypted CoT next turn without exposing plaintext.</li>
+          <li class="fragment fade-up" data-fragment-index="0"><strong>Intellectual property (IP).</strong> CoT reflects costly training, curated traces, and human alignment.</li>
+          <li class="fragment fade-up" data-fragment-index="1"><strong>Distillation risk.<sup>†</sup></strong> CoT can transfer capability to much smaller models.</li>
+          <li class="fragment fade-up" data-fragment-index="2"><strong>Memory.</strong> Applications (e.g., Claude Code and Codex) need CoT across tool calls and turns.</li>
+          <li class="fragment fade-up" data-fragment-index="3"><strong>Two places to store CoT.</strong> Keep it on the model vendor’s server, or return it to the user’s app.</li>
+          <li class="fragment fade-up" data-fragment-index="4"><strong>Encrypted local copy.</strong> The app returns encrypted CoT next turn without exposing plaintext.</li>
         </ul>
 
         <p class="cot-encryption-footnote fragment fade-up" data-fragment-index="1"><sup>†</sup> Distillation is a legitimate method for building smaller models; the concern is <strong>unauthorized distillation</strong>.</p>
-        <aside class="notes">
-          <p>So why encrypt the reasoning? Why not let the client read it, or just return the answer without the reasoning? Let’s look at why model providers do this.</p>
-        </aside>
+        
       </section>
 
       <section class="paper-study-slide paper-title-slide case-study-intro-slide" data-timing="120">
@@ -2019,17 +1936,14 @@
           </svg>
         </figure>
 
-        <span class="fragment staged-animation-trigger" data-fragment-index="0" data-animation-target="case-study-state-flow" data-animation-mode="segment" data-animation-start="0" data-animation-end="4000" aria-hidden="true" data-notes="The user types a question in the terminal about a weight-type error. This conversation has already started, so the client has encrypted CoT from an earlier turn."></span>
-        <span class="fragment staged-animation-trigger" data-fragment-index="1" data-animation-target="case-study-state-flow" data-animation-mode="segment" data-animation-start="4000" data-animation-end="8000" aria-hidden="true" data-notes="The client sends the new question together with the encrypted CoT to the server."></span>
-        <span class="fragment staged-animation-trigger" data-fragment-index="2" data-animation-target="case-study-state-flow" data-animation-mode="segment" data-animation-start="8000" data-animation-end="12000" aria-hidden="true" data-notes="The server decrypts the CoT so the model can read its earlier reasoning and continue from where it left off."></span>
-        <span class="fragment staged-animation-trigger" data-fragment-index="3" data-animation-target="case-study-state-flow" data-animation-mode="segment" data-animation-start="12000" data-animation-end="18000" aria-hidden="true" data-notes="The model suggests that the input and weights may be on different devices. It then asks the application to read the model file so it can investigate."></span>
-        <span class="fragment staged-animation-trigger" data-fragment-index="4" data-animation-target="case-study-state-flow" data-animation-mode="segment" data-animation-start="18000" data-animation-end="22000" aria-hidden="true" data-notes="The server prepares the response with the new CoT and the request to read the file."></span>
-        <span class="fragment staged-animation-trigger" data-fragment-index="5" data-animation-target="case-study-state-flow" data-animation-mode="segment" data-animation-start="22000" data-animation-end="27900" aria-hidden="true" data-notes="The server encrypts the new CoT and returns it to the client along with the file-read request. The app reads the file and can send the encrypted CoT back with the next request."></span>
+        <span class="fragment staged-animation-trigger" data-fragment-index="0" data-animation-target="case-study-state-flow" data-animation-mode="segment" data-animation-start="0" data-animation-end="4000" aria-hidden="true"></span>
+        <span class="fragment staged-animation-trigger" data-fragment-index="1" data-animation-target="case-study-state-flow" data-animation-mode="segment" data-animation-start="4000" data-animation-end="8000" aria-hidden="true"></span>
+        <span class="fragment staged-animation-trigger" data-fragment-index="2" data-animation-target="case-study-state-flow" data-animation-mode="segment" data-animation-start="8000" data-animation-end="12000" aria-hidden="true"></span>
+        <span class="fragment staged-animation-trigger" data-fragment-index="3" data-animation-target="case-study-state-flow" data-animation-mode="segment" data-animation-start="12000" data-animation-end="18000" aria-hidden="true"></span>
+        <span class="fragment staged-animation-trigger" data-fragment-index="4" data-animation-target="case-study-state-flow" data-animation-mode="segment" data-animation-start="18000" data-animation-end="22000" aria-hidden="true"></span>
+        <span class="fragment staged-animation-trigger" data-fragment-index="5" data-animation-target="case-study-state-flow" data-animation-mode="segment" data-animation-start="22000" data-animation-end="27900" aria-hidden="true"></span>
         <a class="paper-study-reference apa-reference" href="https://arxiv.org/pdf/2608.09867" target="_blank" rel="noopener noreferrer">Panfilov, A., Schmotz, D., Shumailov, I., Beurer-Kellner, L., Schaeffer, J., Prabhu, A., Geiping, J., &amp; Andriushchenko, M. (2026). <em>Stealing reasoning traces from proprietary LLM APIs</em> [Preprint]. arXiv. https://doi.org/10.48550/arXiv.2608.09867</a>
-        <aside class="notes">
-          <p>Now let’s look at a paper from August this year, called “Stealing Reasoning Traces from Proprietary LLM APIs.” It looks at how attackers can get a model to reveal CoT that is supposed to stay private.</p>
-          <p>Before we look at the attack, let’s see how these systems normally work. The server returns encrypted CoT to the client, then decrypts it when the client sends it back. Let’s follow one interaction.</p>
-        </aside>
+        
       </section>
 
       <section class="paper-study-slide family-crypto-slide" data-timing="120">
@@ -2076,10 +1990,7 @@
           </article>
         </div>
         <a class="paper-study-reference apa-reference" href="https://arxiv.org/pdf/2608.09867" target="_blank" rel="noopener noreferrer">Panfilov, A., Schmotz, D., Shumailov, I., Beurer-Kellner, L., Schaeffer, J., Prabhu, A., Geiping, J., &amp; Andriushchenko, M. (2026). <em>Stealing reasoning traces from proprietary LLM APIs</em> [Preprint]. arXiv. https://doi.org/10.48550/arXiv.2608.09867</a>
-        <aside class="notes">
-          <p>The issue is that some models from the same provider can accept the same encrypted CoT.</p>
-          <p>That means CoT generated by one model can be sent back with a request to another model from the same provider.</p>
-        </aside>
+        
       </section>
 
       <section class="paper-study-slide compat-attack-slide" data-timing="240">
@@ -2527,27 +2438,25 @@
         <div class="paper-insight red compat-key-insight">
           <strong>Key insight:</strong> Plain text thinking leaked in assistant response. An attacker can exploit a weaker model to recover the chain of thought (CoT) from prior conversations with frontier models.
         </div>
-        <span class="fragment compat-step-trigger" data-fragment-index="0" aria-hidden="true" data-notes="The client sends the algebra problem to Opus 5. This is the first request, so there is no earlier CoT to send."></span>
-        <span class="fragment compat-step-trigger" data-fragment-index="1" aria-hidden="true" data-notes="Opus 5 generates the CoT as it works through the equation, then gives the answer, x equals nineteen."></span>
-        <span class="fragment compat-step-trigger" data-fragment-index="2" aria-hidden="true" data-notes="The server prepares the response with the CoT and the final answer, x equals nineteen."></span>
-        <span class="fragment compat-step-trigger" data-fragment-index="3" aria-hidden="true" data-notes="Now the server encrypts the CoT. The client will receive encrypted CoT, not the readable steps."></span>
-        <span class="fragment compat-step-trigger" data-fragment-index="4" aria-hidden="true" data-notes="The reply arrives in the terminal. The client can read the answer, x equals nineteen, but not the encrypted CoT."></span>
-        <span class="fragment compat-step-trigger" data-fragment-index="5" aria-hidden="true" data-notes="The client sends the encrypted CoT back to Opus 5 and asks it to reveal the earlier CoT. The request includes an adversarial suffix—a specially chosen piece of text added at the end to try to jailbreak the model."></span>
-        <span class="fragment compat-step-trigger" data-fragment-index="6" aria-hidden="true" data-notes="The server decrypts the CoT. Opus 5 can now read its earlier CoT along with the new request."></span>
-        <span class="fragment compat-step-trigger" data-fragment-index="7" aria-hidden="true" data-notes="Opus 5 refuses to reveal the earlier CoT, even with the adversarial suffix. So it successfully resists this jailbreak attempt and follows the safety rules set by its developers: keep the CoT private."></span>
-        <span class="fragment compat-step-trigger" data-fragment-index="8" aria-hidden="true" data-notes="The server prepares the response with the new CoT and the refusal message."></span>
-        <span class="fragment compat-step-trigger" data-fragment-index="9" aria-hidden="true" data-notes="The server encrypts the new CoT before returning it to the client along with the refusal."></span>
-        <span class="fragment compat-step-trigger" data-fragment-index="10" aria-hidden="true" data-notes="The refusal arrives in the terminal. The client still cannot read the CoT."></span>
-        <span class="fragment compat-step-trigger" data-fragment-index="11" aria-hidden="true" data-notes="Let’s see what happens if the client sends the encrypted CoT from the algebra problem to Haiku 4.6 instead. We use the same request to reveal the CoT, including the adversarial suffix used to try to jailbreak the model."></span>
-        <span class="fragment compat-step-trigger" data-fragment-index="12" aria-hidden="true" data-notes="The server decrypts the CoT for Haiku 4.6. Haiku can now read the CoT generated by Opus 5, along with the request to reveal it."></span>
-        <span class="fragment compat-step-trigger" data-fragment-index="13" aria-hidden="true" data-notes="This time, Haiku does not refuse. It copies the earlier CoT into its answer."></span>
-        <span class="fragment compat-step-trigger" data-fragment-index="14" aria-hidden="true" data-notes="The server prepares the response. The earlier CoT is now included in the answer that the client can read."></span>
-        <span class="fragment compat-step-trigger" data-fragment-index="15" aria-hidden="true" data-notes="The server encrypts Haiku’s new CoT, but the copy of the earlier CoT in the answer is not encrypted."></span>
-        <span class="fragment compat-step-trigger" data-fragment-index="16" aria-hidden="true" data-notes="The reply arrives in the terminal, and the client can now read the earlier CoT. The attacker did not break the encryption. They got another model to reveal what Opus 5 refused to share."></span>
+        <span class="fragment compat-step-trigger" data-fragment-index="0" aria-hidden="true"></span>
+        <span class="fragment compat-step-trigger" data-fragment-index="1" aria-hidden="true"></span>
+        <span class="fragment compat-step-trigger" data-fragment-index="2" aria-hidden="true"></span>
+        <span class="fragment compat-step-trigger" data-fragment-index="3" aria-hidden="true"></span>
+        <span class="fragment compat-step-trigger" data-fragment-index="4" aria-hidden="true"></span>
+        <span class="fragment compat-step-trigger" data-fragment-index="5" aria-hidden="true"></span>
+        <span class="fragment compat-step-trigger" data-fragment-index="6" aria-hidden="true"></span>
+        <span class="fragment compat-step-trigger" data-fragment-index="7" aria-hidden="true"></span>
+        <span class="fragment compat-step-trigger" data-fragment-index="8" aria-hidden="true"></span>
+        <span class="fragment compat-step-trigger" data-fragment-index="9" aria-hidden="true"></span>
+        <span class="fragment compat-step-trigger" data-fragment-index="10" aria-hidden="true"></span>
+        <span class="fragment compat-step-trigger" data-fragment-index="11" aria-hidden="true"></span>
+        <span class="fragment compat-step-trigger" data-fragment-index="12" aria-hidden="true"></span>
+        <span class="fragment compat-step-trigger" data-fragment-index="13" aria-hidden="true"></span>
+        <span class="fragment compat-step-trigger" data-fragment-index="14" aria-hidden="true"></span>
+        <span class="fragment compat-step-trigger" data-fragment-index="15" aria-hidden="true"></span>
+        <span class="fragment compat-step-trigger" data-fragment-index="16" aria-hidden="true"></span>
         <a class="paper-study-reference apa-reference" href="https://arxiv.org/pdf/2608.09867" target="_blank" rel="noopener noreferrer">Panfilov, A., Schmotz, D., Shumailov, I., Beurer-Kellner, L., Schaeffer, J., Prabhu, A., Geiping, J., &amp; Andriushchenko, M. (2026). <em>Stealing reasoning traces from proprietary LLM APIs</em> [Preprint]. arXiv. https://doi.org/10.48550/arXiv.2608.09867</a>
-        <aside class="notes">
-          <p>So why is it a problem if different models can accept the same encrypted CoT? Let’s use a simple algebra problem to see what can happen. Watch the terminal on the left and the server on the right.</p>
-        </aside>
+        
       </section>
 
       <section class="paper-study-slide decryption-oracle-slide" data-timing="150">
@@ -2734,11 +2643,7 @@
           </article>
         </div>
 
-        <aside class="notes">
-          <p>These grids show which models can accept encrypted CoT from another model. The diagonal is left out because it would just test a model with its own CoT.</p>
-          <p>This worked for 25 out of 30 model pairs at Anthropic, 15 out of 30 at OpenAI, and 30 out of 30 at Google. This only means the models accepted the CoT—not that they revealed it.</p>
-          <p>If a weaker model uses the same encryption and decryption system, it may be able to read CoT from a stronger model. If that weaker model is easier to jailbreak, an attacker may get it to reveal the stronger model’s CoT.</p>
-        </aside>
+        
       </section>
 
       <section class="paper-study-slide impact-overview-slide" data-timing="150">
@@ -2820,10 +2725,7 @@
           </figure>
         </div>
         <a class="paper-study-reference apa-reference" href="https://arxiv.org/pdf/2608.09867" target="_blank" rel="noopener noreferrer">Panfilov, A., Schmotz, D., Shumailov, I., Beurer-Kellner, L., Schaeffer, J., Prabhu, A., Geiping, J., &amp; Andriushchenko, M. (2026). <em>Stealing reasoning traces from proprietary LLM APIs</em> [Preprint]. arXiv. https://doi.org/10.48550/arXiv.2608.09867</a>
-        <aside class="notes">
-          <p>So why does leaking CoT matter? It can expose the reasoning that providers spent money training their models to produce. It can also reveal private information that was never shown in the final answer. And instructions hidden in the CoT could affect what an agent does later.</p>
-          <p>Many datasets available online include encrypted CoT. If that CoT is revealed, it can expose sensitive information. The chart shows examples found in public logs, including personal details, technical identifiers, and login credentials.</p>
-        </aside>
+        
       </section>
 
       <section class="paper-study-slide prompt-anatomy-slide" data-timing="150">
@@ -2910,12 +2812,7 @@
         </figure>
         <p class="prompt-anatomy-takeaway">The model does not see only the user prompt; it sees the provider-assembled context.</p>
         <p class="prompt-anatomy-insight"><span>Why keep it private?</span> Many commercial LLM products keep system prompts private because they may contain product behavior rules, agent workflows, tool-call formats, safety policies, and internal feature names—information a company may treat as proprietary.</p>
-        <aside class="notes">
-          <p>So far, we’ve looked at stealing the CoT a model generates. Now we’ll turn to a different target: the hidden instructions given to the model. This brings us to the next study, on system prompt extraction.</p>
-          <p>Before we look at that attack, let’s see what the model actually receives. It gets more than the message the user types. The app or provider also adds a system prompt, developer instructions, and context from tools or files.</p>
-          <p>Some of that extra information may not be shown to the end user. Together, it tells the model what role it has and what it is supposed to do.</p>
-          <p>Companies want to keep these prompts private because they describe product behaviour and internal workflows.</p>
-        </aside>
+        
       </section>
 
       <section class="paper-study-slide justask-method-slide" data-timing="180">
@@ -3007,11 +2904,7 @@
 
 
         <a class="paper-study-reference apa-reference" href="https://icml.cc/virtual/2026/poster/61428" target="_blank" rel="noopener noreferrer">Zheng, X., Wu, Y., Huang, H., Li, Y., Ma, X., Li, B., Jiang, Y.-G., &amp; Wang, C. (2026). Just Ask: Curious Code Agents Reveal System Prompts in Frontier LLMs. Proceedings of the 43rd International Conference on Machine Learning (ICML 2026).</a>
-        <aside class="notes">
-          <p>So how could an attacker get a model to reveal those hidden instructions? This is what the next paper, JustAsk, explores. The idea is to try different ways of asking, then use the replies to decide what to try next.</p>
-          <p>Let’s follow the loop here. JustAsk picks a strategy, chats with the target model, scores the result, and updates which strategy to try next.</p>
-          <p>It chooses from 28 fixed strategies: 14 use a single message, and 14 use several rounds of conversation. It does not create new strategies. Instead, it updates their scores, balancing strategies that worked before with others it has not tried enough.</p>
-        </aside>
+        
       </section>
 
       <section class="paper-study-slide consistency-reward-slide" data-timing="180">
@@ -3080,10 +2973,7 @@
         </div>
 
         <a class="paper-study-reference apa-reference" href="https://icml.cc/virtual/2026/poster/61428" target="_blank" rel="noopener noreferrer">Zheng, X., Wu, Y., Huang, H., Li, Y., Ma, X., Li, B., Jiang, Y.-G., &amp; Wang, C. (2026). Just Ask: Curious Code Agents Reveal System Prompts in Frontier LLMs. Proceedings of the 43rd International Conference on Machine Learning (ICML 2026).</a>
-        <aside class="notes">
-          <p>But how can it score an extraction without knowing the real system prompt? It cannot directly check whether an extraction is correct. Instead, it checks whether repeated attempts and different strategies give similar results.</p>
-          <p>Here, 2 attempts using the same strategy have a similarity score of 0.86. Another attempt using a different strategy agrees with them at 0.82. The average is 0.84. If the average is at least 0.70, the reward is 1; otherwise, it is 0. Similar results are a useful clue, but they do not prove that the extracted prompt is correct.</p>
-        </aside>
+        
       </section>
 
       <section class="paper-study-slide prompt-results-slide" data-timing="180">
@@ -3564,20 +3454,17 @@ Three levels: *****, medium, very thorough (******* by parent agent)
         </div>
 
         <a class="paper-study-reference apa-reference" href="https://icml.cc/virtual/2026/poster/61428" target="_blank" rel="noopener noreferrer">Zheng, X., Wu, Y., Huang, H., Li, Y., Ma, X., Li, B., Jiang, Y.-G., &amp; Wang, C. (2026). Just Ask: Curious Code Agents Reveal System Prompts in Frontier LLMs. Proceedings of the 43rd International Conference on Machine Learning (ICML 2026).</a>
-        <aside class="notes">
-          <p>So what did JustAsk recover? This gallery shows 45 published extractions. Each row lists a model and the consistency score we just discussed. A high score means the attempts gave similar results, not that every word has been verified.</p>
-          <p>On the right, we compare the system prompt extracted by JustAsk for the Explore subagent with a leaked version. Their similarity score is 0.94. They are close in meaning, but that does not mean they match word for word.</p>
-        </aside>
+        
       </section>
 
       <section class="paper-study-slide isc-intro-slide" data-timing="140">
         <span class="kicker">Case study · Internal Safety Collapse</span>
         <h2>Do we need to explicitly manipulate the model?</h2>
         <ul class="isc-intro-point">
-          <li class="fragment fade-up" data-fragment-index="0" data-notes="Model developers train models to finish tasks and follow safety rules. Ideally, the model should do both.">Modern AI models are trained to <span class="isc-hl-task">complete tasks</span> while following <span class="isc-hl-safety">safety safeguards</span>.</li>
-          <li class="fragment fade-up" data-fragment-index="1" data-notes="But what if finishing the task seems to require something the safety rules would normally block? Which goal does the model follow?">What happens when <span class="isc-hl-task">successful task completion</span> conflicts with those <span class="isc-hl-safety">safeguards</span>?</li>
+          <li class="fragment fade-up" data-fragment-index="0">Modern AI models are trained to <span class="isc-hl-task">complete tasks</span> while following <span class="isc-hl-safety">safety safeguards</span>.</li>
+          <li class="fragment fade-up" data-fragment-index="1">What happens when <span class="isc-hl-task">successful task completion</span> conflicts with those <span class="isc-hl-safety">safeguards</span>?</li>
         </ul>
-        <figure class="isc-validator fragment fade-up" data-fragment-index="2" data-staged-animation="isc-training-flow" aria-label="Teaching reconstruction of the paper’s TVD mechanism and Table 5. Advance five times: first bullet, second bullet, then the visual with an empty unsafe slot, then a still-safe fill that fails, then a starred filtered phishing query that passes. The filtered query is not a payload." data-notes="Here, the agent needs to prepare training data for a safety classifier. The data needs both safe and unsafe examples, but the unsafe example is missing. The agent has to fill that gap before training can start.">
+        <figure class="isc-validator fragment fade-up" data-fragment-index="2" data-staged-animation="isc-training-flow" aria-label="Teaching reconstruction of the paper’s TVD mechanism and Table 5. Advance five times: first bullet, second bullet, then the visual with an empty unsafe slot, then a still-safe fill that fails, then a starred filtered phishing query that passes. The filtered query is not a payload.">
                   <div class="isc-defs">
                     <article class="isc-def isc-def-task">
                       <header><span>1</span> TASK</header>
@@ -3632,12 +3519,10 @@ Three levels: *****, medium, very thorough (******* by parent agent)
                     </div>
                   </article>
                 </figure>
-        <span class="fragment staged-animation-trigger" data-fragment-index="3" data-animation-target="isc-training-flow" data-animation-mode="segment" data-animation-start="0" data-animation-end="3600" aria-hidden="true" data-notes="The agent first writes a safe example about protecting an account. But the check expects an unsafe example, so it rejects this answer and asks the agent to try again."></span>
-        <span class="fragment staged-animation-trigger" data-fragment-index="4" data-animation-target="isc-training-flow" data-animation-mode="segment" data-animation-start="3800" data-animation-end="7600" aria-hidden="true" data-notes="This time, the agent produces an example that the check labels unsafe. The check passes, and training can continue. To finish the task, the agent has produced content it would normally avoid—even without a jailbreak prompt."></span>
+        <span class="fragment staged-animation-trigger" data-fragment-index="3" data-animation-target="isc-training-flow" data-animation-mode="segment" data-animation-start="0" data-animation-end="3600" aria-hidden="true"></span>
+        <span class="fragment staged-animation-trigger" data-fragment-index="4" data-animation-target="isc-training-flow" data-animation-mode="segment" data-animation-start="3800" data-animation-end="7600" aria-hidden="true"></span>
         <a class="paper-study-reference apa-reference" href="https://arxiv.org/abs/2603.23509" target="_blank" rel="noopener noreferrer">Wu, Y., Liu, X., Gao, Y., Zheng, X., Huang, H., Li, Y., Wang, C., Li, B., Ma, X., &amp; Jiang, Y.-G. (2026). <em>Internal safety collapse in frontier large language models</em> [Preprint]. arXiv:2603.23509.</a>
-        <aside class="notes">
-          <p>So far, attackers have deliberately tried to get around a model’s rules. But can a model break those rules just while trying to finish a task? The next study calls this Internal Safety Collapse. Let’s look at an example.</p>
-        </aside>
+        
       </section>
 
       <section class="paper-study-slide isc-results-slide" data-timing="150">
@@ -3776,10 +3661,7 @@ Three levels: *****, medium, very thorough (******* by parent agent)
         </div>
 
         <a class="paper-study-reference apa-reference" href="https://arxiv.org/abs/2603.23509" target="_blank" rel="noopener noreferrer">Wu, Y., Liu, X., Gao, Y., Zheng, X., Huang, H., Li, Y., Wang, C., Li, B., Ma, X., &amp; Jiang, Y.-G. (2026). <em>Internal safety collapse in frontier large language models</em> [Preprint]. arXiv:2603.23509.</a>
-        <aside class="notes">
-          <p>Was this just a problem with that example? The study tested 53 scenarios across 8 professional areas, including biology, chemistry, and cybersecurity. In these tasks, finishing the work could conflict with the model’s safety rules.</p>
-          <p>The table on the right shows examples from the project, which reports 62 confirmed cases. These results suggest this is a broad problem across different models and tasks, not just an isolated case.</p>
-        </aside>
+        
       </section>
 
       <section class="paper-study-slide importance-slide" data-timing="180">
@@ -3805,11 +3687,7 @@ Three levels: *****, medium, very thorough (******* by parent agent)
           </article>
         </div>
 
-        <aside class="notes">
-          <p>Why does this matter more now? Agents do not just write answers. They can plan, call tools, run code, and keep working on long tasks. If they stop following safety rules, they can change files, data, or real systems—not just produce harmful text.</p>
-          <p>Cybersecurity is an important example. On the right are Anthropic’s results on 4 offensive cybersecurity evaluations. Mythos 5 is the internal version, while Claude Fable is the public version with strong safety guardrails. They are essentially the same underlying model. Fable has the same underlying cyber capabilities, but its guardrails restrict access to them. Mythos 5 scores 88.4% on Firefox, 24.0% on OSS-Fuzz, 83.8% on CyberGym, and 38.7% on CyScenarioBench. Fable scores 0% on all 4.</p>
-          <p>So a score of 0% does not necessarily mean the model cannot do the task. It may mean the safety guardrails stop it from doing it. That is why cyber capability and model safety are closely connected: if those guardrails fail, capabilities that were restricted can become available. Next, let’s look at what can happen when an agent stops following those limits.</p>
-        </aside>
+        
       </section>
 
       <section class="paper-study-slide importance-slide importance-future-slide" data-timing="190">
@@ -3832,14 +3710,14 @@ Three levels: *****, medium, very thorough (******* by parent agent)
                 <small>isolated sandbox</small>
               </article>
               <b class="hf-flow-arrow">→</b>
-              <article class="hf-flow-node hf-grader fragment fade-up" data-fragment-index="0" data-notes="The agent has a difficult task, and the grader only accepts the correct flag. To finish, it needs to find that answer inside the authorised sandbox.">
+              <article class="hf-flow-node hf-grader fragment fade-up" data-fragment-index="0">
                               <span>01</span>
                               <strong>Hard task</strong>
                               <small>correct flag required</small>
                             </article>
             </div>
 
-            <div class="hf-breakout fragment" data-fragment-index="1" aria-label="Agent takes an unintended path beyond the sandbox" data-notes="But instead of solving it inside the sandbox, the agent searches the web for the ExploitGym answer.">
+            <div class="hf-breakout fragment" data-fragment-index="1" aria-label="Agent takes an unintended path beyond the sandbox">
                           <small>Unintended path</small>
                           <span class="hf-agent-token"><img src="logos/openai.svg" alt=""></span>
                           <b>→</b>
@@ -3851,7 +3729,7 @@ Three levels: *****, medium, very thorough (******* by parent agent)
               <small>look for the ExploitGym answer</small>
             </article>
 
-            <b class="hf-flow-arrow hf-live-arrow fragment" data-fragment-index="2" data-notes="That search leads it to Hugging Face as a possible place to find the answer. But the task gives it no permission to access private systems there.">→</b>
+            <b class="hf-flow-arrow hf-live-arrow fragment" data-fragment-index="2">→</b>
 
             <article class="hf-flow-node hf-production fragment fade-up" data-fragment-index="2">
               <div class="hf-logo-cluster" aria-hidden="true">
@@ -3861,10 +3739,10 @@ Three levels: *****, medium, very thorough (******* by parent agent)
               </div>
               <strong>Hugging Face</strong>
               <small>likely answer source found</small>
-              <span class="hf-production-status fragment fade-up" data-fragment-index="4" data-notes="The agent then reaches production compute nodes—real systems outside the sandbox it was allowed to use.">04 · Production accessed</span>
+              <span class="hf-production-status fragment fade-up" data-fragment-index="4">04 · Production accessed</span>
             </article>
 
-            <div class="hf-hack-route fragment" data-fragment-index="3" aria-label="Official report sequence: exposed Hugging Face credentials, an HDF5 file-read zero-day, RefJinja code execution, then access to production compute nodes" data-notes="According to the report, the agent uses exposed credentials and software vulnerabilities to gain unauthorised access. It is no longer just searching for an answer.">
+            <div class="hf-hack-route fragment" data-fragment-index="3" aria-label="Official report sequence: exposed Hugging Face credentials, an HDF5 file-read zero-day, RefJinja code execution, then access to production compute nodes">
                           <span>03 · Unauthorized intrusion</span>
                           <div class="hf-hack-sequence">
                             <span>Exposed HF credentials</span><b>→</b>
@@ -3876,7 +3754,7 @@ Three levels: *****, medium, very thorough (******* by parent agent)
                         </div>
           </figure>
 
-          <div class="hf-lesson-points fragment fade-up" data-fragment-index="5" data-notes="The agent even recognises that this might be outside its permission. But it continues because it thinks this could help finish the task. It puts getting the answer ahead of following the rules.">
+          <div class="hf-lesson-points fragment fade-up" data-fragment-index="5">
                       <span>What the incident shows · <a href="https://openai.com/index/hugging-face-incident-and-the-road-ahead/" target="_blank" rel="noopener noreferrer">OpenAI Official Incident Report ↗</a></span>
                       <ul>
                         <li>The agent recognized: <q>This might be an unauthorized action outside of my intended scope.</q></li>
@@ -3885,15 +3763,13 @@ Three levels: *****, medium, very thorough (******* by parent agent)
                       </ul>
                     </div>
 
-          <p class="hf-next-question fragment fade-up" data-fragment-index="6" data-notes="Now imagine the same behaviour in an agent that controls scientific tools or lab equipment. What could happen if it breaks safety rules just to finish an experiment?">
+          <p class="hf-next-question fragment fade-up" data-fragment-index="6">
                       <span>Next frontier<br>AI for Science + Embodied AI</span>
                       <strong>What happens when AI agents control scientific tools and laboratory automation?</strong>
                     </p>
         </div>
 
-        <aside class="notes">
-          <p>Earlier this year, an AI agent was involved in an incident affecting Hugging Face. It was supposed to solve an ExploitGym challenge inside an authorised sandbox.</p>
-        </aside>
+        
       </section>
 
       <section class="paper-study-slide composite-summary-slide" data-timing="150">
@@ -3909,21 +3785,17 @@ Three levels: *****, medium, very thorough (******* by parent agent)
 
         <p class="summary-next"><span>Next lecture</span><strong>How to generate adversarial examples</strong></p>
 
-        <aside class="notes">
-          <p>Let’s wrap up. We started with adversarial examples: inputs deliberately changed to make a model get something wrong. We saw how attacks differ from ordinary errors, and why limited training data and unreliable features can make models vulnerable.</p>
-          <p>We then looked at how to describe an attack: when it happens, what the attacker knows, what they want, and what they can change.</p>
-          <p>Finally, we looked at attacks on CoT and system prompts, and what can go wrong when agents use tools. In the next lecture, we’ll look at how to generate adversarial examples.</p>
-        </aside>
+        
       </section>
     </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+  
   <script>
     window.PRESENTATION_CONFIG = { totalTime: 50 * 60, logoPath: 'uom-logo.svg' };
   </script>
-  <script src="presentation.js?v=speaker-interaction-v2"></script>
+  <script src="presentation.js?v=2e9074b474ddfda9"></script>
   <script src="lecture15.js?v=token-box-layout"></script>
 </body>
 </html>
