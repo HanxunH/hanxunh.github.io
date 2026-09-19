@@ -1,0 +1,850 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="referrer" content="no-referrer">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lecture 16 · Generating Adversarial Examples</title>
+  <script>
+    (() => {
+      const url = new URL(window.location.href);
+      if (url.searchParams.has("laser-fix")) {
+        url.searchParams.delete("laser-fix");
+        window.history.replaceState(window.history.state, "", url.href);
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+  <link rel="stylesheet" href="presentation.css?v=shared-laser-module">
+  <link rel="stylesheet" href="laser-pointer.css?v=3">
+  <link rel="stylesheet" data-slide-style="lecture16" href="lecture16.css?v=lecture-reorg-20260917" media="all">
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <section data-slide-style="lecture16" class="title-slide no-brand lecture-title" data-timing="90">
+        <div class="title-lockup">
+          <div class="title-brand"><img src="uom-logo.svg" alt="The University of Melbourne"></div>
+          <div class="title-heading"><h1>Generating Adversarial<br>Examples</h1></div>
+        </div>
+        <div class="title-course">
+          <strong>COMP90073</strong>
+          <span>Trustworthy Machine Learning</span>
+          <span>Hanxun Huang, CIS</span>
+          <span>Semester 2, 2026</span>
+        </div>
+        <div class="title-wave" aria-hidden="true"></div>
+        <aside class="notes">
+          <p>Hi everyone. Last lecture we looked at what adversarial examples are, why they can happen, and how we describe an attack: what the attacker knows, what they want, and what they can change.</p>
+        </aside>
+      </section>
+
+<section class="outline-slide" data-slide-style="lecture16" data-timing="100"><span class="kicker">Lecture map</span><h2>Outline</h2><div class="outline-list"><div class="outline-item"><span>01</span><strong>Why are linear classifiers useful for understanding attacks?</strong></div><div class="outline-item"><span>02</span><strong>How do we measure and constrain a perturbation?</strong></div><div class="outline-item"><span>03</span><strong>How do FGSM, PGD and MI-FGSM search with gradients?</strong></div></div><aside class="notes">
+          <p>Today we look at how to generate those examples. We start with a linear classifier, where we can work out the shortest move to a decision boundary.</p>
+          <p>Then we need a way to measure the change and keep it small. That is what a norm budget is for, and why we constrain the perturbation at all.</p>
+          <p>Finally we use input gradients to search: 1 signed step with FGSM, several projected steps with PGD, then a momentum direction with MI-FGSM. We stop there. Carlini–Wagner starts next time.</p>
+        </aside></section>
+
+<section data-slide-style="lecture16" class="linear-foundation-slide" data-timing="145">
+        <span class="kicker">Linear layers · foundation</span>
+        <h2>Why start with a linear layer?</h2>
+
+        <div class="linear-foundation-body">
+        <ul class="linear-foundation-points">
+          <li><strong>Linear layers are the building blocks of neural networks.</strong></li>
+          <li><strong>Classification head</strong><span class="linear-example">\(\color{#ff4756}{z}=\color{#000f46}{W}\color{#16834f}{h}+\color{#745b00}{b}\) gives class logits; \(\color{#ff4756}{p}=\color{#000f46}{\operatorname{softmax}}(\color{#ff4756}{z})\) gives class probabilities.</span></li>
+          <li><strong>Attention projections</strong><span class="linear-example">\(\color{#ff4756}{Q}=\color{#16834f}{X}\color{#000f46}{W_Q}+\color{#745b00}{b_Q},\quad \color{#ff4756}{K}=\color{#16834f}{X}\color{#000f46}{W_K}+\color{#745b00}{b_K},\quad \color{#ff4756}{V}=\color{#16834f}{X}\color{#000f46}{W_V}+\color{#745b00}{b_V}\).</span></li>
+          <li><strong>Convolution</strong><span class="linear-example">\(\color{#ff4756}{\operatorname{vec}(Y)}=\color{#000f46}{T(K)}\color{#16834f}{\operatorname{vec}(X)}+\color{#745b00}{b}\), where \(T(K)\) is Toeplitz in 1-D<br>and block Toeplitz with Toeplitz blocks (BTTB) in 2-D.</span></li>
+        </ul>
+
+        <p class="linear-equation-legend"><span class="eq-output">output</span><span class="eq-operator">weights / operator</span><span class="eq-input">input</span><span class="eq-bias">bias</span></p>
+        </div>
+
+        <aside class="notes">
+          <p>Why start with a linear layer? Because linear layers appear throughout neural networks. The basic operation is always the same: multiply the input by weights, then add a bias.</p>
+          <p>A classification head turns a representation into class scores. Softmax turns those scores into probabilities. Attention uses 3 separate linear projections to build Q, K, and V.</p>
+          <p>A convolution can also be written as a matrix multiplication. In 2-D, the matrix is called block Toeplitz with Toeplitz blocks, or BTTB. The key idea is that the same filter weights are reused at different positions.</p>
+          <p>So linear geometry gives us a useful starting point for understanding attacks.</p>
+        </aside>
+      </section>
+
+<section data-slide-style="lecture16" class="linear-score-slide" data-timing="150">
+        <span class="kicker">Linear layers · score geometry</span>
+        <h2>A linear classifier partitions the input space</h2>
+        <div class="linear-score-layout">
+          <article class="linear-score-copy">
+            <div class="score-bullet fragment fade-up" data-fragment-index="0" data-notes="Each class i has a linear score: g i of x equals w i transpose x plus b i. On the right, those scores split the plane into 2 regions: class i on 1 side, class j on the other, with a straight boundary between them.">
+              <strong>Linear score</strong><p>For class \(i\):</p>
+              <div class="hero-formula">\[g_i(x)=w_i^\top x+b_i\]</div>
+            </div>
+            <div class="score-bullet fragment fade-up" data-fragment-index="1" data-notes="The model does not output the scores themselves. It predicts the class with the largest score: y-hat is the argmax of g i of x. The marked point x 0 is 1 input sitting in the class-i region.">
+              <strong>Prediction</strong><p>The model selects the largest score:</p>
+              <div class="compact-formula">\[\hat y=\arg\max_i g_i(x)\]</div>
+            </div>
+            <div class="score-bullet fragment fade-up" data-fragment-index="2" data-notes="The decision boundary between class i and class j is where their scores meet. On that line the 2 classes are tied.">
+              <strong>Decision boundary</strong><p>Classes \(i\) and \(j\) meet when their scores are equal.</p>
+            </div>
+            <div class="boundary-reasoning">
+              <div class="fragment fade-up" data-fragment-index="3" data-notes="Write that tie as an equation: g i of x equals g j of x. That is the set of points where the 2 scores are equal."><span>1</span><p>\[g_i(x)=g_j(x)\]</p></div>
+              <div class="fragment fade-up" data-fragment-index="4" data-notes="Now substitute the linear formulas. w i transpose x plus b i equals w j transpose x plus b j."><span>2</span><p>\[w_i^\top x+b_i=w_j^\top x+b_j\]</p></div>
+              <div class="result fragment fade-up" data-fragment-index="5" data-notes="Collect the x terms on 1 side. We get w i minus w j, transpose x, plus b i minus b j, equals 0. That is a hyperplane: 1 linear equation in x. Reaching this surface is a tie. Crossing it is what changes the predicted class."><span>3</span><p>\[(w_i-w_j)^\top x+(b_i-b_j)=0\]</p></div>
+            </div>
+          </article>
+          <figure class="decision-map" aria-label="The right-side geometry reveals two class regions, a prediction point, and their highlighted decision boundary where the scores are equal">
+            <svg viewBox="0 0 650 470" role="img">
+              <rect class="plot-bg" x="15" y="15" width="620" height="430" rx="16" />
+              <path class="region region-a" d="M15 15H334L245 445H15Z" />
+              <path class="region region-b" d="M334 15H635V445H245Z" />
+              <path class="boundary boundary-ij" d="M334 15L245 445" />
+              <path class="boundary-focus-halo" d="M334 15L245 445" />
+              <circle class="sample-point" cx="165" cy="285" r="9" />
+            </svg>
+            <div class="plot-math-label class-label class-i-label">Class \(i\)</div>
+            <div class="plot-math-label class-label class-j-label">Class \(j\)</div>
+            <div class="plot-math-label sample-label">\(x_0\)</div>
+            <div class="plot-math-label boundary-tie-label">\(g_i(x)=g_j(x)\)</div>
+          </figure>
+        </div>
+        <aside class="notes">
+          <p>Let’s start with binary classification.</p>
+        </aside>
+      </section>
+
+<section data-slide-style="lecture16" class="linear-lp-slide" data-timing="155">
+        <span class="kicker">Linear layers · multiclass target</span>
+        <h2>A multiclass target is an intersection of half-spaces</h2>
+        <div class="lp-aligned-layout">
+          <div class="lp-bullets">
+            <div class="lp-bullet fragment fade-up" data-fragment-index="0" data-notes="First, compare the target class t with class 1. This line is where their scores are equal.">
+              <strong>Boundary with class 1</strong>
+              <p>Target class \(t\) ties class 1 on this line.</p>
+              <div>\[g_1(x)=g_t(x)\]</div>
+            </div>
+            <div class="lp-bullet fragment fade-up" data-fragment-index="1" data-notes="Now compare t with class 2. This gives us another boundary where their scores are equal.">
+              <strong>Boundary with class 2</strong>
+              <p>Target class \(t\) ties class 2 on this line.</p>
+              <div>\[g_2(x)=g_t(x)\]</div>
+            </div>
+            <div class="lp-bullet lp-stack-bullet fragment fade-up" data-fragment-index="2" data-notes="We want t to score at least as high as both other classes. The shaded region is where both conditions hold.">
+              <strong>Target region</strong>
+              <p>A \(K\)-class model contributes \(K-1\) comparisons—one per competing class.</p>
+              <div class="lp-stack-derivation">
+                <div class="fragment fade-up" data-fragment-index="3" data-notes="Write those conditions as inequalities. Substitute the linear scores, then collect the weights on the left and the biases on the right.">
+                  \[\begin{aligned}g_1(x)\le g_t(x)&amp;\iff (w_1-w_t)^\top x\le b_t-b_1\\g_2(x)\le g_t(x)&amp;\iff (w_2-w_t)^\top x\le b_t-b_2\end{aligned}\]
+                </div>
+                <div class="fragment fade-up lp-three-class-stack" data-fragment-index="4" data-notes="Stack the 2 inequalities into a matrix. Now we can write both conditions together as A transpose x less than or equal to b.">
+                  \[
+                  \underbrace{\begin{bmatrix}
+                    (w_1-w_t)^\top\\
+                    (w_2-w_t)^\top
+                  \end{bmatrix}}_{A^\top\in\mathbb R^{2\times d}}x
+                  \ \le\
+                  \underbrace{\begin{bmatrix}
+                    b_t-b_1\\
+                    b_t-b_2
+                  \end{bmatrix}}_{b\in\mathbb R^2}
+                  \]
+                </div>
+                <div class="fragment fade-up lp-k-stack" data-fragment-index="5" data-notes="For K classes, do the same thing with every class except t. That gives K minus 1 inequalities. The target region is where all of them hold.">
+                  \[
+                  \underbrace{\begin{bmatrix}
+                    (w_1-w_t)^\top\\
+                    \vdots\\
+                    (w_{t-1}-w_t)^\top\\
+                    (w_{t+1}-w_t)^\top\\
+                    \vdots\\
+                    (w_K-w_t)^\top
+                  \end{bmatrix}}_{A^\top\in\mathbb R^{(K-1)\times d}}x
+                  \ \le\
+                  \underbrace{\begin{bmatrix}
+                    b_t-b_1\\
+                    \vdots\\
+                    b_t-b_{t-1}\\
+                    b_t-b_{t+1}\\
+                    \vdots\\
+                    b_t-b_K
+                  \end{bmatrix}}_{b\in\mathbb R^{K-1}}
+                  \]
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <figure class="lp-geometry" aria-label="Two pairwise target-class boundaries whose intersection forms the multiclass target region">
+            <svg viewBox="0 0 650 470" role="img">
+              <rect class="plot-bg" x="15" y="15" width="620" height="430" rx="16" />
+              <path class="lp-feasible-region" d="M305 15H635V178L362 250Z" />
+              <line class="lp-constraint c1" x1="305" y1="15" x2="362" y2="250" />
+              <line class="lp-constraint c2" x1="635" y1="178" x2="362" y2="250" />
+            </svg>
+            <div class="plot-math-label lp-constraint-label l1">\(g_1(x)=g_t(x)\)</div>
+            <div class="plot-math-label lp-constraint-label l2">\(g_2(x)=g_t(x)\)</div>
+            <div class="plot-math-label lp-region-label">Target region \(\Omega_t\)</div>
+            <div class="plot-math-label lp-stack-label">\(\Omega_t=\{x:A^\top x\le b\}\)</div>
+          </figure>
+        </div>
+        <aside class="notes">
+          <p>Now let’s look at multiclass classification.</p>
+        </aside>
+      </section>
+
+<section data-slide-style="lecture16" class="binary-setup-slide" data-timing="155">
+        <span class="kicker">Linear layers · binary classification</span>
+        <h2>Linear (Binary) Classifiers</h2>
+        <div class="binary-bridge-layout">
+          <div class="binary-bridge-copy">
+            <div class="binary-bullet fragment fade-up" data-fragment-index="0" data-notes="Let’s say m(x) is the score for class t minus the score for class 0. On the boundary, the scores are equal, so m(x) is 0. We use z for the weight difference and z 0 for the bias difference to keep the equation short.">
+              <strong>1. Derive the boundary equation</strong>
+              <p>Class \(t\) and class \(0\) meet where their scores are equal.</p>
+              <div class="binary-formula binary-margin-derivation">
+                \[\begin{aligned}
+                  g_t(x)&amp;=w_t^\top x+b_t,\qquad g_0(x)=w_0^\top x+b_0\\
+                  m(x)&amp;=g_t(x)-g_0(x)\\
+                  g_t(x)=g_0(x)&amp;\iff m(x)=0\\
+                  m(x)&amp;=(w_t-w_0)^\top x+(b_t-b_0)=z^\top x+z_0\\
+                  z&amp;=w_t-w_0,\qquad z_0=b_t-b_0
+                \end{aligned}\]
+              </div>
+            </div>
+            <div class="binary-bullet fragment fade-up" data-fragment-index="1" data-notes="We want the closest point on the boundary to our original input, x 0. So we minimise the squared distance while requiring m of x to be 0. Add a Lagrange multiplier, lambda, to combine the objective and constraint. Then differentiate with respect to x and lambda, and set both derivatives to 0.">
+              <strong>2. Introducing a Lagrange multiplier</strong>
+              <div class="binary-kkt-explainer">
+                <div class="binary-kkt-row"><span>Boundary</span><div>\[m(x)=z^\top x+z_0=0\]</div></div>
+                <div class="binary-kkt-row"><span>Problem</span><div>\[\min_x\;\underbrace{\tfrac12\|x-x_0\|_2^2}_{f(x)}\quad\text{s.t.}\quad m(x)=0\]</div></div>
+                <div class="binary-kkt-row"><span>Lagrangian</span><div>\[\mathcal L=f(x)+\lambda m(x)=\tfrac12\|x-x_0\|_2^2+\lambda(z^\top x+z_0)\]</div></div>
+                <p class="binary-derivative-intro">To find the analytic minimum, we need to find the partial derivatives and set them to \(0\).</p>
+                <div class="binary-kkt-row"><span>Differentiate \(x\)</span><div>\[\begin{aligned}\nabla_x\mathcal L&amp;=\nabla_x f(x)+\lambda\nabla_x m(x)\\&amp;=(x-x_0)+\lambda z=0\end{aligned}\]</div></div>
+                <div class="binary-kkt-row"><span>Differentiate \(\lambda\)</span><div>\[\frac{\partial\mathcal L}{\partial\lambda}=m(x)=z^\top x+z_0=0\]</div></div>
+              </div>
+            </div>
+          </div>
+          <figure class="binary-bridge-figure" aria-label="Binary class regions, the separating decision boundary, and Euclidean distance contours around x0">
+            <svg viewBox="0 0 650 470" role="img">
+              <defs><clipPath id="binary-plot-clip"><rect x="15" y="15" width="620" height="430" rx="16" /></clipPath></defs>
+              <rect class="plot-bg" x="15" y="15" width="620" height="430" rx="16" />
+              <path class="binary-region class-zero" d="M15 15H260L390 445H15Z" />
+              <path class="binary-region target-class" d="M260 15H635V445H390Z" />
+              <g class="binary-contours" clip-path="url(#binary-plot-clip)">
+                <circle cx="155" cy="330" r="45" />
+                <circle cx="155" cy="330" r="90" />
+                <circle cx="155" cy="330" r="135" />
+              </g>
+              <line class="binary-boundary" x1="260" y1="15" x2="390" y2="445" />
+              <circle class="binary-start" cx="155" cy="330" r="11" />
+            </svg>
+            <div class="plot-math-label binary-region-label class-zero-label">Class \(0\): \(m(x)&lt;0\)</div>
+            <div class="plot-math-label binary-region-label target-label">Target \(t\): \(m(x)\ge0\)</div>
+            <div class="plot-math-label binary-contour-label">distance from \(x_0\)</div>
+            <div class="plot-math-label binary-start-label">\(x_0\)</div>
+          </figure>
+        </div>
+        <aside class="notes">
+          <p>Let’s return to 2 classes and find the shortest move to the decision boundary.</p>
+        </aside>
+      </section>
+
+<section data-slide-style="lecture16" class="lagrange-slide" data-timing="180">
+        <span class="kicker">Linear layers · analytic attack</span>
+        <h2>Solving the Lagrange equations</h2>
+        <p class="lagrange-goal"><strong>Goal:</strong> solve for \(\lambda\), then recover \(x^*\).</p>
+        <div class="lagrange-layout">
+          <div class="lagrange-main">
+            <div class="equation-row"><span>From previous slide</span><div>\[\nabla_x\mathcal L=(x-x_0)+\lambda z=0,\qquad \frac{\partial\mathcal L}{\partial\lambda}=z^\top x+z_0=0\]</div></div>
+            <div class="equation-row fragment fade-up" data-fragment-index="0" data-notes="First, multiply the first equation by z transpose. Use z transpose z equals the squared length of z, then rearrange to get z transpose x on its own."><span>Left-multiply by \(z^\top\)</span><div>\[\begin{aligned}z^\top(x-x_0+\lambda z)&amp;=z^\top0=0\\z^\top x-z^\top x_0+\lambda\|z\|_2^2&amp;=0\\z^\top x&amp;=z^\top x_0-\lambda\|z\|_2^2\end{aligned}\]</div></div>
+            <div class="equation-row fragment fade-up" data-fragment-index="1" data-notes="The boundary equation tells us that z transpose x equals minus z 0. Substitute that into the first equation and collect the terms."><span>Substitute the constraint</span><div>\[\begin{aligned}z^\top x&amp;=z^\top x_0-\lambda\|z\|_2^2\\z^\top x&amp;=-z_0\\z^\top x_0-\lambda\|z\|_2^2&amp;=-z_0\\\lambda\|z\|_2^2&amp;=z^\top x_0+z_0\end{aligned}\]</div></div>
+            <div class="equation-row fragment fade-up" data-fragment-index="2" data-notes="Now divide by the squared length of z. This gives us lambda star, the value we need."><span>Divide by \(\|z\|_2^2\)</span><div>\[\begin{aligned}\lambda^*\|z\|_2^2&amp;=z^\top x_0+z_0\\\lambda^*&amp;=(z^\top x_0+z_0)\frac{1}{\|z\|_2^2}\\&amp;=\frac{z^\top x_0+z_0}{\|z\|_2^2}\end{aligned}\]</div></div>
+            <div class="equation-row result fragment fade-up" data-fragment-index="3" data-notes="Finally, substitute lambda star into x equals x 0 minus lambda z. That gives x star, the closest point on the decision boundary. To move into the other class, we can take a small extra step across the boundary."><span>Recover \(x^*\)</span><div>\[x^*=x_0-\lambda^*z=x_0-\frac{z^\top x_0+z_0}{\|z\|_2^2}\,z\]</div></div>
+          </div>
+          <aside class="lagrange-side fragment fade-up" data-fragment-index="0">
+            <strong>Match the shared \(z^\top x\)</strong>
+            <p>Use \(z^\top z=\|z\|_2^2\). The boundary gives \(z^\top x=-z_0\), so matching the two expressions isolates \(\lambda\). Once \(\lambda^*\) is known, rearrange \(x-x_0+\lambda z=0\) to obtain \(x^*=x_0-\lambda^*z\).</p>
+            <div class="lagrange-note-append fragment fade-up" data-fragment-index="3">
+              <span>From previous slide</span>
+              <div class="lagrange-side-equation">\[\begin{aligned}
+                \nabla_x\mathcal L=0&amp;\Rightarrow x-x_0+\lambda z=0\\
+                &amp;\Rightarrow x=x_0-\lambda z
+              \end{aligned}\]</div>
+              <div class="lagrange-star-note">
+                <span>\(^*\) means optimal</span>
+                <p><b>\(\lambda^*\)</b>: optimal signed coefficient along \(z\).<br><b>\(x^*\)</b>: closest point on the boundary \(m(x)=0\).</p>
+              </div>
+            </div>
+          </aside>
+        </div>
+        <aside class="notes">
+          <p>Now let’s solve these 2 equations to find the closest point on the boundary.</p>
+        </aside>
+      </section>
+
+<section data-slide-style="lecture16" class="projection-summary-slide" data-timing="150">
+        <span class="kicker">Linear binary classifier · result</span>
+        <h2>One projection gives the exact attack</h2>
+        <div class="projection-summary-layout">
+          <figure class="projection-summary-figure" aria-label="The minimum-norm perturbation projects x0 orthogonally onto a linear decision boundary">
+            <svg viewBox="0 0 820 500" role="img">
+              <defs>
+                <marker id="projection-summary-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" /></marker>
+                <clipPath id="projection-summary-clip"><rect x="15" y="15" width="790" height="470" rx="16" /></clipPath>
+              </defs>
+              <rect class="plot-bg" x="15" y="15" width="790" height="470" rx="16" />
+              <path class="projection-class-left" d="M15 15H550L290 485H15Z" />
+              <path class="projection-class-right" d="M550 15H805V485H290Z" />
+              <g class="projection-contours" clip-path="url(#projection-summary-clip)">
+                <circle cx="210" cy="335" r="55" />
+                <circle cx="210" cy="335" r="110" />
+                <circle cx="210" cy="335" r="165" />
+              </g>
+              <line class="projection-summary-boundary" x1="550" y1="15" x2="290" y2="485" />
+              <line class="projection-summary-vector" x1="210" y1="335" x2="335" y2="404" marker-end="url(#projection-summary-arrow)" />
+              <circle class="projection-summary-start" cx="210" cy="335" r="12" />
+              <circle class="projection-summary-end" cx="335" cy="404" r="12" />
+              <path class="projection-summary-right-angle" d="M326 420L310 411L319 395" />
+            </svg>
+            <div class="plot-math-label projection-class-label projection-left-label">Class \(0\)</div>
+            <div class="plot-math-label projection-class-label projection-right-label">Target \(t\)</div>
+            <div class="plot-math-label projection-boundary-label">\(m(x)=0\)</div>
+            <div class="plot-math-label projection-start-label">\(x_0\)</div>
+            <div class="plot-math-label projection-end-label">\(x^*\)</div>
+          </figure>
+          <div class="projection-summary-copy">
+            <div class="projection-bullet fragment fade-up" data-fragment-index="0" data-notes="The shortest path to the boundary is perpendicular to it. We move from x 0 to x star along z. The difference between these points is our perturbation, r star.">
+              <strong>Shortest direction</strong>
+              <p>Move along the boundary normal \(z\).</p>
+              <div>\[r^*=x^*-x_0=-\lambda^*z\]</div>
+            </div>
+            <div class="projection-bullet fragment fade-up" data-fragment-index="1" data-notes="Each dashed circle shows points at the same distance from x 0. The smallest circle that touches the boundary gives us the minimum distance. The formula calculates that distance.">
+              <strong>Minimum distance</strong>
+              <p>The margin determines how far \(x_0\) is from the boundary.</p>
+              <div>\[\|r^*\|_2=\frac{|z^\top x_0+z_0|}{\|z\|_2}\]</div>
+            </div>
+            <div class="projection-bullet fragment fade-up" data-fragment-index="2" data-notes="Because the classifier is linear, we can get a closed-form solution here. This formula gives us the closest point on the boundary directly, without an iterative search. But what if we don’t have a closed-form solution? How can we find an adversarial example then?">
+              <strong>Closed-form result</strong>
+              <div>\[x^*=x_0-\frac{z^\top x_0+z_0}{\|z\|_2^2}z\]</div>
+              <p class="projection-one-step">One projection. Exact for a binary linear classifier.</p>
+            </div>
+          </div>
+        </div>
+        <aside class="notes">
+          <p>Let’s see what this result looks like on the diagram.</p>
+        </aside>
+      </section>
+
+<section data-slide-style="lecture16" class="iterative-transition-slide" data-timing="150">
+        <span class="kicker">Optimization · conceptual idea</span>
+        <h2>Use gradient descent to find adversarial examples</h2>
+        <div class="iterative-transition-layout">
+          <div class="iterative-transition-copy">
+            <div class="iterative-bullet fragment fade-up" data-fragment-index="0" data-notes="First, define an objective F that we want to minimise. Choose it so that reducing F helps us fool the model.">
+              <strong>Define an attack objective</strong>
+              <p>Choose a differentiable \(F\) whose minimum corresponds to attack success.</p>
+              <div class="iterative-formal">\[x_{\mathrm{adv}}^*\in\arg\min_{x_{\mathrm{adv}}}F(x_{\mathrm{adv}})\]</div>
+            </div>
+            <div class="iterative-bullet fragment fade-up" data-fragment-index="1" data-notes="Calculate the gradient at the current input, then take a small step in the opposite direction to reduce F. Gamma controls the step size. At the new point, calculate the gradient again and take another step.">
+              <strong>Take gradient descent steps</strong>
+              <p>Recompute the local descent direction after every update.</p>
+              <div class="iterative-formal">\[\begin{aligned}d^{(k)}&amp;=\nabla_xF(x_{\mathrm{adv}}^{(k)})\\x_{\mathrm{adv}}^{(k+1)}&amp;=x_{\mathrm{adv}}^{(k)}-\gamma_kd^{(k)}\end{aligned}\]</div>
+            </div>
+            <div class="iterative-bullet fragment fade-up" data-fragment-index="2" data-notes="After each update, check the prediction. For this untargeted attack, we stop when the predicted class changes. Otherwise, keep going: calculate the gradient, update the input, and check again.">
+              <strong>Stop when the attack criterion is met</strong>
+              <p>For an untargeted attack, stop at the first iterate whose predicted class changes.</p>
+              <div class="iterative-formal">\[\begin{aligned}K&amp;=\min\{k\ge1:\hat y(x_{\mathrm{adv}}^{(k)})\ne\hat y(x_{\mathrm{adv}}^{(0)})\}\\x_{\mathrm{adv}}&amp;=x_{\mathrm{adv}}^{(K)}\end{aligned}\]</div>
+              <p class="iterative-loop">Gradient → update → check → repeat</p>
+            </div>
+          </div>
+          <figure class="iterative-transition-figure" aria-label="Gradient descent follows local directions across an attack-objective landscape">
+            <svg viewBox="0 0 650 470" role="img">
+              <defs><marker id="iterative-path-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" /></marker></defs>
+              <rect class="plot-bg" x="15" y="15" width="620" height="430" rx="16" />
+              <ellipse class="iterative-contour c1" cx="355" cy="245" rx="250" ry="165" />
+              <ellipse class="iterative-contour c2" cx="355" cy="245" rx="190" ry="125" />
+              <ellipse class="iterative-contour c3" cx="355" cy="245" rx="130" ry="84" />
+              <ellipse class="iterative-contour c4" cx="355" cy="245" rx="72" ry="45" />
+              <polyline class="iterative-path" points="115,100 185,155 245,176 292,217 324,229 347,241" marker-end="url(#iterative-path-arrow)" />
+              <circle class="iterative-point p0" cx="115" cy="100" r="11" />
+              <circle class="iterative-point p1" cx="185" cy="155" r="9" />
+              <circle class="iterative-point p2" cx="245" cy="176" r="9" />
+              <circle class="iterative-point p3" cx="292" cy="217" r="9" />
+              <circle class="iterative-point p4" cx="324" cy="229" r="9" />
+              <circle class="iterative-point p5" cx="347" cy="241" r="11" />
+            </svg>
+            <div class="plot-math-label iterative-start-label">\(x_{\mathrm{adv}}^{(0)}\)</div>
+            <div class="plot-math-label iterative-gradient-label">\(-\nabla_xF(x_{\mathrm{adv}}^{(k)})\)</div>
+            <div class="plot-math-label iterative-end-label">\(x_{\mathrm{adv}}=x_{\mathrm{adv}}^{(K)}\)</div>
+          </figure>
+        </div>
+        <aside class="notes">
+          <p>If we don’t have a closed-form solution, we can search step by step using gradient descent. Let’s see how that works.</p>
+        </aside>
+      </section>
+
+<section data-slide-style="lecture16" class="norm-geometry-slide" data-timing="150">
+        <span class="kicker">Attack constraints · foundations</span>
+        <h2>What Are Norms?</h2>
+        <div class="norm-theory-layout">
+          <div class="norm-theory-copy">
+            <p>\(\delta\) is a perturbation vector; \(\varepsilon\) is its allowed radius under the chosen norm.</p>
+            <div class="norm-general-formula">\[\begin{aligned}\|\delta\|_p&amp;=\left(\sum_{i=1}^{d}|\delta_i|^p\right)^{1/p}\\\|\delta\|_p&amp;\le\varepsilon\qquad\text{allowed perturbation}\\\|\delta\|_p&amp;=\varepsilon\qquad\text{boundary at radius }\varepsilon\end{aligned}\]</div>
+            <div class="norm-theory-row fragment fade-up" data-fragment-index="0" data-notes="The L1 norm adds up the absolute values of all the changes. In 2 dimensions, the allowed region is a diamond. Any point inside or on the diamond stays within the budget.">
+              <strong>\(\ell_1\)</strong>
+              <div>\[\|\delta\|_1=\sum_i|\delta_i|\]</div>
+              <p>Total absolute change</p>
+            </div>
+            <div class="norm-theory-row fragment fade-up" data-fragment-index="1" data-notes="The L2 norm is the usual straight-line distance. Square each change, add them up, then take the square root. Here, the allowed region is a circle.">
+              <strong>\(\ell_2\)</strong>
+              <div>\[\|\delta\|_2=\sqrt{\sum_i\delta_i^2}\]</div>
+              <p>Euclidean distance</p>
+            </div>
+            <div class="norm-theory-row fragment fade-up" data-fragment-index="2" data-notes="The L-infinity norm takes the largest absolute change. So no coordinate can change by more than epsilon. The allowed region is a square. The same epsilon gives us different allowed regions depending on the norm.">
+              <strong>\(\ell_\infty\)</strong>
+              <div>\[\|\delta\|_\infty=\max_i|\delta_i|\]</div>
+              <p>Largest coordinate change</p>
+            </div>
+          </div>
+          <figure class="norm-unit-figure" aria-label="Two-dimensional unit balls for L1, L2, and L infinity norms">
+            <svg viewBox="0 0 500 500" role="img">
+              <rect class="plot-bg" x="25" y="25" width="450" height="450" rx="16" />
+              <line class="norm-unit-axis" x1="55" y1="250" x2="445" y2="250" />
+              <line class="norm-unit-axis" x1="250" y1="55" x2="250" y2="445" />
+              <polygon class="norm-unit-ball norm-unit-l1" points="250,85 415,250 250,415 85,250" />
+              <circle class="norm-unit-ball norm-unit-l2" cx="250" cy="250" r="165" />
+              <rect class="norm-unit-ball norm-unit-linf" x="85" y="85" width="330" height="330" />
+            </svg>
+            <div class="plot-math-label norm-axis-d1">\(\delta_1\)</div>
+            <div class="plot-math-label norm-axis-d2">\(\delta_2\)</div>
+            <div class="plot-math-label norm-tick-x-pos">\(+\varepsilon\)</div>
+            <div class="plot-math-label norm-tick-x-neg">\(-\varepsilon\)</div>
+            <div class="plot-math-label norm-tick-y-pos">\(+\varepsilon\)</div>
+            <div class="plot-math-label norm-tick-y-neg">\(-\varepsilon\)</div>
+            <div class="plot-math-label norm-origin-zero">\(0\)</div>
+            <div class="norm-unit-legend">
+              <span class="norm-legend-l1">\(\ell_1\) · radius \(\varepsilon\) · diamond</span>
+              <span class="norm-legend-l2">\(\ell_2\) · radius \(\varepsilon\) · circle</span>
+              <span class="norm-legend-linf">\(\ell_\infty\) · radius \(\varepsilon\) · square</span>
+            </div>
+            <figcaption>Axis intercepts are \(\pm\varepsilon\); every boundary satisfies \(\|\delta\|_p=\varepsilon\).</figcaption>
+          </figure>
+        </div>
+        <aside class="notes">
+          <p>As we update the input, we also need to limit how much it changes. A norm measures the size of that change. We call the perturbation delta, and use epsilon to set its maximum allowed size. Let’s look at 3 common norms.</p>
+        </aside>
+      </section>
+
+<section data-slide-style="lecture16" class="norm-demo-slide" data-timing="170" data-norm="l2">
+        <span class="kicker">Attack constraint · norm choice</span>
+        <h2>How do we measure perturbation strength?</h2>
+        <div class="norm-demo-layout">
+          <div class="norm-selector">
+            <p class="norm-intro">\[\delta=x_{\mathrm{adv}}-x_0,\qquad \|\delta\|_p\le\varepsilon\]</p>
+            <div class="norm-options" role="group" aria-label="Choose a perturbation norm">
+              <button type="button" class="norm-option" data-norm-choice="l1" data-sync-click="norm-l1" aria-pressed="false">
+                <strong>\(\ell_1\) norm</strong>
+                <span>\[\|\delta\|_1=\sum_i|\delta_i|\]</span>
+                <small>Sparse coordinate changes · total absolute budget</small>
+              </button>
+              <button type="button" class="norm-option active" data-norm-choice="l2" data-sync-click="norm-l2" aria-pressed="true">
+                <strong>\(\ell_2\) norm</strong>
+                <span>\[\|\delta\|_2=\sqrt{\sum_i\delta_i^2}\]</span>
+                <small>Distributed noise · Euclidean energy budget</small>
+              </button>
+              <button type="button" class="norm-option" data-norm-choice="linf" data-sync-click="norm-linf" aria-pressed="false">
+                <strong>\(\ell_\infty\) norm</strong>
+                <span>\[\|\delta\|_\infty=\max_i|\delta_i|\]</span>
+                <small>Dense bounded changes · \(N/255\) per pixel</small>
+              </button>
+            </div>
+          </div>
+          <div class="norm-visual-panel">
+            <div class="norm-current-formula" aria-live="polite">
+              <div data-norm-formula="l1">\[\|\delta\|_1\le\varepsilon\]</div>
+              <div data-norm-formula="l2">\[\|\delta\|_2\le\varepsilon\]</div>
+              <div data-norm-formula="linf">\[\|\delta\|_\infty\le\varepsilon,\qquad \varepsilon=\frac{N}{255}\]</div>
+            </div>
+            <figure class="norm-image-figure" aria-label="Original cat photograph beside an interactively perturbed version whose noise visibility changes with epsilon">
+              <div class="norm-image-pair">
+                <article>
+                  <div class="norm-image-stack"><img class="norm-original-image" src="cat-norm-demo.jpg" alt="Original photograph of three cats"></div>
+                  <strong>Original \(x_0\)</strong>
+                </article>
+                <article>
+                  <div class="norm-image-stack"><canvas class="norm-perturbed-canvas" width="320" height="320" aria-label="Cat photograph with the selected perturbation applied"></canvas></div>
+                  <strong>Perturbed \(x_{\mathrm{adv}}\)</strong>
+                </article>
+              </div>
+              <div class="norm-visibility"><span></span><strong data-noise-status>Noise is hard to see</strong></div>
+            </figure>
+            <div class="norm-strength-control">
+              <label for="norm-strength">
+                <span data-strength-label="l1">Representative \(\ell_1\) strength</span>
+                <span data-strength-label="l2">Representative \(\ell_2\) strength</span>
+                <span data-strength-label="linf">Per-pixel \(\ell_\infty\) budget</span>
+                <output for="norm-strength">2%</output>
+              </label>
+              <input id="norm-strength" type="range" min="0" max="255" step="1" value="4" data-sync-input="norm-strength" aria-label="Image perturbation strength N over 255">
+              <div><span>subtle</span><span>full noise</span></div>
+            </div>
+          </div>
+        </div>
+        <aside class="notes">
+          <p>Let’s see what these norms look like on an image. The original is on the left, and the modified image is on the right.</p>
+          <p>Switch between the 3 examples. L1 changes a few pixels here. L2 spreads the change across the image. L-infinity limits the largest change to any pixel channel. The norm sets the budget, but does not uniquely determine the pattern.</p>
+          <p>Move the slider to make the changes more visible. The slider scales each example for comparison; it is not the same numerical budget across the 3 norms.</p>
+        </aside>
+      </section>
+
+<section data-slide-style="lecture16" class="constraint-motivation-slide" data-timing="155">
+        <span class="kicker">Attack constraints · semantic preservation</span>
+        <h2>Why constrain the perturbation?</h2>
+        <div class="constraint-story">
+          <article class="constraint-step original fragment fade-up" data-fragment-index="0" data-notes="We start with a handwritten 1. We see a 1, and the model predicts 1.">
+            <header><span>01</span><strong>Start with the original input</strong></header>
+            <p>The semantic label is 1, and the model predicts 1.</p>
+            <img src="digit-one.png" alt="Grayscale handwritten digit 1">
+            <footer><b>Semantic label:</b> 1 · <b>Model:</b> 1</footer>
+          </article>
+          <b class="constraint-arrow fragment fade-up" data-fragment-index="1" data-notes="After a small change, it still looks like a 1. If the model predicts a different class, we have an adversarial example.">→</b>
+          <article class="constraint-step constrained fragment fade-up" data-fragment-index="1">
+            <header><span>02</span><strong>Keep the change small</strong></header>
+            <p>The semantic label stays 1. If the model changes its prediction, this is a valid attack.</p>
+            <img src="digit-one-small-change.png" alt="Handwritten digit 1 after a small pixel perturbation">
+            <footer><b>Semantic label:</b> 1 · <b>Model:</b> changed</footer>
+          </article>
+          <b class="constraint-arrow fragment fade-up" data-fragment-index="2" data-notes="With a large edit, the image now looks like a 7. The correct label has changed too. We want to fool the model, not turn the input into a genuinely different class.">→</b>
+          <article class="constraint-step invalid fragment fade-up" data-fragment-index="2">
+            <header><span>03</span><strong>Do not change the meaning</strong></header>
+            <p>If the image now represents a 7, its semantic label has changed. This is not an attack on the original 1.</p>
+            <img src="digit-seven.png" alt="Grayscale handwritten digit 7">
+            <footer><b>Semantic label:</b> 7 · <b>Not an attack</b></footer>
+          </article>
+        </div>
+        <aside class="notes">
+          <p>But why limit the change at all? Let’s look at a simple example.</p>
+        </aside>
+      </section>
+
+<section data-slide-style="lecture16" class="direction-primer-slide" data-timing="155">
+        <span class="kicker">Gradient directions · comparison</span>
+        <h2>Comparison of Three Types<br>of Gradient-related Vectors</h2>
+        <div class="vector-panels">
+          <article class="fragment fade-up" data-fragment-index="0" data-notes="The gradient points toward the steepest increase. Its length tells us how steep that increase is. Here, the arrows get longer farther from the origin.">
+            <span>Gradient vectors</span><strong>\(\nabla f\)</strong>
+            <div class="vector-property">\[\|v\|_2=\|\nabla f\|_2\quad\text{varies}\]</div>
+            <svg viewBox="0 0 360 300" aria-label="Gradient vectors point away from the origin and grow in magnitude">
+              <defs><marker id="raw-vector-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10Z" /></marker></defs>
+              <g class="vector-guides"><circle cx="180" cy="150" r="55" /><circle cx="180" cy="150" r="105" /></g>
+              <g class="vector-field gradient-field"></g><circle class="vector-origin" cx="180" cy="150" r="6" />
+            </svg>
+            <p>True direction and strength of steepest ascent; magnitude increases away from the origin.</p>
+          </article>
+          <article class="fragment fade-up" data-fragment-index="1" data-notes="The sign vector keeps only +1, -1, or 0 for each coordinate. It tells us which coordinates to increase or decrease, but discards their original sizes.">
+            <span>Sign of gradient vectors</span><strong>\(\operatorname{sign}(\nabla f)\)</strong>
+            <div class="vector-property">\[v_i\in\{-1,0,+1\}\]</div>
+            <svg viewBox="0 0 360 300" aria-label="Sign-gradient vectors keep only the positive, negative, or zero sign of each component">
+              <defs><marker id="sign-vector-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10Z" /></marker></defs>
+              <path class="vector-axes" d="M25 150H335M180 20V280" />
+              <g class="vector-field sign-field"></g><circle class="vector-origin" cx="180" cy="150" r="6" />
+            </svg>
+            <p>Each component is \(-1\), \(0\), or \(+1\); direction signs remain, magnitude is discarded.</p>
+          </article>
+          <article class="fragment fade-up" data-fragment-index="2" data-notes="The normalised gradient keeps the original direction but scales its length to 1. We divide by the gradient’s length, provided it is not 0.">
+            <span>Normalized gradient vectors</span><strong>\(\nabla f/\|\nabla f\|_2\)</strong>
+            <div class="vector-property">\[\|v\|_2=1\quad\text{everywhere}\]</div>
+            <svg viewBox="0 0 360 300" aria-label="Normalized gradient vectors preserve direction and have unit length">
+              <defs><marker id="normalized-vector-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10Z" /></marker></defs>
+              <g class="vector-guides"><circle cx="180" cy="150" r="55" /><circle cx="180" cy="150" r="105" /></g>
+              <g class="vector-field normalized-field"></g><circle class="vector-origin" cx="180" cy="150" r="6" />
+            </svg>
+            <p>Same direction as the gradient, but unit length everywhere.</p>
+          </article>
+        </div>
+        <aside class="notes">
+          <p>We now know how to measure the change. Next, let’s compare 3 ways to choose its direction.</p>
+        </aside>
+      </section>
+
+<section data-slide-style="lecture16" class="construct-attack-slide method-slide" data-timing="165">
+        <span class="kicker">Practical attacks · high-level idea</span>
+        <h2>Constructing An Adversarial Example</h2>
+        <div class="attack-method-layout">
+          <div class="attack-method-copy">
+            <div class="attack-step fragment fade-up" data-fragment-index="0" data-notes="Add a perturbation delta to the original input, x 0. The result is our candidate, x adv.">
+              <strong>1. Choose a perturbation</strong>
+              <p>Add \(\delta\) to the original input.</p>
+              <div>\[x_{\mathrm{adv}}=x_0+\delta\]</div>
+            </div>
+            <div class="attack-step fragment fade-up" data-fragment-index="1" data-notes="Feed x 0 plus delta into the model, f theta. The loss compares the model’s output with the correct label, y. For an untargeted attack, change delta to increase this loss while keeping theta fixed. For a targeted attack, decrease the loss for the chosen target label instead.">
+              <strong>2. Increase the loss</strong>
+              <p>Push the model away from the correct class.</p>
+              <div>\[\max_{\delta}\;\mathcal L(f_\theta(x_0+\delta),y)\]</div>
+            </div>
+            <div class="attack-step fragment fade-up" data-fragment-index="2" data-notes="We still maximise the loss between f theta of x 0 plus delta and the correct label, y. But now we add the constraints: keep delta within the norm budget and the pixels between 0 and 1. Only delta changes; the model’s weights stay fixed.">
+              <strong>3. Keep the change small</strong>
+              <div>\[\max_{\delta}\;\mathcal L(f_\theta(x_0+\delta),y)\quad\text{s.t.}\quad\|\delta\|_p\le\varepsilon,\;\;x_0+\delta\in[0,1]^d\]</div>
+              <p class="method-result">Keep pixels valid; stop when the prediction changes.</p>
+            </div>
+          </div>
+          <figure class="attack-method-figure construct-attack-figure" aria-label="High-level adversarial example construction from perturbation, loss optimization, and a constrained attack criterion">
+            <div class="construct-stage candidate-stage">
+              <span>Candidate</span>
+              <strong>\(x_{\mathrm{adv}}=x_0+\delta\)</strong>
+              <p>Add \(\delta\)</p>
+            </div>
+            <b>↓ adjust \(\delta\)</b>
+            <div class="construct-stage loss-stage">
+              <span>Optimization</span>
+              <strong>\(\mathcal L(f_\theta(x_{\mathrm{adv}}),y)\uparrow\)</strong>
+              <p>Increase the loss</p>
+            </div>
+            <b>↓ check the result</b>
+            <div class="construct-stage success-stage">
+              <span>Success</span>
+              <strong>\(\hat y(x_{\mathrm{adv}})\ne y\)</strong>
+              <p>Prediction changes; \(\delta\) stays small</p>
+            </div>
+          </figure>
+        </div>
+        <aside class="notes">
+          <p>Let’s put those ideas together to construct an adversarial example.</p>
+        </aside>
+      </section>
+
+<section data-slide-style="lecture16" class="fgsm-slide method-slide" data-timing="170">
+        <span class="kicker">Practical attacks · one-step method</span>
+        <h2>Fast Gradient Sign Method (FGSM)</h2>
+        <div class="attack-method-layout">
+          <div class="attack-method-copy">
+            <div class="attack-step fragment fade-up" data-fragment-index="0" data-notes="Calculate the loss gradient with respect to the original input. The model’s weights stay fixed.">
+              <strong>1. Evaluate the input gradient</strong>
+              <p>Differentiate the loss with respect to \(x\) at the original input \(x_0\).</p>
+              <div>\[\nabla_x\mathcal L(x_0,y)\]</div>
+            </div>
+            <div class="attack-step fragment fade-up" data-fragment-index="1" data-notes="Take the sign of each gradient component and multiply by epsilon. This gives a perturbation within the L-infinity budget. We add it to increase the true-label loss; a targeted attack would subtract the sign of the target-label loss.">
+              <strong>2. Take the sign for an \(\ell_\infty\) step</strong>
+              <p>Each coordinate takes its largest allowed increase or decrease; \(\varepsilon\) sets that maximum change.</p>
+              <div>\[\delta_{\mathrm{FGSM}}=\varepsilon\,\operatorname{sign}\!\left(\nabla_x\mathcal L(x_0,y)\right)\]</div>
+            </div>
+            <div class="attack-step fragment fade-up" data-fragment-index="2" data-notes="Add the perturbation to the image and clip the pixels to 0 through 1. That is FGSM: 1 backward pass and 1 update.">
+              <strong>3. Update the input once</strong>
+              <div>\[x_{\mathrm{adv}}=\operatorname{clip}_{[0,1]}\!\left(x_0+\varepsilon\,\operatorname{sign}\!\left(\nabla_x\mathcal L(x_0,y)\right)\right)\]</div>
+              <p class="method-result">Fast: one backward pass and one update.</p>
+            </div>
+            <div class="attack-step fragment fade-up" data-fragment-index="3" data-notes="For an L2 budget, use the normalised gradient instead. Multiply it by epsilon, then add it to the image. We still keep the final pixels within their valid range.">
+              <strong>4. Adapt the direction for an \(\ell_2\) budget</strong>
+              <p>Replace the sign vector with the unit-normalized gradient.</p>
+              <div>\[x_{\mathrm{adv}}=x_0+\varepsilon\,\frac{\nabla_x\mathcal L(x_0,y)}{\|\nabla_x\mathcal L(x_0,y)\|_2}\]</div>
+            </div>
+          </div>
+          <figure class="attack-method-figure fgsm-method-figure" aria-label="FGSM converts the input gradient into a sign direction and takes one bounded step">
+            <svg viewBox="0 0 650 470" role="img">
+              <defs>
+                <marker id="fgsm-gradient-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" /></marker>
+                <marker id="fgsm-step-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" /></marker>
+              </defs>
+              <rect class="plot-bg" x="15" y="15" width="620" height="430" rx="16" />
+              <rect class="fgsm-budget" x="145" y="70" width="360" height="340" />
+              <circle class="fgsm-l2-budget" cx="325" cy="245" r="170" />
+              <line class="fgsm-method-gradient" x1="325" y1="245" x2="430" y2="155" marker-end="url(#fgsm-gradient-arrow)" />
+              <line class="fgsm-method-step" x1="325" y1="245" x2="505" y2="70" marker-end="url(#fgsm-step-arrow)" />
+              <circle class="fgsm-method-start" cx="325" cy="245" r="11" />
+              <circle class="fgsm-method-end" cx="505" cy="70" r="12" />
+              <line class="fgsm-l2-step" x1="325" y1="245" x2="454" y2="134" marker-end="url(#fgsm-gradient-arrow)" />
+              <circle class="fgsm-l2-end" cx="454" cy="134" r="12" />
+            </svg>
+            <div class="plot-math-label fgsm-budget-label">\(\|\delta\|_\infty\le\varepsilon\)</div>
+            <div class="plot-math-label fgsm-origin-label">\(x_0\)</div>
+            <div class="plot-math-label fgsm-gradient-label">\(\nabla_x\mathcal L(x_0,y)\)</div>
+            <div class="plot-math-label fgsm-sign-label">\(\delta_{\mathrm{FGSM}}\)</div>
+            <div class="plot-math-label fgsm-adv-label">\(x_{\mathrm{adv}}\)</div>
+            <div class="plot-math-label fgsm-l2-label">\(\ell_2\): normalized gradient</div>
+          </figure>
+        </div>
+        <a class="source-line" href="https://arxiv.org/abs/1412.6572" target="_blank" rel="noopener noreferrer">Goodfellow, I. J., Shlens, J., &amp; Szegedy, C. (2015). Explaining and harnessing adversarial examples. <em>International Conference on Learning Representations.</em></a>
+        <aside class="notes">
+          <p>Let’s start with the Fast Gradient Sign Method, or FGSM. It generates an attack in 1 step.</p>
+        </aside>
+      </section>
+
+<section data-slide-style="lecture16" class="fgsm-issue-slide" data-timing="150">
+        <span class="kicker">Practical attacks · one-step method</span>
+        <h2>Why could one FGSM step fail?</h2>
+        <div class="fgsm-issue-layout">
+          <div class="fgsm-issue-copy">
+            <div class="fgsm-issue fragment fade-up" data-fragment-index="0" data-notes="At the starting point, the gradient points toward the blue region, where the model predicts a different class.">
+              <strong>Correct local direction</strong>
+              <p>At \(x_0\), the sign gradient points toward a nearby different-class region.</p>
+            </div>
+            <div class="fgsm-issue fragment fade-up" data-fragment-index="1" data-notes="FGSM takes the full step and checks only the endpoint. Here, that endpoint is still in the original class.">
+              <strong>One endpoint update</strong>
+              <p>FGSM jumps to the edge of the \(\ell_\infty\) budget without checking the points in between.</p>
+            </div>
+            <div class="fgsm-issue fragment fade-up" data-fragment-index="2" data-notes="The step passed through the blue region but went too far. Smaller steps let us recompute the gradient and check along the way. That leads us to an iterative attack.">
+              <strong>Overshoot</strong>
+              <p>The step crosses the curved region, but its endpoint is back in the original class.</p>
+            </div>
+          </div>
+          <figure class="fgsm-issue-figure" aria-label="FGSM and PGD shown in the same L infinity budget: the correct FGSM sign direction crosses a curved different-class region but its one-step endpoint overshoots, while smaller recomputed steps stop after changing class">
+            <svg viewBox="0 0 650 470" role="img">
+              <defs>
+                <marker id="fgsm-issue-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" /></marker>
+                <marker id="fgsm-local-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" /></marker>
+                <marker id="iterative-issue-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" /></marker>
+              </defs>
+              <rect class="plot-bg" x="15" y="15" width="620" height="430" rx="16" />
+              <rect class="fgsm-issue-budget" x="105" y="55" width="430" height="360" />
+              <path class="fgsm-failure-region" d="M130 140C220 75 315 95 355 170C400 255 470 260 540 190C570 208 570 245 540 265C460 330 350 315 305 235C268 170 210 178 130 245C105 225 105 162 130 140Z" />
+              <path class="fgsm-issue-boundary" d="M130 140C220 75 315 95 355 170C400 255 470 260 540 190C570 208 570 245 540 265C460 330 350 315 305 235C268 170 210 178 130 245C105 225 105 162 130 140Z" />
+              <line class="fgsm-local-sign" x1="235" y1="335" x2="295" y2="279" marker-end="url(#fgsm-local-arrow)" />
+              <line class="fgsm-one-step" x1="235" y1="335" x2="535" y2="55" marker-end="url(#fgsm-issue-arrow)" />
+              <polyline class="fgsm-iterative-hint" points="235,335 295,279 326,253 346,220" marker-end="url(#iterative-issue-arrow)" />
+              <circle class="fgsm-issue-start" cx="235" cy="335" r="11" />
+              <circle class="fgsm-issue-end" cx="535" cy="55" r="12" />
+              <circle class="fgsm-issue-iterate p1" cx="295" cy="279" r="8" />
+              <circle class="fgsm-issue-iterate p2" cx="326" cy="253" r="8" />
+              <circle class="fgsm-issue-success" cx="346" cy="220" r="12" />
+            </svg>
+            <div class="plot-math-label fgsm-issue-budget-label">\(\|\delta\|_\infty\le\varepsilon\)</div>
+            <div class="plot-math-label fgsm-issue-region-label">different class</div>
+            <div class="plot-math-label fgsm-issue-start-label">\(x_0\)</div>
+            <div class="plot-math-label fgsm-issue-local-label">correct local sign</div>
+            <div class="plot-math-label fgsm-issue-fail-label">FGSM endpoint · \(\hat y=y\)</div>
+            <div class="plot-math-label fgsm-issue-iterative-label">small steps · recompute</div>
+            <div class="plot-math-label fgsm-issue-success-label">stop · \(\hat y\ne y\)</div>
+          </figure>
+        </div>
+        <aside class="notes">
+          <p>FGSM is fast, but can that single step miss an adversarial example?</p>
+        </aside>
+      </section>
+
+<section data-slide-style="lecture16" class="pgd-slide method-slide" data-timing="180">
+        <span class="kicker">Practical attacks · iterative method</span>
+        <h2>Projected Gradient Descent (PGD)</h2>
+        <div class="attack-method-layout">
+          <div class="attack-method-copy">
+            <div class="attack-step fragment fade-up" data-fragment-index="0" data-notes="Start at the original image or a random point within the budget. The starting pixels must also be valid.">
+              <strong>1. Start inside the budget</strong>
+              <p>Start at \(x_0\), or add a random perturbation inside the same \(\ell_\infty\) budget.</p>
+              <div>\[x_{\mathrm{adv}}^{(0)}=x_0+\delta^{(0)},\qquad \|\delta^{(0)}\|_\infty\le\varepsilon\]</div>
+            </div>
+            <div class="attack-step fragment fade-up" data-fragment-index="1" data-notes="Calculate the gradient and take a small sign-gradient step. Alpha is the step size. Recompute the gradient after each update so the direction can change.">
+              <strong>2. Take a small sign-gradient step</strong>
+              <p>Recompute the gradient at the current point.</p>
+              <div>\[\widetilde x_{\mathrm{adv}}^{(k+1)}=x_{\mathrm{adv}}^{(k)}+\alpha\,\operatorname{sign}\!\left(\nabla_x\mathcal L(x_{\mathrm{adv}}^{(k)},y)\right)\]</div>
+            </div>
+            <div class="attack-step fragment fade-up" data-fragment-index="2" data-notes="If the update goes outside the allowed region, project it back. This enforces the norm budget and pixel range. Repeat: gradient, step, projection. In this untargeted version, we increase the classification loss.">
+              <strong>3. Project back into the budget</strong>
+              <p>Keep the point within \(\varepsilon\) of \(x_0\) and inside the valid pixel range.</p>
+              <div>\[x_{\mathrm{adv}}^{(k+1)}=\Pi_{\mathcal C}\!\left(\widetilde x_{\mathrm{adv}}^{(k+1)}\right),\qquad \mathcal C=\{z:\|z-x_0\|_\infty\le\varepsilon\}\cap[0,1]^d\]</div>
+              <p class="method-result">Repeat → recompute → project</p>
+            </div>
+          </div>
+          <figure class="attack-method-figure pgd-method-figure" aria-label="Projected Gradient Descent takes repeated small sign-gradient steps and projects an out-of-budget point back into the L infinity budget">
+            <svg viewBox="0 0 650 470" role="img">
+              <rect class="plot-bg" x="15" y="15" width="620" height="430" rx="16" />
+              <rect class="pgd-budget" x="105" y="55" width="430" height="360" />
+              <polyline class="pgd-method-path" points="235,335 290,285 350,250 420,185 535,70" />
+              <circle class="pgd-method-point p0" cx="235" cy="335" r="10" />
+              <circle class="pgd-method-point p1" cx="290" cy="285" r="9" />
+              <circle class="pgd-method-point p2" cx="350" cy="250" r="9" />
+              <circle class="pgd-method-point p3" cx="420" cy="185" r="9" />
+              <circle class="pgd-method-outside" cx="565" cy="70" r="10" />
+              <line class="pgd-projection-line" x1="565" y1="70" x2="535" y2="70" />
+              <circle class="pgd-method-projected" cx="535" cy="70" r="11" />
+            </svg>
+            <div class="plot-math-label pgd-budget-label">\(\|\delta\|_\infty\le\varepsilon\)</div>
+            <div class="plot-math-label pgd-start-label">\(x_{\mathrm{adv}}^{(0)}\)</div>
+            <div class="plot-math-label pgd-project-label">project back</div>
+          </figure>
+        </div>
+        <a class="source-line" href="https://arxiv.org/abs/1706.06083" target="_blank" rel="noopener noreferrer">Madry, A., Makelov, A., Schmidt, L., Tsipras, D., &amp; Vladu, A. (2018). Towards deep learning models resistant to adversarial attacks. <em>International Conference on Learning Representations.</em></a>
+        <aside class="notes">
+          <p>Projected Gradient Descent, or PGD, uses that idea: take small steps and stay within the allowed region.</p>
+        </aside>
+      </section>
+
+<section data-slide-style="lecture16" class="mifgsm-slide method-slide" data-timing="180">
+        <span class="kicker">Practical attacks · momentum</span>
+        <h2>Momentum Iterative Fast Gradient Sign Method (MI-FGSM)</h2>
+        <div class="attack-method-layout">
+          <div class="attack-method-copy">
+            <div class="attack-step fragment fade-up" data-fragment-index="0" data-notes="Start at the original input and set the accumulated gradient to 0. Choose T steps, each with size epsilon divided by T.">
+              <strong>1. Initialize the attack</strong>
+              <p>Use \(T\) steps. Each step has size \(\alpha=\varepsilon/T\).</p>
+              <div>\[x_{\mathrm{adv}}^{(0)}=x_0,\qquad g^{(0)}=0,\qquad \alpha=\frac{\varepsilon}{T}\]</div>
+            </div>
+            <div class="attack-step fragment fade-up" data-fragment-index="1" data-notes="Keep part of the previous direction and add the current gradient, normalised by its L1 norm. Mu controls how much history we keep.">
+              <strong>2. Accumulate normalized gradients</strong>
+              <p>\(\mu\) keeps part of the previous accumulated direction.</p>
+              <div>\[g^{(k+1)}=\mu g^{(k)}+\frac{\nabla_x\mathcal L(x_{\mathrm{adv}}^{(k)},y)}{\|\nabla_x\mathcal L(x_{\mathrm{adv}}^{(k)},y)\|_1}\]</div>
+            </div>
+            <div class="attack-step fragment fade-up" data-fragment-index="2" data-notes="Update the input using the sign of this accumulated direction. We now use information from earlier steps, not just the latest gradient. With this step size, T updates stay within the L-infinity budget. The goal is not just a smoother path. Momentum can also help the attack avoid poor local solutions and transfer better to another model—meaning the same adversarial input may fool a model we did not use to generate it.">
+              <strong>3. Update with the accumulated sign</strong>
+              <p>Use \(\operatorname{sign}(g^{(k+1)})\), not only the current gradient.</p>
+              <div>\[x_{\mathrm{adv}}^{(k+1)}=x_{\mathrm{adv}}^{(k)}+\alpha\,\operatorname{sign}(g^{(k+1)}),\qquad k=0,\ldots,T-1\]</div>
+              <p class="method-result">\(x_{\mathrm{adv}}=x_{\mathrm{adv}}^{(T)}\), with \(\|x_{\mathrm{adv}}-x_0\|_\infty\le\varepsilon\)</p>
+            </div>
+          </div>
+          <figure class="attack-method-figure mifgsm-method-figure" aria-label="Comparison of an oscillating iterative path without momentum and a smoother path with momentum">
+            <svg viewBox="0 0 650 470" role="img">
+              <defs>
+                <marker id="mifgsm-gradient-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" /></marker>
+                <marker id="mifgsm-momentum-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" /></marker>
+              </defs>
+              <rect class="plot-bg" x="15" y="15" width="620" height="430" rx="16" />
+              <rect class="mifgsm-compare-panel" x="35" y="55" width="270" height="350" rx="14" />
+              <rect class="mifgsm-compare-panel with-momentum" x="345" y="55" width="270" height="350" rx="14" />
+              <g class="mifgsm-contours">
+                <ellipse cx="170" cy="225" rx="115" ry="95" />
+                <ellipse cx="170" cy="225" rx="88" ry="71" />
+                <ellipse cx="170" cy="225" rx="61" ry="48" />
+                <ellipse cx="170" cy="225" rx="34" ry="26" />
+                <ellipse cx="480" cy="225" rx="115" ry="95" />
+                <ellipse cx="480" cy="225" rx="88" ry="71" />
+                <ellipse cx="480" cy="225" rx="61" ry="48" />
+                <ellipse cx="480" cy="225" rx="34" ry="26" />
+              </g>
+              <polyline class="mifgsm-no-momentum-path" points="67,150 87,270 104,198 117,241 128,215 136,231 143,222 148,227 153,224 156,226 159,225 170,225" marker-end="url(#mifgsm-gradient-arrow)" />
+              <path class="mifgsm-momentum-path" d="M377 150L383 186L392 223L401 242L411 244L420 235L428 226L435 221L442 220L447 222L452 225L456 226L459 226L462 226L465 225L467 225L469 225L471 225L472 225L473 225L474 225L480 225" marker-end="url(#mifgsm-momentum-arrow)" />
+              <g class="mifgsm-trace-points no-momentum">
+                <circle cx="67" cy="150" r="5" /><circle cx="87" cy="270" r="5" /><circle cx="104" cy="198" r="5" /><circle cx="117" cy="241" r="5" /><circle cx="128" cy="215" r="5" /><circle cx="143" cy="222" r="5" />
+              </g>
+              <g class="mifgsm-trace-points with-momentum">
+                <circle cx="377" cy="150" r="5" /><circle cx="392" cy="223" r="5" /><circle cx="411" cy="244" r="5" /><circle cx="428" cy="226" r="5" /><circle cx="447" cy="222" r="5" /><circle cx="459" cy="226" r="5" />
+              </g>
+              <circle class="mifgsm-no-momentum-end" cx="170" cy="225" r="11" />
+              <circle class="mifgsm-momentum-end" cx="480" cy="225" r="11" />
+            </svg>
+            <div class="plot-math-label mifgsm-without-label">without momentum</div>
+            <div class="plot-math-label mifgsm-with-label">with momentum</div>
+            <div class="plot-math-label mifgsm-oscillation-label">oscillating updates</div>
+            <div class="plot-math-label mifgsm-stable-label">stable direction</div>
+          </figure>
+        </div>
+        <a class="source-line" href="https://arxiv.org/abs/1710.06081" target="_blank" rel="noopener noreferrer">Dong, Y., Liao, F., Pang, T., Su, H., Zhu, J., Hu, X., &amp; Li, J. (2018). Boosting adversarial attacks with momentum. <em>IEEE/CVF Conference on Computer Vision and Pattern Recognition</em>, 9185–9193.</a>
+        <aside class="notes">
+          <p>PGD improves on FGSM by taking several small steps. But each step follows only the latest gradient, so the direction can keep changing and the path can zigzag. MI-FGSM adds momentum: it remembers earlier directions instead of starting fresh at every step.</p>
+        </aside>
+      </section>
+
+<section class="lecture-summary-slide composite-summary-slide" data-slide-style="lecture16" data-timing="120"><span class="kicker">Summary</span><h2>What have we learned?</h2><ul class="composite-points"><li><strong>Linear geometry</strong><span>Find the closest decision-boundary point with a closed-form projection.</span></li><li><strong>Norms and budgets</strong><span>L1, L2 and L-infinity define different perturbation budgets; pixels must stay valid.</span></li><li><strong>Sign-step attacks</strong><span>FGSM takes 1 signed step. PGD repeats the step and projects back into the budget.</span></li><li><strong>Momentum</strong><span>MI-FGSM accumulates a direction instead of following only the latest gradient.</span></li></ul><p class="summary-next"><span>Next lecture</span><strong>White-Box Attacks and Automatic Differentiation</strong></p><aside class="notes">
+          <p>Let’s bring this together. We started with a linear classifier, where we could calculate the closest boundary point directly.</p>
+          <p>For neural networks we used the input gradient under a norm budget. FGSM takes 1 signed step. PGD repeats that step and projects. MI-FGSM keeps a running direction so the path does not zigzag as much.</p>
+          <p>The key questions stay the same: what we want to change, how much change is allowed, and which variable we update. Next lecture we continue with Carlini–Wagner, discrete token search, a generative attack, and the automatic differentiation that produces these gradients.</p>
+        </aside></section>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+  <script>window.PRESENTATION_CONFIG = { totalTime: 50 * 60, logoPath: 'uom-logo.svg' };</script>
+  <script src="laser-pointer.js?v=3"></script>
+  <script src="presentation.js?v=lecture-reorg-20260917"></script>
+  <script src="lecture16.js?v=lecture-reorg-20260917"></script>
+</body>
+</html>
