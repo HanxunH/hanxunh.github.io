@@ -24,16 +24,10 @@
       </div>
       <div class="title-course"><strong>COMP90073</strong><span>Trustworthy Machine Learning</span><span>Hanxun Huang, CIS</span><span>Semester 2, 2026</span></div>
       <div class="title-wave" aria-hidden="true"></div>
-      <aside class="notes">
-          <p>Last time we could backpropagate through the target. Today we cannot use those target-model gradients. We will query, transfer, then search over prompts, conversations, and long contexts.</p>
-        </aside>
+      
     </section>
 
-<section class="l17-outline-slide" data-slide-style="lecture17" data-timing="100"><span class="kicker">Lecture map</span><h2>Outline</h2><div class="l17-outline-list"><div><span>01</span><strong>How do query-based attacks work without target gradients?</strong></div><div><span>02</span><strong>How do transfer attacks reuse a surrogate?</strong></div><div><span>03</span><strong>How do black-box attacks search over LLM prompts and context?</strong></div></div><aside class="notes">
-          <p>We start with classical black-box attacks. If we can query the target, we estimate a direction or we search with scores and labels. No target-model gradient is used.</p>
-          <p>If repeated queries are unavailable, we craft on a surrogate that we do control. That surrogate may have gradients; the held-out target still does not. Transfer is not a pure query attack.</p>
-          <p>Then we move to language models. We search using generated replies, transfer prompts between models, and change conversations or long contexts. Throughout, we check whether the response actually achieves the attacker’s goal.</p>
-        </aside></section>
+<section class="l17-outline-slide" data-slide-style="lecture17" data-timing="100"><span class="kicker">Lecture map</span><h2>Outline</h2><div class="l17-outline-list"><div><span>01</span><strong>How do query-based attacks work without target gradients?</strong></div><div><span>02</span><strong>How do transfer attacks reuse a surrogate?</strong></div><div><span>03</span><strong>How do black-box attacks search over LLM prompts and context?</strong></div></div></section>
 
 <section data-slide-style="lecture17" class="bb-teaching-slide bb-access-slide" data-timing="170">
         <span class="kicker">Black-box attacks · access</span>
@@ -87,10 +81,7 @@
           </div>
         </figure>
         <p class="bb-takeaway fragment fade-in" data-fragment-index="1"><span><strong>White box:</strong> compute \(\nabla_\delta\mathcal L\).</span><span><strong>Black box:</strong> observe outputs, not exact gradients.</span></p>
-        <aside class="notes">
-          <p>Until now we assumed we could backpropagate through the target. If we only see inputs and outputs, that gradient is gone.</p>
-          <p>The rest of this lecture is black-box in that sense: no target-model gradients. We can still query, or we can craft on a surrogate.</p>
-        </aside>
+        
       </section>
 
 <section data-slide-style="lecture17" class="bb-teaching-slide bb-budget-slide" data-timing="165">
@@ -144,7 +135,7 @@
         </figure>
         <p class="bb-takeaway fragment fade-in" data-fragment-index="1">Transfer: craft on a surrogate, then send the same input to the black-box target.</p>
         <p class="budget-access-note fragment fade-in" data-fragment-index="1">Gray box: we know partial information about the target, e.g. CNN or Transformer.</p>
-        <aside class="notes">Each reveal shows its complete diagram and labels. The query signal runs three loops and stops. The surrogate signal also runs three loops, then stops before the finished input travels once to the target. Three loops are only a visual illustration: k represents an arbitrary number of evaluations, not three measured API calls. The gray-box transfer example uses partial target information, such as its model family, to guide surrogate choice; target weights and gradients remain unavailable. The surrogate may be a local white-box model. Craft on the surrogate, then submit the same input to the target; transfer may fail. Target calls during crafting are zero in this example; the final submission is one separate call. Transfer is also possible without partial target information. No live API requests are made.</aside>
+        
       </section>
 
 <section data-slide-style="lecture17" class="bb-teaching-slide fd-teaching-slide fd-slope-slide" data-timing="175">
@@ -214,7 +205,7 @@
         <div class="bb-equation fragment fade-in" data-fragment-index="2">\[\frac{d\mathcal L}{d\delta}(0)\approx\frac{\ell(f_\theta(x+h),y)-\ell(f_\theta(x-h),y)}{2h}=\frac{1.24-1.20}{0.02}=2\]</div>
         <p class="bb-takeaway fragment fade-in" data-fragment-index="2">Positive slope: increasing this input value increases the loss locally.</p>
         <p class="fd-access-note fragment fade-in" data-fragment-index="0">Illustrative loss values, not model results. Compute loss from probabilities or logits—not labels alone.</p>
-        <aside class="notes">Start with one scalar input value x=0.50 and perturbation delta=0. Define L(delta)=ell(f_theta(x+delta),y), with fixed model and label. Use h=0.01 only for estimating the derivative. Query x-h, then x+h. The target returns scores; compute both losses locally. The example losses 1.20 and 1.24 are illustrative, not experimental measurements. Their difference is 0.04 over an input change of 0.02, giving estimated slope 2. This estimates the derivative at delta=0, not the exact derivative of an unknown model. Reference: Bhagoji, He, Li and Song, Exploring the Space of Black-box Attacks on Deep Neural Networks, arXiv:1712.09491.</aside>
+        
       </section>
 
 <section data-slide-style="lecture17" class="bb-teaching-slide fd-teaching-slide fd-coordinate-slide" data-timing="175">
@@ -295,7 +286,7 @@
             <p class="fd-access-note">1024 values per channel × 3 channels. Each coordinate requires two input evaluations.</p>
           </div>
         </div>
-        <aside class="notes">The two inputs are drawn as 32 by 32 RGB channel stacks. Demonstrate four positions in R, then four in G, then four in B, and stop. The active channel comes to the front of both stacks. Each demonstration tests minus h, plus h, then estimates one gradient component; other channel values remain unchanged. The index refers to the full 3072-coordinate vector, so it jumps when the demo advances to the next channel. This is a short visual demonstration, not a complete gradient scan or live model run. A full calculation would use all 1024 coordinates per channel, giving Q=2HWC=6144 input evaluations. That total is computed from the dimensions, not counted by replaying thousands of animation steps. Reference: Bhagoji et al., Exploring the Space of Black-box Attacks on Deep Neural Networks, arXiv:1712.09491.</aside>
+        
       </section>
 
 <section data-slide-style="lecture17" class="bb-teaching-slide bb-directions-slide" data-timing="165">
@@ -333,7 +324,7 @@
         <div class="bb-equation fragment fade-in" data-fragment-index="1">\[2d\;\longrightarrow\;2m\text{ queries},\qquad m&lt;d\]</div>
         <p class="bb-takeaway fragment fade-in" data-fragment-index="1">Fewer queries. Less precise gradient estimates.</p>
         <a class="source-line" href="https://arxiv.org/abs/1712.09491" target="_blank" rel="noopener noreferrer">Bhagoji, A. N., He, W., Li, B., &amp; Song, D. (2017). <em>Exploring the space of black-box attacks on deep neural networks</em> [Preprint]. arXiv. https://arxiv.org/abs/1712.09491</a>
-        <aside class="notes">Probing every coordinate costs 2d queries. Using m random directions costs 2m queries, with m less than d. The cheaper estimate is noisier. This is still a score-based setting. If we only receive labels, we do not have this loss, and people instead search near the decision boundary. The figure illustrates the general idea of probing fewer directions. The cited Bhagoji et al. paper develops random feature grouping and PCA-based query reduction, not this generic random-direction illustration.</aside>
+        
       </section>
 
 <section data-slide-style="lecture17" class="bb-teaching-slide bb-direction-choice-slide" data-timing="180">
@@ -388,7 +379,7 @@
         <div class="bb-equation fragment fade-in" data-fragment-index="2">\[x+\delta-hu_j\qquad\text{and}\qquad x+\delta+hu_j\]</div>
         <p class="bb-takeaway fragment fade-in" data-fragment-index="2">Two queries measure the loss change along one direction.</p>
         <a class="source-line" href="https://arxiv.org/abs/1712.09491" target="_blank" rel="noopener noreferrer">Bhagoji, A. N., He, W., Li, B., &amp; Song, D. (2017). <em>Exploring the space of black-box attacks on deep neural networks</em> [Preprint]. arXiv. https://arxiv.org/abs/1712.09491</a>
-        <aside class="notes">Three conceptual choices, revealed left to right. Random directions can be sampled without representative input data; they are the generic approach discussed on the previous slide, not a claim that Bhagoji et al. introduced it. Random feature grouping partitions coordinates into groups and changes coordinates within a chosen group together. The highlighted scattered cells illustrate one group, not a contiguous image patch. PCA estimates principal directions from sample inputs; the ellipse is a schematic data cloud, not a loss surface. Keep a few high-variance directions. Neither grouping nor PCA requires target weights; PCA does require suitable sample data. For any chosen direction u_j, compare losses at x+delta plus and minus h u_j. Each pair gives a directional derivative, not all individual pixel gradients. Fewer probes constrain the gradient approximation. Grouping and PCA are described in Section 3.2 of Bhagoji, He, Li and Song, Exploring the Space of Black-box Attacks on Deep Neural Networks, arXiv:1712.09491.</aside>
+        
       </section>
 
 <section data-slide-style="lecture17" class="bb-teaching-slide bb-performance-slide" data-timing="180">
@@ -411,7 +402,7 @@
         <p class="bb-takeaway">Fewer queries can still give high attack success.</p>
         <p class="performance-note">Results depend on the model, dataset, and perturbation budget.</p>
         <a class="source-line" href="https://arxiv.org/abs/1712.09491" target="_blank" rel="noopener noreferrer">Bhagoji, A. N., He, W., Li, B., &amp; Song, D. (2017). <em>Exploring the space of black-box attacks on deep neural networks</em> [Preprint]. arXiv. https://arxiv.org/abs/1712.09491</a>
-        <aside class="notes">Original plots, not reconstructed curves: crops of Figure 3(b) and Figure 3(c), page 11 of arXiv:1712.09491v1. Source PDF: https://arxiv.org/pdf/1712.09491v1. The MNIST crop uses page coordinates (238,94)-(372,198); the CIFAR crop uses (371,94)-(505,198), rendered at six pixels per point. The axes, curves, legends and original plot titles are retained. All content is visible on entry. Identify None, the full finite-difference baseline. The horizontal axis is epsilon, not query count; vertical axis is attack success percent. Legend values are PCA component counts k. Example query costs: MNIST d=784, so 2d=1568 compared with 2k=200 for PCA-100; CIFAR-10 d=3072, so 2d=6144 compared with 800 for PCA-400. Counts are model input evaluations per gradient estimate, not necessarily HTTP requests with batching. Compare curves at the same epsilon within each plot. MNIST and CIFAR use different input scales, so do not compare their epsilon values directly. Smaller k reduces cost but can reduce success, especially for smaller perturbation budgets. Do not claim universal success rates or that all reduced settings match the baseline.</aside>
+        
       </section>
 
 <section data-slide-style="lecture17" class="bb-teaching-slide bb-zoo-slide" data-timing="180">
@@ -471,7 +462,7 @@
         <p class="zoo-objective">Randomness selects <strong>what to test</strong>. Estimated gradients guide <strong>how to update</strong>.</p>
         <p class="bb-takeaway">Same gradient-estimation idea. Different objective and optimizer.</p>
         <a class="source-line" href="https://arxiv.org/abs/1708.03999" target="_blank" rel="noopener noreferrer">Chen, P.-Y., Zhang, H., Sharma, Y., Yi, J., &amp; Hsieh, C.-J. (2017). <em>ZOO: Zeroth order optimization based black-box attacks to deep neural networks without training substitute models</em> [Preprint]. arXiv. https://arxiv.org/abs/1708.03999</a>
-        <aside class="notes">This slide compares earlier estimated-gradient FGSM-style attacks with the ZOO-Adam variant of Chen et al. The upper row illustrates an untargeted sign-ascent step with example gradient components [2,-1,0.5]; these are illustrative values, not measured results. A positive component adds alpha and a negative component subtracts alpha, before projecting to the permitted input and perturbation bounds. Random probing or PCA determines how the gradient is estimated, not a random final update. The lower row minimizes a C and W style objective F consisting of distortion plus an attack penalty. ZOO estimates derivatives for selected coordinates and applies coordinate-wise Adam using each coordinate's gradient history and adaptive scaling. Delta_i denotes the signed step produced by that optimizer, not the raw finite-difference probe h and not an independent random change. The three-cell strips show additive changes, not absolute pixel values. One selected coordinate is shown for clarity; ZOO can update a batch of selected coordinates. Other coordinates remain fixed in that update. Constraints and the detailed Adam moment equations are omitted from this comparison diagram. Up and down denote optimization goals, not a guarantee at each step. The ZOO paper also studies a coordinate Newton variant. Both families use target scores, estimated derivatives, and no substitute model.</aside>
+        
       </section>
 
 <section data-slide-style="lecture17" class="bb-teaching-slide bb-direct-search-slide square-demo" data-scene-count="8" data-scene-control="manual" data-scene-duration="2000" data-timing="180">
@@ -614,7 +605,7 @@
         <span class="fragment search-step" data-fragment-index="5" data-scene-step="6" aria-hidden="true"></span>
         <span class="fragment search-step" data-fragment-index="6" data-scene-step="7" aria-hidden="true"></span>
         <a class="source-line" href="https://arxiv.org/abs/1912.00049" target="_blank" rel="noopener noreferrer">Andriushchenko, M., Croce, F., Flammarion, N., &amp; Hein, M. (2019). <em>Square Attack: A query-efficient black-box adversarial attack via random search</em> [Preprint]. arXiv. https://arxiv.org/abs/1912.00049</a>
-        <aside class="notes">Manual Next-controlled storyboard of the L infinity variant, following Square Attack Algorithm 2. First choose a square and sample a sign independently for each RGB channel. All values in the same channel of that square share the signed increment plus or minus 2 epsilon. This is twice epsilon, not two queries. The increment is applied to the current candidate; it is not the final perturbation relative to the original image. It allows a value near one side of the permitted interval to move to the opposite side. Clip first to [x-epsilon,x+epsilon], then to valid pixel values [0,1]. The resulting total perturbation remains bounded by epsilon. Query only the clipped candidate; accept if the objective improves, otherwise retain the previous input. The confidence values are illustrative, not measured results, and the paper commonly uses a margin objective. No model or API is called.</aside>
+        
       </section>
 
 <section data-slide-style="lecture17" class="bb-teaching-slide bb-direct-search-slide simba-demo" data-scene-count="4" data-scene-control="manual" data-scene-duration="2200" data-timing="160">
@@ -1089,7 +1080,7 @@
         <span class="fragment search-step" data-fragment-index="1" data-scene-step="2" aria-hidden="true"></span>
         <span class="fragment search-step" data-fragment-index="2" data-scene-step="3" aria-hidden="true"></span>
         <a class="source-line" href="https://arxiv.org/abs/1905.07121" target="_blank" rel="noopener noreferrer">Guo, C., Gardner, J. R., You, Y., Wilson, A. G., &amp; Weinberger, K. Q. (2019). <em>Simple black-box adversarial attacks</em> [Preprint]. arXiv. https://arxiv.org/abs/1905.07121</a>
-        <aside class="notes">SimBA is score-based direct search, not finite-difference gradient estimation. Sample one unused orthonormal direction u from a fixed basis (pixel, DCT, or a simple stripe or checker here). Query x_adv minus h u. If original-class confidence p_y rises, reject that sign and only then query plus. If p_y falls, accept immediately and skip the unused sign. This illustration: start at 0.80, minus yields 0.83 so reject, plus yields 0.70 so accept, then keep x_adv + h u and move to a new unused direction. Two queries for this pair; at most two per direction. h is a trial step, not epsilon. Scores are illustrative, not model outputs. No live queries.</aside>
+        
       </section>
 
 <section data-slide-style="lecture17" class="bb-teaching-slide bb-direct-search-slide boundary-demo" data-scene-count="5" data-scene-control="manual" data-scene-duration="2200" data-timing="180">
@@ -1204,7 +1195,7 @@
         <span class="fragment search-step" data-fragment-index="2" data-scene-step="3" aria-hidden="true"></span>
         <span class="fragment search-step" data-fragment-index="3" data-scene-step="4" aria-hidden="true"></span>
         <a class="source-line" href="https://arxiv.org/abs/1712.04248" target="_blank" rel="noopener noreferrer">Brendel, W., Rauber, J., &amp; Bethge, M. (2017). <em>Decision-based adversarial attacks: Reliable attacks against black-box machine learning models</em> [Preprint]. arXiv. https://arxiv.org/abs/1712.04248</a>
-        <aside class="notes">Layout and geometry adapted from CS598 lecture0907, pages 27–30: https://aisecure.github.io/TEACHING/CS598/Fall2021_files/lecture0907.pdf. Manual Next shows one accepted update before a separate rejection case. Original x=(325,330) remains fixed. Current input A=(490,110) is misclassified. First show a random sideways proposal B=(325,55) on the sphere around x: both distances are exactly 275. Then propose C=(325,155), distance 175, along the direction to x. Keep A as the solid current point while C is hollow and unqueried. Query C's label in the next scene; only then turn C solid and retain A as a gray previous point. The arc, sideways proposal and inward arrow remain visible. A separate final scene proposes D=(325,240), distance 90, inside the correctly classified region. Reject D and leave C unchanged. The diagram illustrates the projected orthogonal proposal and inward step, not an exact sampler. Input-domain constraints and step-size adaptation apply in the full method. Only labels are queried; the boundary is drawn for teaching. No live queries or model execution.</aside>
+        
       </section>
 
 <section data-slide-style="lecture17" class="bb-teaching-slide bb-query-transition centered" data-timing="90">
@@ -1216,7 +1207,7 @@
           <li><strong>The service may block further queries.</strong></li>
         </ul>
         <h3 class="practicality-question">What if we cannot query the target?</h3>
-        <aside class="notes">Static transition from query-based to transfer-based attacks. Detection and blocking are possible, not guaranteed. Ask what happens when target queries are unavailable while crafting. The next slide introduces local surrogate crafting; evaluating the finished input on the target is still a target call.</aside>
+        
       </section>
 
 <section data-slide-style="lecture17" class="bb-teaching-slide bb-transfer-slide" data-timing="175">
@@ -1270,10 +1261,7 @@
           </div>
         </div>
         <a class="source-line" href="https://huggingface.co/models" target="_blank" rel="noopener noreferrer">Hugging Face · 11 Sep 2026 · Public model repositories, including variants. Licenses and access vary.</a>
-        <aside class="notes">
-          <p>Query-based search needs many target calls, and those calls can be noticed or blocked.</p>
-          <p>If we cannot query while crafting, we build the example on a surrogate we do control, then send it to the target. The surrogate may have gradients. The target still does not. Transfer is not a pure query attack.</p>
-        </aside>
+        
       </section>
 
 <section data-slide-style="lecture17" class="bb-teaching-slide bb-direct-search-slide tramer-demo" data-scene-count="4" data-scene-control="manual" data-scene-duration="1800" data-timing="200">
@@ -1354,7 +1342,7 @@
         <span class="fragment search-step" data-fragment-index="1" data-scene-step="2" aria-hidden="true"></span>
         <span class="fragment search-step" data-fragment-index="2" data-scene-step="3" aria-hidden="true"></span>
         <a class="source-line" href="https://arxiv.org/html/1704.03453#S4" target="_blank" rel="noopener noreferrer">Tramèr, F., Papernot, N., Goodfellow, I., Boneh, D., &amp; McDaniel, P. (2017). <em>The space of transferable adversarial examples</em> [Preprint]. arXiv. https://arxiv.org/abs/1704.03453</a>
-        <aside class="notes">Conceptual explanation based on Tramèr et al. (2017), Sections 3–5: shared adversarial subspaces, nearby decision boundaries, and limits of transferability. The diagram is an authored two-dimensional illustration, not a reproduction of a measured boundary. The solid surrogate boundary and dashed target boundary are similar but not identical. The gray double-headed arrow highlights their separation, following the inter-boundary-distance idea in the paper's Figure 3. Original x=(180,320) is correctly classified by both. A=(350,175) crosses only the surrogate boundary. B=(447.14,92.14) lies in the overlap of their misclassified regions and fools both. Next adds the target boundary and gap, then A, then B and the shared region. No experiment details are shown. Similar boundaries and overlapping error regions provide an intuition, not a universal guarantee. This does not imply that all models share exactly the same boundary or that increasing perturbation size always produces transfer. No model execution or live queries.</aside>
+        
       </section>
 
 <section data-slide-style="lecture17" class="bb-teaching-slide transfer-smoothness-slide momentum-transfer-slide" data-timing="200">
@@ -1422,7 +1410,7 @@
           <p>MI-FGSM combines past gradients, rather than following only the latest local gradient.</p>
         </div>
         <a class="source-line" href="https://arxiv.org/abs/1710.06081" target="_blank" rel="noopener noreferrer">Dong, Y., Liao, F., Pang, T., Su, H., Zhu, J., Hu, X., &amp; Li, J. (2018). Boosting adversarial attacks with momentum. <em>CVPR</em>, 9185–9193.</a>
-        <aside class="notes">Combines the actual authored trajectory coordinates and contour layout from Lecture 16's MI-FGSM slide with this slide's existing sharp and smooth loss sketches. All visuals and explanations appear together on slide entry. Both momentum paths draw simultaneously, without staged fragments or empty background cards. MI-FGSM accumulates normalized gradients with momentum and updates using the accumulated sign. Dong et al. explain that momentum stabilizes update directions and helps escape poor local maxima, producing more transferable adversarial examples in their experiments. The loss sketches compare geometries; they are not before-and-after loss surfaces produced by MI-FGSM. Momentum changes the update rule, not the target model or its loss surface. Both trajectory panels are schematic optimization paths, not measured transfer results or a claim that momentum always succeeds. No model execution or live queries.</aside>
+        
       </section>
 
 <section data-slide-style="lecture17" class="bb-teaching-slide bb-direct-search-slide input-diversity-slide" data-scene-count="6" data-scene-control="manual" data-scene-duration="1800" data-timing="220">
@@ -1500,7 +1488,7 @@
         <span class="fragment search-step" data-fragment-index="3" data-scene-step="4" aria-hidden="true"></span>
         <span class="fragment search-step" data-fragment-index="4" data-scene-step="5" aria-hidden="true"></span>
         <a class="source-line" href="https://doi.org/10.1109/CVPR.2019.00284" target="_blank" rel="noopener noreferrer">Xie, C., Zhang, Z., Zhou, Y., Bai, S., Wang, J., Ren, Z., &amp; Yuille, A. L. (2019). Improving transferability of adversarial examples with input diversity. In <em>Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition</em> (pp. 2730–2739). https://doi.org/10.1109/CVPR.2019.00284</a>
-        <aside class="notes">The input is the supplied cat photograph, center-cropped to a square. This is a broader input-augmentation illustration inspired by DI²-FGSM, whose original input transform uses random resizing and padding. Follow 2 illustrative iterations. First resize and pad the original input, backpropagate through that view, then update the input. The second view uses a sampled crop, horizontal flip, and reduced brightness, then resizes and pads the result. These extra augmentations illustrate the general principle; they are not the original paper’s transform recipe. Only the transformed view is cropped, flipped or darkened. The current input stays in its original coordinate system; backpropagation through the transform maps the gradient back to those pixels. The previous view stays visible during its update and changes at the next iteration. The surrogate weights stay fixed. In a real attack, gradients come from the surrogate loss; here the 2 pixel updates are authored illustrations, adding .04 times alternating row signs, then .04 times alternating column signs to a 288 by 288 crop, clipping to [0,1]. The total change stays within the original-image L-infinity budget .1. No model is run and no attack success is claimed. Sample transformations that preserve the task label; excessive cropping or brightness changes can change the task itself. Diverse views can improve transfer, but do not guarantee it.</aside>
+        
       </section>
 
 <section data-slide-style="lecture17" class="bb-teaching-slide bb-direct-search-slide transfer-method-slide ensemble-method-slide" data-scene-control="manual" data-scene-count="4" data-scene-duration="1800" data-timing="180">
@@ -1586,7 +1574,7 @@
         <span class="fragment search-step" data-fragment-index="1" data-scene-step="2" aria-hidden="true"></span>
         <span class="fragment search-step" data-fragment-index="2" data-scene-step="3" aria-hidden="true"></span>
         <a class="source-line" href="https://arxiv.org/html/1611.02770#S5" target="_blank" rel="noopener noreferrer">Liu, Y., Chen, X., Liu, C., &amp; Song, D. (2017). Delving into transferable adversarial examples and black-box attacks. <em>International Conference on Learning Representations</em>.</a>
-        <aside class="notes">Concept-first illustration of Liu et al. (2017), Sections 5 and 6. Their motivation is that an example adversarial for multiple models may generalize to another model. This is not merely a prediction-fusion diagram. Three authored local boundaries illustrate distinct surrogate errors: model 1 is wrong for horizontal coordinate greater than 300; model 2 for vertical coordinate below 220; model 3 for vertical coordinate below .3 times horizontal coordinate plus 100. Original x=(130,285) is correct on all three. A=(340,280) fools only model 1. B=(630,150) is an illustrative successful ensemble outcome in their shared error region. The target is excluded during crafting; only the last reveal adds its boundary at horizontal coordinate 570 and shows that B transfers in this example. Shared source errors do not guarantee target errors. The polygon is a conceptual overlap, not a measured decision region or a claim that the optimization enforces intersection membership. The actual ensemble combines softmax probabilities before one loss, with nonnegative weights summing to one. The paper presents a targeted objective and an untargeted counterpart; this diagram uses an untargeted teaching example. No experiment statistics, numerical optimizer, model execution or live queries.</aside>
+        
       </section>
 
 <section data-slide-style="lecture17" class="bb-teaching-slide bb-direct-search-slide transfer-method-slide sgm-method-slide" data-scene-control="manual" data-scene-count="2" data-scene-duration="1800" data-timing="180">
@@ -1667,7 +1655,7 @@
         </div>
         <span class="fragment search-step" data-fragment-index="0" data-scene-step="1" aria-hidden="true"></span>
         <a class="source-line" href="https://arxiv.org/html/2002.05990#S3" target="_blank" rel="noopener noreferrer">Wu, D., Wang, Y., Xia, S.-T., Bailey, J., &amp; Ma, X. (2020). Skip connections matter: On the transferability of adversarial examples generated with ResNets. <em>International Conference on Learning Representations</em>.</a>
-        <aside class="notes">Focus on one residual block before discussing longer paths. Forward remains h'=h+F(h). With column gradients, g_skip=g_out and g_residual=J_F(h)^T g_out. SGM uses g_skip+gamma*g_residual rather than gamma times the whole gradient. The left graph keeps all forward geometry and identity gradients fixed. Next attenuates only the residual branch. The right vector-addition example uses g_skip=(4,0), g_residual=(0,5), displayed with 40 SVG units per coordinate and screen y inverted. The residual arrow is translated to the tip of the skip arrow, showing head-to-tail addition. Standard sum is (4,5); gamma=1/2 gives (4,2.5). The skip endpoint remains fixed while the residual arrow shortens and the combined arrow changes direction. Gamma=1/2 is an illustrative arithmetic choice, not a recommended attack setting. Vector directions are authored, not gradients computed from a model; in general, changing the balance can change direction, and does not necessarily reduce the total norm. The paper finds that emphasizing skip-heavy gradients can improve transfer; this is not guaranteed. Across multiple blocks, a path with m residual branches receives gamma^m, while an all-skip path keeps factor 1. The full method applies this modification during backpropagation to update the adversarial input, never model parameters. No model execution or live queries.</aside>
+        
       </section>
 
 <section data-slide-style="lecture17" class="bb-teaching-slide bb-direct-search-slide transfer-method-slide uap-method-slide" data-scene-control="manual" data-scene-count="4" data-scene-duration="1800" data-timing="180">
@@ -1755,7 +1743,7 @@
         <span class="fragment search-step" data-fragment-index="1" data-scene-step="2" aria-hidden="true"></span>
         <span class="fragment search-step" data-fragment-index="2" data-scene-step="3" aria-hidden="true"></span>
         <a class="source-line" href="https://arxiv.org/html/1610.08401v3#S1.F1" target="_blank" rel="noopener noreferrer">Moosavi-Dezfooli, S.-M., Fawzi, A., Fawzi, O., &amp; Frossard, P. (2017). Universal adversarial perturbations. <em>CVPR</em>. Figure 1, also shown in Lecture 15.</a>
-        <aside class="notes">Revisit Lecture 15's Applicability slide, which used uap-cvpr2017-figure1.png. These are real clean/perturbed image pairs and reported predictions from the same published Figure 1, not generated pixel glyphs or new model results. Higher-resolution source: https://arxiv.org/html/1610.08401v3/main_fig_pascal.png (1126 by 1681). Crops (left,top,right,bottom): powder clean (251,9,413,166), perturbed (711,9,874,167); grille clean (55,366,218,528), perturbed (907,366,1069,528); dog clean (15,959,177,1121), perturbed (949,959,1110,1121); joystick clean (131,175,293,336), perturbed (830,175,996,336); flagpole clean (1,760,167,922), perturbed (952,760,1124,922); butterfly clean (53,1158,218,1319), perturbed (907,1158,1071,1319); perturbation visualization (452,728,673,949). Thin grid lines and the plus marker on the delta visualization are part of the published figure, not new perturbations. The displayed noise is a figure visualization, not a raw tensor suitable for reconstructing the examples. Next first switches the first three photos to their published perturbed versions: face powder to Chihuahua, grille to Jay, Tibetan mastiff unchanged. Then show three other clean photos; the final reveal uses their published perturbed versions: joystick to Chihuahua, flagpole to Labrador, lycaenid to Brabancon griffon. The same delta visualization remains fixed in every scene. Colors distinguish changed predictions from the original reported label. The figure does not specify whether these pictured images were in the construction set, so do not call them held-out samples. In general the paper learns one bounded image-agnostic perturbation on a set and demonstrates reuse on many images, including some cross-model transfer. Not every image is fooled. No per-image optimization, regenerated adversarial examples or model execution occurs here.</aside>
+        
       </section>
 
 <section data-slide-style="lecture17" class="bb-teaching-slide bb-direct-search-slide transfer-method-slide xtransfer-scope-slide" data-scene-control="manual" data-scene-count="4" data-scene-duration="1800" data-timing="180">
@@ -1838,7 +1826,7 @@
         <span class="fragment search-step" data-fragment-index="1" data-scene-step="2" aria-hidden="true"></span>
         <span class="fragment search-step" data-fragment-index="2" data-scene-step="3" aria-hidden="true"></span>
         <a class="source-line" href="https://arxiv.org/html/2505.05528v3#S3.SS2" target="_blank" rel="noopener noreferrer">Huang, H., Erfani, S., Li, Y., Ma, X., &amp; Bailey, J. (2025). X-Transfer attacks: Towards super transferable adversarial attacks on CLIP. <em>Proceedings of the 42nd International Conference on Machine Learning</em>.</a>
-        <aside class="notes">Classroom diagram of Huang et al. (2025), Sections 3.2 and 4. The clean spring and lava photographs are cropped from Figure 3, https://arxiv.org/html/2505.05528v3/XTransfer1.png (2042 by 528): spring (2,34,234,264), lava (1028,34,1259,264). Only the clean photographs are reused, not the figure's response text. The published UAP visualization is from Figure 4(b), https://arxiv.org/html/2505.05528v3/uap_linf_scale_k.png (2040 by 510), first panel crop (16,56,405,447), downsampled to 159 by 160. This is a displayed visualization, not a raw perturbation tensor. The same visualization stays fixed while input, model and task contexts change. Dataset A/B are illustrative domain labels, not claims about those photographs' dataset membership. The two photos come from different examples in Figure 3; this diagram does not reproduce their particular targeted or untargeted outcomes. The plus sign represents adding delta to the clean image once. The model routes represent distinct compatible held-out CLIP or VLM systems, not arbitrary encoder replacement in a fixed VLM. The paper evaluates zero-shot classification, image/text retrieval, captioning and VQA and reports reuse across samples, domains, models and tasks, not guaranteed success on every case. No new model predictions, optimization, or live queries.</aside>
+        
       </section>
 
 <section data-slide-style="lecture17" class="bb-teaching-slide bb-direct-search-slide transfer-method-slide xtransfer-scaling-slide" data-scene-control="manual" data-scene-count="3" data-scene-duration="1800" data-timing="180">
@@ -1920,7 +1908,7 @@
         <span class="fragment search-step" data-fragment-index="0" data-scene-step="1" aria-hidden="true"></span>
         <span class="fragment search-step" data-fragment-index="1" data-scene-step="2" aria-hidden="true"></span>
         <a class="source-line" href="https://arxiv.org/html/2505.05528v3#S3.SS3" target="_blank" rel="noopener noreferrer">Huang, H., Erfani, S., Li, Y., Ma, X., &amp; Bailey, J. (2025). X-Transfer attacks: Towards super transferable adversarial attacks on CLIP. <em>Proceedings of the 42nd International Conference on Machine Learning</em>.</a>
-        <aside class="notes">Paper-aligned selection from Huang et al. (2025), Section 3.3, Algorithm 1 and Eq. 6: UCB_i=R_i+sqrt(2 ln(n)/n_i), select the top k scores. R_i is a moving average of the selected encoder's loss, n_i its selection count, and n the total number of encoder selections. After evaluating selected encoders, update their histories as R_i=(1-m)R_i+m L_i and increment their counts; unselected encoders are not freshly evaluated at every step. The illustrated selection assumes prior exploration/history; untried encoders require exploration. For the untargeted cosine-similarity loss, higher loss means the current perturbation has not moved that encoder's image features as effectively, so the loss-history term favors harder encoders while the UCB bonus explores less-used ones. Average scalar losses, not embeddings, since embedding dimensions may differ. Minimize the selected loss to update the shared delta under the perturbation budget. The selected pairs are schematic, not a recorded or computed UCB trace. The UAP tile is the same published Figure 4(b) visualization used on the preceding slide; it represents the optimized object, not measured intermediate delta values. The animation highlights the update and changes the parameter index without fabricating intermediate noise images. Batch photos are the two clean Figure 3 photographs and the previously cited 2017 UAP grille photograph; they illustrate a batch, not the actual training set. Actual target models remain outside the surrogate pool. No model execution, raw perturbation artifact, real training loop or live queries.</aside>
+        
       </section>
 
 <section data-slide-style="lecture18" class="l18-slide l18-landscape" data-timing="130">
@@ -1936,7 +1924,7 @@
         <path class="landscape-axis" d="M175 95V54" marker-end="url(#landscape-time-arrow)"/>
         <text class="landscape-axis-label" x="175" y="519">More synthetic</text>
         <text class="landscape-axis-label" x="1350" y="491">Time</text>
-        <g class="fragment fade-up" data-fragment-index="0" data-notes="In the early deep-learning era, adversarial robustness became an important research focus. We ask whether a prediction stays reliable under deliberately chosen input changes. This is where much of our earlier attack material fits.">
+        <g class="fragment fade-up" data-fragment-index="0">
           <path class="landscape-guide" d="M190 371H283M470 427V450"/>
           <circle class="landscape-dot" cx="175" cy="371" r="10"/><circle class="landscape-dot" cx="470" cy="450" r="10"/>
           <rect class="landscape-card" x="295" y="315" width="350" height="112" rx="14"/>
@@ -1945,7 +1933,7 @@
           <text class="landscape-time-copy" x="470" y="410">verification, trade-offs</text>
           <text class="landscape-year" x="470" y="490">2012</text>
         </g>
-        <g class="fragment fade-up" data-fragment-index="1" data-notes="The scope also widened to distribution shift: can a model keep working when deployment data differ from training data? Generalisation, adaptation and transfer learning sit here. These areas overlap with robustness and remain active.">
+        <g class="fragment fade-up" data-fragment-index="1">
           <path class="landscape-guide" d="M190 235H658M845 291V450"/>
           <circle class="landscape-dot" cx="175" cy="235" r="10"/><circle class="landscape-dot" cx="845" cy="450" r="10"/>
           <rect class="landscape-card shift" x="670" y="179" width="350" height="112" rx="14"/>
@@ -1954,7 +1942,7 @@
           <text class="landscape-time-copy" x="845" y="274">adaptation, transfer learning</text>
           <text class="landscape-year" x="845" y="490">2019</text>
         </g>
-        <g class="fragment fade-up" data-fragment-index="2" data-notes="With widely used language models, more attention turned to open-ended behaviour and AI safety. Jailbreaking is part of this picture. We now focus on that adversarial part. On the next page, we connect the landscape to a practical question: do we have white-box access to the model, or only a black-box API?">
+        <g class="fragment fade-up" data-fragment-index="2">
           <path class="landscape-guide" d="M190 99H1008M1195 155V450"/>
           <circle class="landscape-dot" cx="175" cy="99" r="10"/><circle class="landscape-dot" cx="1195" cy="450" r="10"/>
           <rect class="landscape-card safety" x="1020" y="43" width="350" height="112" rx="14"/>
@@ -1967,7 +1955,7 @@
     </figure>
     <p class="landscape-caption">Illustrative milestones in research focus—not the start dates of these fields.</p>
   </div>
-  <aside class="notes">Let’s first look at how the research scope has widened. The dates are rough landmarks, not the beginnings of these fields. The areas overlap rather than replacing each other.</aside>
+  
 </section>
 
 <section data-slide-style="lecture18" class="l18-slide l18-landscape l18-landscape-bridge" data-timing="150">
@@ -1980,21 +1968,21 @@
         <text class="landscape-axis-label" x="175" y="28">More realistic</text>
         <path class="landscape-axis" d="M175 54V470" marker-start="url(#landscape-spectrum-arrow)" marker-end="url(#landscape-spectrum-arrow)"/>
         <text class="landscape-axis-label" x="175" y="511">More synthetic</text>
-        <g class="fragment fade-up" data-fragment-index="0" data-notes="Start with adversarial robustness. Most of the attacks we have studied fit here: choose a perturbation budget and try to change a prediction. Controlled settings make the problem easier to define and measure.">
+        <g class="fragment fade-up" data-fragment-index="0">
           <path class="landscape-guide" d="M190 410H338"/><circle class="landscape-dot" cx="175" cy="410" r="11"/>
           <rect class="landscape-card" x="350" y="354" width="960" height="112" rx="14"/>
           <rect class="landscape-accent" x="350" y="354" width="7" height="112" rx="3"/>
           <text class="landscape-heading" x="386" y="393">Adversarial robustness</text>
           <text class="landscape-copy" x="386" y="435">Attacks · defenses · verification · trade-offs</text>
         </g>
-        <g class="fragment fade-up" data-fragment-index="1" data-notes="Distribution shift asks what happens when deployment data differ from training data. That can happen without an attacker. It is another part of the wider reliability picture.">
+        <g class="fragment fade-up" data-fragment-index="1">
           <path class="landscape-guide" d="M190 259H338"/><circle class="landscape-dot" cx="175" cy="259" r="11"/>
           <rect class="landscape-card shift" x="350" y="203" width="960" height="112" rx="14"/>
           <rect class="landscape-accent shift" x="350" y="203" width="7" height="112" rx="3"/>
           <text class="landscape-heading" x="386" y="242">Distribution shift</text>
           <text class="landscape-copy" x="386" y="284">Domain generalisation &amp; adaptation · transfer learning</text>
         </g>
-        <g class="fragment fade-up" data-fragment-index="2" data-notes="At the broader system level, AI safety includes jailbreaking, hallucination and unexpected behaviour. These areas overlap, and not every failure is an attack. We now focus on deliberately steering a language model toward an unsafe response.">
+        <g class="fragment fade-up" data-fragment-index="2">
           <path class="landscape-guide" d="M190 108H338"/><circle class="landscape-dot" cx="175" cy="108" r="11"/>
           <rect class="landscape-card safety" x="350" y="52" width="960" height="112" rx="14"/>
           <rect class="landscape-accent safety" x="350" y="52" width="7" height="112" rx="3"/>
@@ -2003,9 +1991,9 @@
         </g>
       </svg>
     </figure>
-    <p class="l18-takeaway fragment fade-up" data-fragment-index="3" data-notes="There is a separate question: what can the attacker access? With white-box access, we have the weights and computation graph and can compute target gradients. With black-box access to a text API, we submit prompts and observe replies. Many frontier LLMs do not release their weights, so black-box attacks match the access we often have in practice. This is not a claim that every frontier model is closed. Next, we will look at a real published prompt and response."><strong>White-box:</strong> weights + computation graph → target gradients.<br><strong>Black-box:</strong> prompts → API → replies.<br>Many frontier LLMs expose an API, but not their weights.</p>
+    <p class="l18-takeaway fragment fade-up" data-fragment-index="3"><strong>White-box:</strong> weights + computation graph → target gradients.<br><strong>Black-box:</strong> prompts → API → replies.<br>Many frontier LLMs expose an API, but not their weights.</p>
   </div>
-  <aside class="notes">Before moving to language models, let’s put the methods into the broader landscape. This is a conceptual map, not a strict ranking: adversarial robustness also includes realistic physical attacks. The point is that our questions expand from controlled prediction problems to more open-ended system behaviour.</aside>
+  
 </section>
 
 <section class="l18-slide llm-clean llm-real-example" data-slide-style="lecture18" data-scene-count="4" data-timing="130">
@@ -2033,13 +2021,10 @@
     </div>
     <p class="l18-takeaway"><span data-scene="0 1 2" class="is-scene-visible">The attacker controls the prompt.</span><span data-scene="3">The reply provides the requested email—not just a discussion of phishing.</span></p>
   </div>
-  <span class="fragment l18-step" data-fragment-index="0" data-scene-step="1" data-notes="This is an excerpt from the revised attacker prompt in the PAIR paper’s Figure 3. It frames the request as cybersecurity education. The attacker sends text through the target API; it does not change the target weights." aria-hidden="true"></span>
-  <span class="fragment l18-step" data-fragment-index="1" data-scene-step="2" data-notes="The right-hand text is an excerpt from the corresponding published Claude-1 response, not an invented response and not a run we performed. The paper shows the model producing a phishing email. We keep the introductory wording and message structure, but replace the deceptive subject, persuasion and credential-collection instructions with stars." aria-hidden="true"></span>
-  <span class="fragment l18-step" data-fragment-index="2" data-scene-step="3" data-notes="The important point is what the reply does. It provides an email with a subject, an employee greeting and a call to click, rather than only explaining how to recognise phishing. This is one historical published example, not a claim about current Claude models or a guarantee that the prompt works today." aria-hidden="true"></span>
-  <aside class="notes">
-    <p>Here is an actual published prompt and its corresponding response. The attacker icon represents the adversarial role, not a company or model brand. We have shortened the excerpts by replacing omitted text with stars.</p>
-    <p>Source: Chao et al. (2024), Jailbreaking Black Box Large Language Models in Twenty Queries, Figure 3, Claude-1 jailbreak. The displayed pair is the revised attacker prompt and its following response. https://arxiv.org/html/2310.08419v4#S4.F3 — original figure: https://arxiv.org/html/2310.08419v4/figures/conversation_example.png. The preceding attempt was refused; this slide shows the subsequent pair only. No live model execution was performed.</p>
-  </aside>
+  <span class="fragment l18-step" data-fragment-index="0" data-scene-step="1" aria-hidden="true"></span>
+  <span class="fragment l18-step" data-fragment-index="1" data-scene-step="2" aria-hidden="true"></span>
+  <span class="fragment l18-step" data-fragment-index="2" data-scene-step="3" aria-hidden="true"></span>
+  
 </section>
 
 <section class="l18-slide llm-clean" data-slide-style="lecture18" data-scene-count="4" data-timing="110">
@@ -2113,15 +2098,13 @@
     </div>
     <p class="l18-takeaway">A jailbreak succeeds only if the reply actually helps with G.</p>
   </div>
-  <span class="fragment l18-step" data-fragment-index="0" data-scene-step="1" data-notes="The reply starts with Sure. That first word is a trap. The rest is phishing-prevention advice." aria-hidden="true"></span>
-  <span class="fragment l18-step" data-fragment-index="1" data-scene-step="2" data-notes="The judge compares the whole reply with goal G. Prevention advice is a 0. This is an illustration, not a measured run." aria-hidden="true"></span>
-  <span class="fragment l18-step" data-fragment-index="2" data-scene-step="3" data-notes="Judges can miss things. We still spot-check a sample with people, using the same rubric." aria-hidden="true"></span>
+  <span class="fragment l18-step" data-fragment-index="0" data-scene-step="1" aria-hidden="true"></span>
+  <span class="fragment l18-step" data-fragment-index="1" data-scene-step="2" aria-hidden="true"></span>
+  <span class="fragment l18-step" data-fragment-index="2" data-scene-step="3" aria-hidden="true"></span>
   <div class="source-line" aria-label="References">
     <a class="apa-reference" href="https://doi.org/10.52202/079017-1745" target="_blank" rel="noopener noreferrer">Chao, P., Debenedetti, E., Robey, A., Andriushchenko, M., Croce, F., Sehwag, V., Dobriban, E., Flammarion, N., Pappas, G. J., Tramèr, F., Hassani, H., &amp; Wong, E. (2024). JailbreakBench: An open robustness benchmark for jailbreaking large language models. <em>Advances in Neural Information Processing Systems, 37</em>, 55005–55029. https://doi.org/10.52202/079017-1745</a>
   </div>
-  <aside class="notes">
-    <p>Here is one teaching example. The goal is credential-phishing assistance — that is only an evaluation label. Look at the reply, then decide whether the attack worked.</p>
-  </aside>
+  
 </section>
 
 <section class="l18-slide llm-clean" data-slide-style="lecture18" data-scene-count="5" data-timing="100">
@@ -2189,16 +2172,14 @@
     </div>
     <p class="l18-takeaway">The attacker keeps the feedback. The target never sees it.</p>
   </div>
-  <span class="fragment l18-step" data-fragment-index="0" data-scene-step="1" data-notes="The attacker LLM writes a candidate prompt P. That is a full piece of text, not a token swap." aria-hidden="true"></span>
-  <span class="fragment l18-step" data-fragment-index="1" data-scene-step="2" data-notes="The target sees only P. It does not see the attacker’s private history." aria-hidden="true"></span>
-  <span class="fragment l18-step" data-fragment-index="2" data-scene-step="3" data-notes="The judge scores the prompt–reply pair against the fixed goal G." aria-hidden="true"></span>
-  <span class="fragment l18-step" data-fragment-index="3" data-scene-step="4" data-notes="If the reply does not achieve the goal, the prompt, reply and score go into the attacker’s history. The next target query starts fresh." aria-hidden="true"></span>
+  <span class="fragment l18-step" data-fragment-index="0" data-scene-step="1" aria-hidden="true"></span>
+  <span class="fragment l18-step" data-fragment-index="1" data-scene-step="2" aria-hidden="true"></span>
+  <span class="fragment l18-step" data-fragment-index="2" data-scene-step="3" aria-hidden="true"></span>
+  <span class="fragment l18-step" data-fragment-index="3" data-scene-step="4" aria-hidden="true"></span>
   <div class="source-line" aria-label="References">
     <a class="apa-reference" href="https://arxiv.org/abs/2310.08419v4" target="_blank" rel="noopener noreferrer">Chao, P., Robey, A., Dobriban, E., Hassani, H., Pappas, G. J., &amp; Wong, E. (2024). <em>Jailbreaking black box large language models in twenty queries</em> [Preprint]. arXiv. https://arxiv.org/abs/2310.08419v4</a>
   </div>
-  <aside class="notes">
-    <p>PAIR is Prompt Automatic Iterative Refinement. One model proposes prompts. Another model is the target. A judge scores the reply. Let’s name the four steps before we walk a round.</p>
-  </aside>
+  
 </section>
 
 <section class="l18-slide llm-clean" data-slide-style="lecture18" data-scene-count="5" data-timing="110">
@@ -2280,16 +2261,14 @@
     </div>
     <p class="l18-takeaway">Feedback rewrites the next prompt. It does not change the goal.</p>
   </div>
-  <span class="fragment l18-step" data-fragment-index="0" data-scene-step="1" data-notes="We send that summarised training-frame prompt. The target refuses and gives prevention advice. Harmless reply only." aria-hidden="true"></span>
-  <span class="fragment l18-step" data-fragment-index="1" data-scene-step="2" data-notes="PAIR uses a 1 to 10 judge rating. In this illustrative round, a refusal gets the lowest score, 1. This is different from the binary success label on the earlier slide." aria-hidden="true"></span>
-  <span class="fragment l18-step" data-fragment-index="2" data-scene-step="3" data-notes="That failure note goes back to the attacker model. The target still has no history." aria-hidden="true"></span>
-  <span class="fragment l18-step" data-fragment-index="3" data-scene-step="4" data-notes="The attacker writes a different high-level framing. Goal G is unchanged. We do not query again on this slide, and we do not claim it would work." aria-hidden="true"></span>
+  <span class="fragment l18-step" data-fragment-index="0" data-scene-step="1" aria-hidden="true"></span>
+  <span class="fragment l18-step" data-fragment-index="1" data-scene-step="2" aria-hidden="true"></span>
+  <span class="fragment l18-step" data-fragment-index="2" data-scene-step="3" aria-hidden="true"></span>
+  <span class="fragment l18-step" data-fragment-index="3" data-scene-step="4" aria-hidden="true"></span>
   <div class="source-line" aria-label="References">
     <a class="apa-reference" href="https://arxiv.org/abs/2310.08419v4" target="_blank" rel="noopener noreferrer">Chao, P., Robey, A., Dobriban, E., Hassani, H., Pappas, G. J., &amp; Wong, E. (2024). <em>Jailbreaking black box large language models in twenty queries</em> [Preprint]. arXiv. https://arxiv.org/abs/2310.08419v4</a>
   </div>
-  <aside class="notes">
-    <p>Let’s walk through an illustrative round. The first candidate frames the request as staff training. Watch how the target’s response becomes feedback for the next candidate.</p>
-  </aside>
+  
 </section>
 
 <section class="l18-slide llm-clean" data-slide-style="lecture18" data-scene-count="4" data-timing="110">
@@ -2361,15 +2340,13 @@
     </div>
     <p class="l18-takeaway">Branch, prune off-topic, then spend target queries on what remains.</p>
   </div>
-  <span class="fragment l18-step" data-fragment-index="0" data-scene-step="1" data-notes="P3 drifted into weather chat, so it no longer asks for G. TAP deletes it before calling the target." aria-hidden="true"></span>
-  <span class="fragment l18-step" data-fragment-index="1" data-scene-step="2" data-notes="Only the on-topic children are sent to the target. The judge then scores those replies." aria-hidden="true"></span>
-  <span class="fragment l18-step" data-fragment-index="2" data-scene-step="3" data-notes="Keep the better leaf and drop the rest. The query budget is why TAP prunes instead of expanding forever." aria-hidden="true"></span>
+  <span class="fragment l18-step" data-fragment-index="0" data-scene-step="1" aria-hidden="true"></span>
+  <span class="fragment l18-step" data-fragment-index="1" data-scene-step="2" aria-hidden="true"></span>
+  <span class="fragment l18-step" data-fragment-index="2" data-scene-step="3" aria-hidden="true"></span>
   <div class="source-line" aria-label="References">
     <a class="apa-reference" href="https://doi.org/10.52202/079017-1952" target="_blank" rel="noopener noreferrer">Mehrotra, A., Zampetakis, M., Kassianik, P., Nelson, B., Anderson, H., Singer, Y., &amp; Karbasi, A. (2024). Tree of attacks: Jailbreaking black-box LLMs automatically. <em>Advances in Neural Information Processing Systems, 37</em>, 61065–61105. https://doi.org/10.52202/079017-1952</a>
   </div>
-  <aside class="notes">
-    <p>TAP is Tree of Attacks with Pruning. Same black-box access as PAIR, but the search is a tree: several children, then a prune, then a query.</p>
-  </aside>
+  
 </section>
 
 
@@ -2423,13 +2400,13 @@
     </div>
     <p class="l18-takeaway">A prompt that works on the source need not work on a held-out target.</p>
   </div>
-  <span class="fragment l18-step" data-fragment-index="0" data-scene-step="1" data-notes="We freeze one candidate. No more rewriting on the source." aria-hidden="true"></span>
-  <span class="fragment l18-step" data-fragment-index="1" data-scene-step="2" data-notes="The same frozen string is sent to held-out target A. This reply is a teaching illustration, not a measured result." aria-hidden="true"></span>
-  <span class="fragment l18-step" data-fragment-index="2" data-scene-step="3" data-notes="Target B gets the same prompt and may answer differently. Transfer is not guaranteed." aria-hidden="true"></span>
+  <span class="fragment l18-step" data-fragment-index="0" data-scene-step="1" aria-hidden="true"></span>
+  <span class="fragment l18-step" data-fragment-index="1" data-scene-step="2" aria-hidden="true"></span>
+  <span class="fragment l18-step" data-fragment-index="2" data-scene-step="3" aria-hidden="true"></span>
   <div class="source-line" aria-label="References">
     <a class="apa-reference" href="https://arxiv.org/abs/2310.08419v4" target="_blank" rel="noopener noreferrer">Chao, P., Robey, A., Dobriban, E., Hassani, H., Pappas, G. J., &amp; Wong, E. (2024). <em>Jailbreaking black box large language models in twenty queries</em> [Preprint]. arXiv. https://arxiv.org/abs/2310.08419v4</a>
   </div>
-  <aside class="notes">A prompt found on one model can be tried on another. That is transfer. We search on a source, freeze one candidate, then submit it to two held-out APIs. Chao et al. study this reuse; we are not showing their transfer table here. The source may be queried many times while searching. We do not use held-out target gradients, and we are not walking GCG.</aside>
+  
 </section>
 
 <section class="l18-slide llm-clean" data-slide-style="lecture18" data-scene-count="4" data-timing="100">
@@ -2511,13 +2488,13 @@
     </div>
     <p class="l18-takeaway">Crescendo is a live target conversation. Judge the transcript, not the last user line.</p>
   </div>
-  <span class="fragment l18-step" data-fragment-index="0" data-scene-step="1" data-notes="The next question refers to the model’s own explanation. The full earlier reply remains in the target’s context." aria-hidden="true"></span>
-  <span class="fragment l18-step" data-fragment-index="1" data-scene-step="2" data-notes="The response adds detail. That detail can become material for a later, more problematic request. The early answer may still be safe." aria-hidden="true"></span>
-  <span class="fragment l18-step" data-fragment-index="2" data-scene-step="3" data-notes="The final request escalates toward credential-theft assistance. Now the attacker is asking for something the model should refuse. We must inspect the actual final response: a long conversation alone is not a successful jailbreak." aria-hidden="true"></span>
+  <span class="fragment l18-step" data-fragment-index="0" data-scene-step="1" aria-hidden="true"></span>
+  <span class="fragment l18-step" data-fragment-index="1" data-scene-step="2" aria-hidden="true"></span>
+  <span class="fragment l18-step" data-fragment-index="2" data-scene-step="3" aria-hidden="true"></span>
   <div class="source-line" aria-label="References">
     <a class="apa-reference" href="https://arxiv.org/abs/2404.01833v3" target="_blank" rel="noopener noreferrer">Russinovich, M., Salem, A., &amp; Eldan, R. (2025). <em>Great, now write an article about that: The Crescendo multi-turn LLM jailbreak attack</em> [Preprint]. arXiv. https://arxiv.org/abs/2404.01833v3</a>
   </div>
-  <aside class="notes">Unlike PAIR, Crescendo keeps a conversation with the target itself. The attacker starts with a general question and progressively steers it toward the prohibited goal, using earlier replies as context. This diagram summarises the escalation pattern, not a measured successful attack.</aside>
+  
 </section>
 
 <section class="l18-slide llm-clean" data-slide-style="lecture18" data-scene-count="4" data-timing="100">
@@ -2568,13 +2545,13 @@
     <p class="llm-clean-caption" data-scene="2 3">Published Anthropic figure: harmful-response rate versus number of shots. Claude 2.0, April 2024.</p>
     <p class="l18-takeaway">Many-shot is one long prompt. Crescendo is a live conversation.</p>
   </div>
-  <span class="fragment l18-step" data-fragment-index="0" data-scene-step="1" data-notes="The new query is last. Everything above it is still the same request. Weights stay frozen." aria-hidden="true"></span>
-  <span class="fragment l18-step" data-fragment-index="1" data-scene-step="2" data-notes="This is Anthropic’s published Claude 2.0 plot from April 2024. With few demonstrations, harmful-response rates are low in this setting." aria-hidden="true"></span>
-  <span class="fragment l18-step" data-fragment-index="2" data-scene-step="3" data-notes="With more shots the harmful-response share rises. That is still one packed prompt, not a multi-turn chat with the target." aria-hidden="true"></span>
+  <span class="fragment l18-step" data-fragment-index="0" data-scene-step="1" aria-hidden="true"></span>
+  <span class="fragment l18-step" data-fragment-index="1" data-scene-step="2" aria-hidden="true"></span>
+  <span class="fragment l18-step" data-fragment-index="2" data-scene-step="3" aria-hidden="true"></span>
   <div class="source-line" aria-label="References">
     <a class="apa-reference" href="https://www.anthropic.com/research/many-shot-jailbreaking" target="_blank" rel="noopener noreferrer">Anthropic. (2024, April 2). <em>Many-shot jailbreaking</em>. https://www.anthropic.com/research/many-shot-jailbreaking</a>
   </div>
-  <aside class="notes">The attacker writes many fabricated user–assistant pairs into one request. Those pairs demonstrate compliance with unsafe requests, followed by the new query. The target did not generate those earlier answers: they are attacker-supplied context. This exploits in-context learning without changing weights. The diagram labels the pairs rather than printing their harmful contents. Crescendo differs because its earlier replies come from live interaction with the target.</aside>
+  
 </section>
 
 <section class="l18-slide llm-clean" data-slide-style="lecture18" data-scene-count="3" data-timing="90">
@@ -2631,14 +2608,14 @@
     </p>
     <p class="l18-takeaway">The search object is not always a new prompt to a stateless target.</p>
   </div>
-  <span class="fragment l18-step" data-fragment-index="0" data-scene-step="1" data-notes="Transfer: the search ran on a source. Held-out targets see a frozen prompt. The source may still have been queried many times." aria-hidden="true"></span>
-  <span class="fragment l18-step" data-fragment-index="1" data-scene-step="2" data-notes="Crescendo changes the next user turn in a live chat. Many-shot changes the demonstrations inside one request." aria-hidden="true"></span>
+  <span class="fragment l18-step" data-fragment-index="0" data-scene-step="1" aria-hidden="true"></span>
+  <span class="fragment l18-step" data-fragment-index="1" data-scene-step="2" aria-hidden="true"></span>
   <div class="source-line" aria-label="References">
     <a class="apa-reference" href="https://arxiv.org/abs/2310.08419v4" target="_blank" rel="noopener noreferrer">Chao, P., Robey, A., Dobriban, E., Hassani, H., Pappas, G. J., &amp; Wong, E. (2024). <em>Jailbreaking black box large language models in twenty queries</em> [Preprint]. arXiv. https://arxiv.org/abs/2310.08419v4</a>
     <a class="apa-reference" href="https://doi.org/10.52202/079017-1952" target="_blank" rel="noopener noreferrer">Mehrotra, A., Zampetakis, M., Kassianik, P., Nelson, B., Anderson, H., Singer, Y., &amp; Karbasi, A. (2024). Tree of attacks: Jailbreaking black-box LLMs automatically. <em>Advances in Neural Information Processing Systems, 37</em>, 61065–61105. https://doi.org/10.52202/079017-1952</a>
     <a class="apa-reference" href="https://arxiv.org/abs/2404.01833v3" target="_blank" rel="noopener noreferrer">Russinovich, M., Salem, A., &amp; Eldan, R. (2025). <em>Great, now write an article about that: The Crescendo multi-turn LLM jailbreak attack</em> [Preprint]. arXiv. https://arxiv.org/abs/2404.01833v3</a>
   </div>
-  <aside class="notes">Five methods, not a leaderboard. PAIR and TAP propose new prompts and read target replies. Transfer still searches—on a source—then reuses one string; do not say it needs no source queries. Crescendo walks a live target chat. Many-shot packs demonstrations into one input. Anthropic (2024) is the many-shot source; it is on the previous slide.</aside>
+  
 </section>
 
 <section class="l18-slide llm-clean" data-slide-style="lecture18" data-scene-count="4" data-timing="110">
@@ -2695,13 +2672,13 @@
     <p class="llm-clean-caption">PAIR rows from Table 2, Chao et al. (2024): direct attacks on JailbreakBench with a Mixtral attacker.</p>
     <p class="l18-takeaway">Name the budget, the targets, and the judge. ASR is not a free-floating percentage.</p>
   </div>
-  <span class="fragment l18-step" data-fragment-index="0" data-scene-step="1" data-notes="Jailbreak percent is attack success at this budget: a behaviour counts if Llama Guard marks a jailbreak before 90 target queries." aria-hidden="true"></span>
-  <span class="fragment l18-step" data-fragment-index="1" data-scene-step="2" data-notes="The queries-per-success column averages only successful runs. For PAIR on Vicuna that value is 10.0. It does not say every attempt succeeds in 10 queries. Failed runs, attacker and judge calls, and token usage also contribute to the total cost." aria-hidden="true"></span>
-  <span class="fragment l18-step" data-fragment-index="2" data-scene-step="3" data-notes="Llama-2 is 4 percent, Claude-1 3 percent, Claude-2 0 percent. Same method, same budget. This is a July 2024 snapshot, not a ranking of today’s models." aria-hidden="true"></span>
+  <span class="fragment l18-step" data-fragment-index="0" data-scene-step="1" aria-hidden="true"></span>
+  <span class="fragment l18-step" data-fragment-index="1" data-scene-step="2" aria-hidden="true"></span>
+  <span class="fragment l18-step" data-fragment-index="2" data-scene-step="3" aria-hidden="true"></span>
   <div class="source-line" aria-label="References">
     <a class="apa-reference" href="https://arxiv.org/abs/2310.08419v4" target="_blank" rel="noopener noreferrer">Chao, P., Robey, A., Dobriban, E., Hassani, H., Pappas, G. J., &amp; Wong, E. (2024). <em>Jailbreaking black box large language models in twenty queries</em> [Preprint]. arXiv. https://arxiv.org/abs/2310.08419v4</a>
   </div>
-  <aside class="notes">These are the PAIR rows cropped from the original Table 2, not a reconstructed chart. The experiment uses Mixtral to attack 100 JBB-Behaviors, with Llama Guard as the success judge and at most 90 target queries. The paper uses target temperature 0 and 150 generated tokens. We read the setup first, then success rate, cost and differences between targets. These are results for this particular setting, not a direct comparison with other papers.</aside>
+  
 </section>
 
 
@@ -2713,14 +2690,14 @@
 <li><strong>LLM attacks</strong><span>Search over prompts, branches, conversation histories and long contexts.</span></li>
 <li><strong>Evidence matters</strong><span>Check the actual outcome, the query budget and the evaluation setting.</span></li>
 </ul><p class="summary-next"><span>Key takeaway</span><strong>No target gradients does not mean no attack.</strong></p>
-<aside class="notes">We started with queries: even without a backward pass, scores and labels can guide a search. Transfer takes a different route: build an attack on a surrogate and test whether it carries over. For language models, we changed the search space to text and context, but the same questions remain. What can the attacker change? What feedback do they get? And how do we know the attack actually worked? The key point is that hiding target gradients does not remove the attack surface.</aside></section>
+</section>
     </div>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+  
   <script>window.PRESENTATION_CONFIG = { totalTime: 50 * 60, logoPath: 'uom-logo.svg' };</script>
   <script src="laser-pointer.js?v=3"></script>
-  <script src="presentation.js?v=lecture-reorg-20260917"></script>
+  <script src="presentation.js?v=2e9074b474ddfda9"></script>
   <script src="lecture17.js?v=lecture-reorg-20260917"></script>
   <script src="lecture18.js?v=lecture-reorg-20260917"></script>
 </body>
