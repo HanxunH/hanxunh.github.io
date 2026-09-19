@@ -1,0 +1,27 @@
+.presentation-laser-pointer {
+  box-sizing: border-box;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2147483647;
+  width: 16px;
+  height: 16px;
+  margin: -8px 0 0 -8px;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  background: #ff2438;
+  box-shadow: 0 0 0 7px rgba(255, 36, 56, .2), 0 0 16px 8px rgba(255, 36, 56, .35);
+  pointer-events: none;
+}
+
+.presentation-laser-pointer[hidden] { display: none; }
+
+.presentation-laser-active .reveal,
+.presentation-laser-active .reveal * { cursor: none !important; }
+
+.print-pdf .presentation-laser-pointer,
+.reveal-print .presentation-laser-pointer { display: none !important; }
+
+@media print {
+  .presentation-laser-pointer { display: none !important; }
+}
