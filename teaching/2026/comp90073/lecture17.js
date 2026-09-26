@@ -216,6 +216,15 @@
   const scales = { original: 0, start: 1, sideways: 1, inward: 175 / 275, rejected: 90 / 275, 'diversity-step-one': .4, 'diversity-step-two': .4 };
   for (const image of images) {
     const kind = image.dataset.boundaryImage;
+    const photo = image.closest('.tramer-demo');
+    if (photo) {
+      const background = document.createElementNS('http://www.w3.org/2000/svg', 'image');
+      background.setAttribute('href', 'cat-norm-demo.jpg');
+      background.setAttribute('width', '144');
+      background.setAttribute('height', '144');
+      background.setAttribute('preserveAspectRatio', 'xMidYMax slice');
+      image.append(background);
+    }
     for (let row = 0; row < 8; row++) {
       for (let column = 0; column < 8; column++) {
         const ring = row >= 2 && row <= 5 && column >= 2 && column <= 5 &&
@@ -233,8 +242,14 @@
         pixel.setAttribute('y', row * 18);
         pixel.setAttribute('width', 18);
         pixel.setAttribute('height', 18);
-        pixel.setAttribute('fill', `rgb(${value * 255} ${value * 255} ${value * 255})`);
-        pixel.setAttribute('stroke', '#b7c3d8');
+        if (photo) {
+          pixel.setAttribute('fill', perturbation >= 0 ? '#fff' : '#000f46');
+          pixel.setAttribute('fill-opacity', Math.abs(perturbation) * 3);
+          pixel.setAttribute('stroke', 'rgba(255,255,255,.25)');
+        } else {
+          pixel.setAttribute('fill', `rgb(${value * 255} ${value * 255} ${value * 255})`);
+          pixel.setAttribute('stroke', '#b7c3d8');
+        }
         pixel.setAttribute('stroke-width', '0.6');
         image.append(pixel);
       }
@@ -303,7 +318,8 @@
         }
       } else {
         demo.elapsed = 0;
-        show(demo, 0);
+        // Preserve the outgoing scene while Reveal transitions to the next slide.
+        if (demo.state === -1) show(demo, 0);
       }
     }
     if (active && !document.hidden && !reducedMotion.matches &&

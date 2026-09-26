@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="presentation.css?v=shared-laser-module">
   <link rel="stylesheet" href="laser-pointer.css?v=3">
   <link rel="stylesheet" data-slide-style="lecture16" href="lecture16.css?v=diagram-svg-scope-20260919" media="not all">
-  <link rel="stylesheet" data-slide-style="lecture17" href="lecture17.css?v=centered-ending-20260917" media="all">
+  <link rel="stylesheet" data-slide-style="lecture17" href="lecture17.css?v=local-partial-derivatives-20260921" media="all">
   <script>
     window.MathJax = {
       tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
@@ -55,7 +55,7 @@
             <p>\(c\) balances the two goals.</p>
           </div>
         </div>
-        <a class="source-line" href="https://doi.org/10.1109/SP.2017.49" target="_blank" rel="noopener noreferrer">Carlini, N., &amp; Wagner, D. (2017). Towards evaluating the robustness of neural networks. <em>2017 IEEE Symposium on Security and Privacy</em>, 39–57. https://doi.org/10.1109/SP.2017.49</a>
+        <a class="source-line" href="https://doi.org/10.1109/SP.2017.49" target="_blank" rel="noopener noreferrer">Carlini, N., &amp; Wagner, D. (2017). Towards evaluating the robustness of neural networks. In <em>2017 IEEE Symposium on Security and Privacy (SP)</em> (pp. 39–57). IEEE. https://doi.org/10.1109/SP.2017.49</a>
         
       </section>
 
@@ -127,8 +127,8 @@
           <article class="discrete-input-side fragment fade-up" data-fragment-index="1">
             <span>Large language models</span>
             <h3>Discrete token IDs \(x=(x_1,\ldots,x_n)\)</h3>
-            <p>GPT-2 example: token \(s_i\) has ID \(x_i\), and \(e_i=E[x_i]\).</p>
-            <div class="token-sequence" aria-label="A GPT-2 token sequence with numeric token IDs"><b><span>The</span><small>ID 464</small></b><b><span>answer</span><small>ID 3280</small></b><b><span>is</span><small>ID 318</small></b><b><span>safe</span><small>ID 3338</small></b></div>
+            <p>Each token \(s_i\) has an ID \(x_i\), and an embedding \(e_i=E[x_i]\).</p>
+            <div class="token-sequence" aria-label="An example token sequence with numeric token IDs"><b><span>The</span><small>ID 464</small></b><b><span>answer</span><small>ID 3280</small></b><b><span>is</span><small>ID 318</small></b><b><span>safe</span><small>ID 3338</small></b></div>
           </article>
         </div>
         <p class="discrete-problem fragment fade-up" data-fragment-index="1"><strong>Problem:</strong> token IDs are discrete labels, so a gradient step cannot directly produce the next valid token ID.</p>
@@ -278,7 +278,7 @@
             </div>
           </article>
         </div>
-        <a class="source-line" href="https://arxiv.org/abs/2307.15043" target="_blank" rel="noopener noreferrer">Zou, A., Wang, Z., Carlini, N., Nasr, M., Kolter, J. Z., &amp; Fredrikson, M. (2023). Universal and transferable adversarial attacks on aligned language models. <em>arXiv:2307.15043.</em></a>
+        <a class="source-line" href="https://arxiv.org/abs/2307.15043" target="_blank" rel="noopener noreferrer">Zou, A., Wang, Z., Carlini, N., Nasr, M., Kolter, J. Z., &amp; Fredrikson, M. (2023). <em>Universal and transferable adversarial attacks on aligned language models</em> [Preprint]. arXiv. https://arxiv.org/abs/2307.15043</a>
         
       </section>
 
@@ -641,7 +641,7 @@
           <article><strong>Size penalty</strong><div>\(\mathbb E_x\max(0,\|G_\phi(x)\|_2-c)\)</div><span>Discourage large perturbations.</span></article>
         </div>
         <p class="callout fragment fade-up" data-fragment-index="2">\(\mathcal L=\mathcal L_{\mathrm{attack}}+\alpha\mathcal L_{\mathrm{GAN}}+\beta\mathcal L_{\mathrm{size}}\) · Learn the generator, not a separate perturbation for each image.</p>
-        <a class="source-line" href="https://doi.org/10.24963/ijcai.2018/543" target="_blank" rel="noopener noreferrer">Xiao, C., Li, B., Zhu, J.-Y., He, W., Liu, M., &amp; Song, D. (2018). Generating adversarial examples with adversarial networks. <em>IJCAI-18</em>, 3905–3911. https://doi.org/10.24963/ijcai.2018/543</a>
+        <a class="source-line" href="https://doi.org/10.24963/ijcai.2018/543" target="_blank" rel="noopener noreferrer">Xiao, C., Li, B., Zhu, J.-Y., He, W., Liu, M., &amp; Song, D. (2018). Generating adversarial examples with adversarial networks. In <em>Proceedings of the Twenty-Seventh International Joint Conference on Artificial Intelligence</em> (pp. 3905–3911). International Joint Conferences on Artificial Intelligence Organization. https://doi.org/10.24963/ijcai.2018/543</a>
         
       </section>
 
@@ -690,7 +690,7 @@
           <div class="plot-math-label advgan-math fragment" data-fragment-index="2" style="left:1207px;top:375px;">\(x_{\mathrm{adv},3}=x_3+\delta_3\)</div>
         </figure>
         <p class="callout fragment fade-up" data-fragment-index="2">Generalise across inputs: same \(G_\phi\), different \(\delta_i\). Not a single universal perturbation.</p>
-        <a class="source-line" href="https://doi.org/10.24963/ijcai.2018/543" target="_blank" rel="noopener noreferrer">Xiao, C., Li, B., Zhu, J.-Y., He, W., Liu, M., &amp; Song, D. (2018). Generating adversarial examples with adversarial networks. <em>IJCAI-18</em>, 3905–3911. https://doi.org/10.24963/ijcai.2018/543</a>
+        <a class="source-line" href="https://doi.org/10.24963/ijcai.2018/543" target="_blank" rel="noopener noreferrer">Xiao, C., Li, B., Zhu, J.-Y., He, W., Liu, M., &amp; Song, D. (2018). Generating adversarial examples with adversarial networks. In <em>Proceedings of the Twenty-Seventh International Joint Conference on Artificial Intelligence</em> (pp. 3905–3911). International Joint Conferences on Artificial Intelligence Organization. https://doi.org/10.24963/ijcai.2018/543</a>
         
       </section>
 
@@ -799,6 +799,7 @@
               <div class="gate-input first">\[a\]</div><div class="gate-input second">\[b\]</div>
               <div class="gate-op">\[+\]</div><div class="gate-output">\[z=a+b\]</div><div class="gate-loss">\[\mathcal L\]</div>
             </div>
+            <div class="gate-local-rule"><span>Local</span>\(\displaystyle\frac{\partial z}{\partial a}=1,\qquad\frac{\partial z}{\partial b}=1\)</div>
             <div class="gate-rule">\[g_a\equiv\frac{\partial\mathcal L}{\partial a}=g_z,\qquad g_b\equiv\frac{\partial\mathcal L}{\partial b}=g_z\]</div>
           </article>
           <article class="gate-pattern multiply fragment fade-up" data-fragment-index="1">
@@ -815,6 +816,7 @@
               <div class="gate-input first">\[a\]</div><div class="gate-input second">\[b\]</div>
               <div class="gate-op">\[\times\]</div><div class="gate-output">\[z=ab\]</div><div class="gate-loss">\[\mathcal L\]</div>
             </div>
+            <div class="gate-local-rule"><span>Local</span>\(\displaystyle\frac{\partial z}{\partial a}=b,\qquad\frac{\partial z}{\partial b}=a\)</div>
             <div class="gate-rule">\[g_a=g_z\,b,\qquad g_b=g_z\,a\]</div>
           </article>
           <article class="gate-pattern max fragment fade-up" data-fragment-index="2">
@@ -831,8 +833,9 @@
               <div class="gate-input first">\[a\]</div><div class="gate-input second">\[b\]</div>
               <div class="gate-op text">max</div><div class="gate-output">\[z=\max(a,b)\]</div><div class="gate-loss">\[\mathcal L\]</div>
             </div>
+            <div class="gate-local-rule"><span>Local</span>\(\displaystyle\frac{\partial z}{\partial a}=\mathbf 1[a&gt;b],\qquad\frac{\partial z}{\partial b}=\mathbf 1[b&gt;a]\)</div>
             <div class="gate-rule compact">\[g_a=g_z\mathbf 1[a&gt;b],\qquad g_b=g_z\mathbf 1[b&gt;a]\]</div>
-            <small>At \(a=b\), max is not differentiable; software chooses a tie rule or subgradient.</small>
+            <small>At \(a=b\), max is mathematically not differentiable. The tie-breaking or subgradient rule depends on the implementation.</small>
           </article>
           <article class="gate-pattern branch fragment fade-up" data-fragment-index="3">
             <h3><strong>Copy or branch</strong><span>adds incoming gradients</span></h3>
@@ -848,7 +851,8 @@
               <div class="gate-input single">\[a\]</div><div class="gate-op dot"></div>
               <div class="gate-output first">\[u=a\]</div><div class="gate-output second">\[v=a\]</div><div class="gate-loss">\[\mathcal L\]</div>
             </div>
-            <div class="gate-rule">\[g_a\equiv\frac{\partial\mathcal L}{\partial a}=g_u+g_v\]</div>
+            <div class="gate-local-rule"><span>Local</span>\(\displaystyle\frac{\partial u}{\partial a}=1,\qquad\frac{\partial v}{\partial a}=1\)</div>
+            <div class="gate-rule compact">\[g_a=g_u\frac{\partial u}{\partial a}+g_v\frac{\partial v}{\partial a}=g_u+g_v\]</div>
           </article>
         </div>
         

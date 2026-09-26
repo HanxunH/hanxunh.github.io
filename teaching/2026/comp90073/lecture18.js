@@ -1,5 +1,7 @@
 // Lecture 17's manual storyboard pattern: Next changes authored state, not model output.
 (() => {
+  // Avoid overlapping text from adjacent slides; authored scene animations remain enabled.
+  Reveal.configure({ transition: 'none', backgroundTransition: 'none' });
   const parseStates = value => new Set(value.trim().split(/\s+/).map(Number));
   const demos = [...document.querySelectorAll('.reveal .slides > section.l18-slide[data-scene-count]')].map(slide => ({
     slide,
@@ -31,6 +33,7 @@
   const sync = () => {
     const current = Reveal.getCurrentSlide();
     for (const demo of demos) {
+      if (demo.slide !== current && demo.state !== -1) continue;
       let state = 0;
       if (demo.slide === current) {
         for (const step of demo.steps) {

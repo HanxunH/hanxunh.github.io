@@ -1,0 +1,70 @@
+/* Lectures 19–20: the same 1600 × 900 canvas, palette and manual scene contract as Lectures 15–18. */
+.reveal.training-deck { --teal: #258d8b; --purple: #65469b; }
+.training-deck .slides section { padding: 64px 76px 58px; }
+.training-deck .kicker { display:block; margin-bottom:16px; color:var(--blue); font-size:16px; font-weight:800; letter-spacing:.18em; text-transform:uppercase; }
+.training-deck h2 { max-width:1390px; margin:0 0 14px; font-size:52px; line-height:1.08; }
+.training-deck .slide-lead { max-width:1400px; margin:0; color:var(--ink-2); font-size:26px; line-height:1.35; }
+.training-deck .lesson-body { position:absolute; inset:230px 76px 140px; display:grid; grid-template-columns:920px 440px; gap:40px; align-items:center; }
+.training-deck .lesson-body.wide { grid-template-columns:1fr; }
+.training-deck .lesson-body:has(> .equation) { padding-bottom:95px; }
+.training-deck .visual { width:920px; height:430px; position:relative; margin:0; }
+.training-deck .visual>svg { width:920px; height:430px; display:block; overflow:visible; }
+.training-deck .visual text { font-family:var(--r-main-font); fill:var(--blue); font-size:23px; }
+.training-deck .visual .small { font-size:19px; fill:var(--ink-2); }
+.training-deck .visual .tiny { font-size:16px; fill:var(--muted); }
+.training-deck .visual .label { font-size:25px; font-weight:700; }
+.training-deck .visual .white { fill:white; }
+.training-deck .visual .bad { fill:var(--red); }
+.training-deck .visual .good { fill:var(--teal); }
+.training-deck .visual .muted { fill:var(--muted); }
+.training-deck .bullets { margin:0; padding:0; list-style:none; display:grid; gap:22px; }
+.training-deck .bullets li { padding:8px 0 8px 18px; border-left:3px solid var(--line); color:var(--ink-2); font-size:26px; line-height:1.35; }
+.training-deck .bullets li strong { color:var(--blue); }
+.training-deck .bullets li.is-focused { border-left-color:var(--teal); color:var(--blue); }
+.training-deck .equation { position:absolute; left:0; right:0; bottom:0; margin:0; padding:10px 18px; border-radius:8px; text-align:center; font-size:25px; color:var(--blue); }
+.training-deck .equation mjx-container { margin:0!important; }
+.training-deck .visual-math { position:absolute; display:flex; align-items:center; justify-content:center; color:var(--blue); font-size:26px; }
+.training-deck .visual-math mjx-container { margin:0!important; }
+.training-deck .takeaway { position:absolute; left:76px; bottom:77px; width:1400px; margin:0; padding-top:16px; border-top:2px solid var(--blue); color:var(--blue); font-size:25px; font-weight:700; line-height:1.25; }
+.training-deck .source-line { position:absolute; left:76px; bottom:13px; width:1400px; margin:0; color:var(--ink-2); font-size:13px; font-weight:400; line-height:1.25; text-decoration:none; }
+.training-deck .source-line a { color:inherit; text-decoration:none; }
+.training-deck .source-line a:hover { text-decoration:underline; }
+.training-deck [data-scene] { opacity:0; visibility:hidden; pointer-events:none; }
+.training-deck [data-scene].is-scene-visible { opacity:1; visibility:visible; pointer-events:auto; }
+.training-deck .takeaway [data-scene] { display:none; }
+.training-deck .takeaway [data-scene].is-scene-visible { display:block; }
+.training-deck .is-dimmed { opacity:.25; }
+.training-deck .scene-step { position:absolute; width:0; height:0; overflow:hidden; }
+.training-deck .scene-status { position:absolute; left:0; right:0; top:-38px; color:var(--teal); font-size:20px; font-weight:700; }
+.training-deck .outline { width:1400px; border-top:2px solid var(--blue); }
+.training-deck .outline>div { display:grid; grid-template-columns:95px 1fr; gap:20px; align-items:center; min-height:125px; padding:20px 0; border-bottom:1px solid var(--line); }
+.training-deck .outline span { color:var(--red); font-size:22px; }
+.training-deck .outline strong { font-size:34px; font-weight:650; }
+.training-deck .compare-table { width:1400px; border-collapse:collapse; font-size:25px; line-height:1.3; }
+.training-deck .compare-table th { text-align:left; background:var(--blue); color:white; padding:16px 22px; font-weight:650; }
+.training-deck .compare-table td { padding:16px 22px; border-bottom:1px solid var(--line); vertical-align:top; }
+.training-deck .compare-table tr:nth-child(even) td { background:var(--surface-2); }
+.training-deck .compare-table td:first-child { color:var(--blue); font-weight:700; width:300px; }
+.training-deck .compare-table th:first-child { width:300px; }
+.training-deck .summary-list { width:1400px; margin:0; padding:0; list-style:none; }
+.training-deck .summary-list li { display:grid; grid-template-columns:350px 1fr; gap:32px; padding:22px 0; border-bottom:1px solid var(--line); font-size:28px; line-height:1.35; }
+.training-deck .summary-list strong { color:var(--blue); font-size:31px; }
+.training-deck .summary-list span { color:var(--ink-2); }
+.training-deck .paper-figure { width:920px; max-height:420px; object-fit:contain; }
+.training-deck .title-lockup { position:absolute; left:150px; top:230px; display:flex; align-items:center; gap:44px; }
+.training-deck .title-brand { padding-right:44px; border-right:2px solid rgba(255,255,255,.55); }
+.training-deck .title-brand img { width:220px; height:220px; }
+.training-deck .title-heading h1 { max-width:1000px; margin:0; color:#fff; font-size:58px; line-height:1.08; }
+.training-deck .title-course { position:absolute; left:780px; top:535px; display:grid; gap:12px; color:white; font-size:27px; line-height:1.3; }
+.training-deck .title-course strong { font-size:34px; }
+.training-deck .title-wave { position:absolute; inset:auto 0 0; height:200px; opacity:.2; background:radial-gradient(70% 105% at 16% 112%,transparent 58%,rgba(71,200,240,.38) 58.5%,transparent 59.5%); }
+.training-deck .title-slide .kicker { color:white; }
+.training-deck .photo-frame { fill:white; stroke:var(--line); stroke-width:2; }
+.training-deck .flow-arrow { fill:none; stroke:var(--teal); stroke-width:3; }
+.training-deck .attack-arrow { fill:none; stroke:var(--red); stroke-width:3; }
+.training-deck .diagram-note { font-size:17px; color:var(--muted); margin:8px 0 0; }
+.training-deck .trace-line { stroke-dasharray:1; stroke-dashoffset:0; }
+.training-deck .present .is-scene-visible .trace-line { animation:training-trace .65s ease-out both; }
+@keyframes training-trace { from { stroke-dashoffset:1; } to { stroke-dashoffset:0; } }
+@media (prefers-reduced-motion:reduce) { .training-deck * { animation:none!important; transition:none!important; } }
+@media print { .training-deck .scene-status { display:none; } }
