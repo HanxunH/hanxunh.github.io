@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-Our [BackdoorLLM Benchmark](https://github.com/bboylyg/BackdoorLLM) was awarded first prize in the [SafeBench Competition](https://www.mlsafety.org/safebench/winners), organized by [Center for AI Safety](https://safe.ai). Congratulations to all the authors on this outstanding achievement!
+Our [BackdoorLLM Benchmark](https://github.com/bboylyg/BackdoorLLM) was awarded **first prize** in the [SafeBench Competition](https://www.mlsafety.org/safebench/winners), organized by [Center for AI Safety](https://safe.ai). Congratulations to all the authors on this outstanding achievement!

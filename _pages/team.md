@@ -15,10 +15,10 @@ nav_order: 1
 
 ### Master 
 - Ruoyu Zhou
-- Jingjie Zheng
-- Hanjie Liu
+- [Jingjie Zheng](https://www.linkedin.com/in/jingjie-zheng-8ab61122a/) -> [Tencent (腾讯)](https://www.tencent.com)
+- Hanjie Liu -> [Parametrix.ai (超参数科技)](https://www.chaocanshu.cn)
 - Shenghao Zhong
-- Huan Zhang
+- [Huan Zhang](https://www.linkedin.com/in/huan-z-741b1820a/)
 - Zejinyi Liu
 - [Kaiyuan Cui](https://www.linkedin.com/in/kaiyuancui/) -> [Court Services Victoria](https://courts.vic.gov.au) and PhD at University of Melbourne
 
