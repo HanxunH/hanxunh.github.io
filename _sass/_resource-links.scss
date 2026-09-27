@@ -1,0 +1,129 @@
+// Shared resource links use local icon fonts and real text, not remote badge images.
+.resource-link {
+  --resource-accent: var(--global-text-color);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.42rem;
+  min-height: 30px;
+  padding: 0.25rem 0.68rem;
+  border: 1px solid var(--global-divider-color);
+  border-radius: 999px;
+  background: var(--global-card-bg-color);
+  background: color-mix(in srgb, var(--resource-accent) 4%, var(--global-card-bg-color));
+  color: var(--global-text-color);
+  font-size: 0.78rem;
+  font-weight: 500;
+  line-height: 1.4;
+  text-decoration: none;
+  vertical-align: middle;
+  white-space: nowrap;
+  transition: color 160ms ease, background-color 160ms ease, border-color 160ms ease;
+
+  span {
+    color: inherit;
+  }
+
+  i {
+    width: 1em;
+    color: var(--resource-accent);
+    font-size: 0.95em;
+    text-align: center;
+  }
+
+  .resource-logo {
+    flex: 0 0 auto;
+    width: 1.2em;
+    height: 1.2em;
+    object-fit: contain;
+  }
+
+  &:hover,
+  &:focus-visible {
+    border-color: var(--resource-accent);
+    background: color-mix(in srgb, var(--resource-accent) 10%, var(--global-card-bg-color));
+    color: var(--resource-accent);
+    text-decoration: none;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--resource-accent);
+    outline-offset: 3px;
+  }
+
+  &--scholar { --resource-accent: #245bb3; }
+  &--linkedin { --resource-accent: #17679a; }
+  &--huggingface { --resource-accent: #946008; }
+  &--website { --resource-accent: #08786a; }
+  &--demo { --resource-accent: #7144b8; }
+}
+
+.profile-resources {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin: 1.25rem 0 0.7rem;
+
+  .resource-link {
+    min-height: 42px;
+    padding: 0.5rem 0.95rem;
+    font-size: 0.88rem;
+  }
+}
+
+.profile-contact {
+  display: flex;
+  align-items: baseline;
+  gap: 0.55rem;
+  margin-bottom: 1.25rem;
+  font-size: 0.85rem;
+
+  &,
+  span,
+  i {
+    color: var(--global-text-color-light);
+    color: color-mix(in srgb, var(--global-text-color) 70%, var(--global-bg-color));
+  }
+
+  span {
+    overflow-wrap: anywhere;
+  }
+}
+
+.publication-links {
+  display: inline;
+
+  .resource-link {
+    gap: 0.3rem;
+    min-height: 22px;
+    padding: 0.1rem 0.42rem;
+    margin: 0.08rem 0 0.08rem 0.25rem;
+    border-radius: 6px;
+    font-size: 0.7rem;
+    line-height: 1.2;
+  }
+}
+
+html[data-theme="dark"] {
+  .resource-link--scholar { --resource-accent: #94baff; }
+  .resource-link--linkedin { --resource-accent: #8ccbf0; }
+  .resource-link--huggingface { --resource-accent: #edc56a; }
+  .resource-link--website { --resource-accent: #79d7c5; }
+  .resource-link--demo { --resource-accent: #c3a7f4; }
+}
+
+@media (max-width: 575.98px), (pointer: coarse) {
+  .profile-resources .resource-link {
+    min-height: 44px;
+  }
+
+  .publication-links .resource-link {
+    min-height: 24px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .resource-link {
+    transition: none;
+  }
+}

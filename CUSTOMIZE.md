@@ -147,6 +147,20 @@ A variety of beautiful theme colors have been selected for you to choose from. T
 
 You can add your social media links by adding the specified information at the `Social integration` section in the [\_config.yml](_config.yml) file. This information will appear at the bottom of the `About` page.
 
+### Profile and publication resource tags
+
+The profile links in `_pages/about.md` and publication resources in `_pages/publications.md` use `_includes/resource_link.liquid` instead of external badge images:
+
+```liquid
+{% include resource_link.liquid kind="github" url="https://github.com/HanxunH/VEX-Bench" %}
+```
+
+Supported kinds are `scholar`, `github`, `huggingface`, `website`, `linkedin`, and `demo`. Group profile links in `.profile-resources`; place each paper's `.publication-links` immediately after the title, with the line break after the tags and before the authors. Tags flow inline and wrap individually when space is limited. Styles, dark-mode colors, and mobile sizing are in `_sass/_resource-links.scss`.
+
+Publication tags use smaller text, padding, and corner radii than the profile buttons; these overrides are scoped to `.publication-links`. The introductory Google Scholar link on the Publications page stays a regular text link.
+
+Hugging Face tags use the unmodified [official logo](https://huggingface.co/front/assets/huggingface_logo-noborder.svg), stored locally at `assets/img/huggingface-logo.svg`. Other tags reuse the site's existing icon fonts. Keep the visible text labels alongside the icons.
+
 ## Adding a newsletter
 
 You can add a newsletter subscription form by adding the specified information at the `newsletter` section in the [\_config.yml](_config.yml) file. To set up a newsletter, you can use a service like [Loops.so](https://loops.so/), which is the current supported solution. Once you have set up your newsletter, you can add the form [endpoint](https://loops.so/docs/forms/custom-form) to the `endpoint` field in the `newsletter` section of the [\_config.yml](_config.yml) file.

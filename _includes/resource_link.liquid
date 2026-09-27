@@ -1,0 +1,21 @@
+{%- comment -%}Usage: resource_link.liquid kind="github" url="https://…". Shared by profile and publication links.{%- endcomment -%}
+{%- case include.kind -%}
+  {%- when 'scholar' -%}
+    {%- assign resource_label = 'Google Scholar' -%}
+    {%- assign resource_icon = 'ai ai-google-scholar' -%}
+  {%- when 'github' -%}
+    {%- assign resource_label = 'GitHub' -%}
+    {%- assign resource_icon = 'fa-brands fa-github' -%}
+  {%- when 'huggingface' -%}
+    {%- assign resource_label = 'Hugging Face' -%}
+  {%- when 'website' -%}
+    {%- assign resource_label = 'Website' -%}
+    {%- assign resource_icon = 'fa-solid fa-arrow-up-right-from-square' -%}
+  {%- when 'linkedin' -%}
+    {%- assign resource_label = 'LinkedIn' -%}
+    {%- assign resource_icon = 'fa-brands fa-linkedin' -%}
+  {%- when 'demo' -%}
+    {%- assign resource_label = 'Demo' -%}
+    {%- assign resource_icon = 'fa-solid fa-play' -%}
+{%- endcase -%}
+<a class="resource-link resource-link--{{ include.kind }}" href="{{ include.url | escape }}" target="_blank" rel="noopener noreferrer">{% if include.kind == 'huggingface' %}<img class="resource-logo" src="{{ '/assets/img/huggingface-logo.svg' | relative_url }}" alt="" aria-hidden="true" width="20" height="20">{% else %}<i class="{{ resource_icon }}" aria-hidden="true"></i>{% endif %}<span>{{ resource_label }}</span></a>
